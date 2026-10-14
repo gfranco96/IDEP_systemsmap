@@ -419,9 +419,9 @@ xl("xl_edu2", "sys_education", "education", 2, "Recess, arts, exploratory pedago
    [("s1", "Recess, arts, drama, music, workshop learning, exploratory pedagogy", None, 0, 0),
     ("s2", "Protected autonomy and experimentation", None, 1, 0)],
    [("s1", "s2")], "upward", "protective")
-xl("xl_edu3", "sys_education", "education", 3, "College admissions / employability discourse \u2192 hobbies converted into credentials",
+xl("xl_edu3", "sys_education", "education", 3, "Academic admissions / employability discourse \u2192 hobbies converted into credentials",
    ["transition pressure"], "Admissions and employability discourse converts adolescent hobbies into credentials.",
-   [("s1", "College admissions / employability discourse", None, 0, 0),
+   [("s1", "Academic admissions / employability discourse", None, 0, 0),
     ("s2", "Adolescent hobbies converted into credentials", None, 1, 0)],
    [("s1", "s2")], "downward", "constraining")
 xl("xl_lab1", "sys_market", "market", 1, "Wage conditions, debt, housing, healthcare, childcare costs \u2192 time anxiety and risk aversion",

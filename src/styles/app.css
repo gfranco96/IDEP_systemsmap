@@ -1346,3 +1346,22 @@ ol.steps li.current {
 .lane-label.static .lane-label-bg {
   fill: var(--band-fill);
 }
+.system-house {
+  stroke-width: 1.5;
+}
+.map-svg .t-desc {
+  fill: var(--ink);
+}
+
+/* revision 4: Legend / Menu buttons at half their previous size */
+.toolbar .menu-btn {
+  min-height: 12px;
+  height: 12px;
+  padding: 0 4px;
+  font-size: 7px;
+  line-height: 10px;
+  border-radius: 3px;
+}
+.menu-wrap {
+  gap: 3px;
+}

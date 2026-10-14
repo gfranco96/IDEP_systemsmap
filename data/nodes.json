@@ -1392,7 +1392,7 @@
   {
     "id": "xl_edu3_s1",
     "type": "factor",
-    "label": "College admissions / employability discourse",
+    "label": "Academic admissions / employability discourse",
     "chainId": "xl_edu3",
     "stage": "cross",
     "current": "education",

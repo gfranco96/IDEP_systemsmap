@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { computeLayout, overlaps, type Layout } from '../../src/layout/computeLayout';
-import { routeEdges } from '../../src/layout/routeEdges';
+import { routeEdges, overlappingPairs } from '../../src/layout/routeEdges';
 import { textWidth } from '../../src/layout/text';
 import { aggregateEdges } from '../../src/model/graph';
 import { ALL_CONTAINERS, g, view } from './helpers';
@@ -46,9 +46,24 @@ describe('layout invariants (§5 hard requirements)', () => {
               expect(line.y).toBeLessThanOrEqual(n.h + 0.01);
             }
       });
+      const routed = routeEdges(g, L, aggregateEdges(g, v, { interventionLinks: 'all' }));
       it('routes edges without crossing unrelated nodes', () => {
-        const routed = routeEdges(g, L, aggregateEdges(g, v, { interventionLinks: 'all' }));
         expect(routed.filter((r) => r.collisions > 0).map((r) => r.key)).toEqual([]);
+      });
+      it('never attaches a line to a loop hub through its title', () => {
+        for (const r of routed) {
+          for (const [id, p] of [[r.agg.source, r.pts[0]], [r.agg.target, r.pts[r.pts.length - 1]]] as const) {
+            const n = L.byId.get(id)!;
+            if (n.kind === 'loop') expect(p.y, r.key).toBeLessThan(n.y + 96 - 0.5);
+          }
+        }
+      });
+      it('never lays two lines on top of each other', () => {
+        expect(overlappingPairs(routed, 2).map(([a, b]) => `${a.r.key} × ${b.r.key}`)).toEqual([]);
+      });
+      it('shows every title and label in full (nothing cut off with "…")', () => {
+        expect(L.nodes.filter((n) => n.truncated).map((n) => n.id)).toEqual([]);
+        for (const n of L.nodes) for (const b of n.blocks) for (const l of b.lines) expect(l.text.endsWith('…'), `${n.id}: ${l.text}`).toBe(false);
       });
     });
   }
@@ -57,7 +72,7 @@ describe('layout invariants (§5 hard requirements)', () => {
     for (const v of [view(), view(ALL_CONTAINERS, { interventions: true })]) {
       const L = computeLayout(g, v);
       const col = L.bands.find((b) => b.kind === 'outcomes')!;
-      expect(col.label!.lines[0].text).toBe('Consequences');
+      expect(col.label!.lines[0].text).toBe('Consequences/outcomes');
       expect(col.y).toBeLessThanOrEqual(Math.min(...L.nodes.map((n) => n.y)));
       expect(col.y + col.h).toBeGreaterThanOrEqual(Math.max(...L.nodes.map((n) => n.y + n.h)));
       for (const o of g.outcomes) {
@@ -67,6 +82,51 @@ describe('layout invariants (§5 hard requirements)', () => {
         expect(n.y).toBeGreaterThan(col.y + 50); // below the column heading
       }
       expect(L.nodes.some((n) => n.kind === 'reference')).toBe(false);
+    }
+  });
+
+  it('substages share their stage bar equally and together span it exactly', () => {
+    for (const v of [view(), view(['ch_d1', 'ch_d2'])]) {
+      const L = computeLayout(g, v);
+      for (const st of ['childhood', 'adolescence', 'adulthood'] as const) {
+        const bar = L.byId.get(`stage_${st}`)!;
+        const subs = g.substagesByStage.get(st)!.map((s) => L.byId.get(s.id)!);
+        expect(new Set(subs.map((s) => Math.round(s.w * 100))).size).toBe(1);
+        expect(subs[0].x).toBeCloseTo(bar.x, 6);
+        expect(subs[subs.length - 1].x + subs[subs.length - 1].w).toBeCloseTo(bar.x + bar.w, 6);
+      }
+    }
+  });
+
+  it('houses an expanded cross-life system’s chains in one box spanning all stages', () => {
+    const L = computeLayout(g, view(['sys_education']));
+    const house = L.houses.find((h) => h.id === 'sys_education')!;
+    expect(house.x).toBeLessThanOrEqual(L.stageBands[0].x + 20);
+    expect(house.x + house.w).toBeGreaterThanOrEqual(L.contentX1 - 20);
+    for (const c of g.crossChainsBySystem.get('sys_education')!) {
+      const ids = [c.id, ...c.stepNodeIds];
+      for (const id of ids) {
+        const n = L.byId.get(id)!;
+        expect(n.x).toBeGreaterThanOrEqual(house.x);
+        expect(n.x + n.w).toBeLessThanOrEqual(house.x + house.w);
+        expect(n.y).toBeGreaterThanOrEqual(house.y);
+        expect(n.y + n.h).toBeLessThanOrEqual(house.y + house.h);
+      }
+      // steps are spread across the whole box width
+      const steps = c.stepNodeIds.map((id) => L.byId.get(id)!);
+      const last = steps.reduce((a, b) => (b.x > a.x ? b : a));
+      expect(last.x + last.w).toBeGreaterThan(house.x + house.w - 60);
+    }
+    expect(g.chainById.get('xl_edu3')!.title.startsWith('Academic admissions')).toBe(true);
+  });
+
+  it('outcome bars show the bold name and the full description', () => {
+    const L = computeLayout(g, view());
+    for (const o of g.outcomes) {
+      const n = L.byId.get(o.id)!;
+      expect(n.blocks[0].bold).toBe(true);
+      expect(n.blocks[0].lines.map((l) => l.text).join(' ')).toBe(o.label);
+      expect(n.blocks[1].lines.map((l) => l.text).join(' ')).toBe(o.description);
     }
   });
 
@@ -84,7 +144,7 @@ describe('layout invariants (§5 hard requirements)', () => {
     for (const st of ['childhood', 'adolescence', 'adulthood'] as const) {
       const xs = g.substagesByStage.get(st)!.map((s) => L.byId.get(s.id)!.x);
       expect(xs).toEqual([...xs].sort((a, b) => a - b));
-      const gaps = xs.slice(1).map((x, i) => x - xs[i]);
+      const gaps = xs.slice(1).map((x, i) => Math.round((x - xs[i]) * 1000));
       expect(new Set(gaps).size).toBe(1); // equal pitch regardless of age span
     }
   });

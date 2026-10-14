@@ -5,7 +5,7 @@ import { Texts } from './NodeShape';
 /** Background structure: stage columns, lanes, bottom bands, outcomes column. */
 export function Backdrop({ layout, laneFocus }: { layout: Layout; laneFocus: CurrentId | null }) {
   const laneBands = layout.bands.filter((b) => b.kind === 'laneStage' || b.kind === 'laneCross');
-  const lanesBottom = Math.max(...laneBands.map((b) => b.y + b.h), L.lanesTop);
+  const lanesBottom = Math.max(...laneBands.map((b) => b.y + b.h), layout.lanesTop);
   return (
     <g className="backdrop">
       {/* lane backgrounds */}
@@ -31,6 +31,20 @@ export function Backdrop({ layout, laneFocus }: { layout: Layout; laneFocus: Cur
           y2={lanesBottom}
           vectorEffect="non-scaling-stroke"
           data-testid="stage-divider"
+        />
+      ))}
+      {/* expanded cross-life systems: a box spanning every stage, covering the stage dividers */}
+      {layout.houses.map((h) => (
+        <rect
+          key={h.id}
+          className="system-house"
+          data-testid={`house-${h.id}`}
+          x={h.x}
+          y={h.y}
+          width={h.w}
+          height={h.h}
+          rx={10}
+          style={{ stroke: `var(--c-${h.current})`, fill: `color-mix(in srgb, var(--c-${h.current}) 9%, var(--surface))` }}
         />
       ))}
       {/* other bands */}

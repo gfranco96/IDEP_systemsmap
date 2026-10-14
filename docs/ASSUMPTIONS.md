@@ -55,6 +55,31 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
 8. During the walk-through, every focus/zoom treats only the area above the walk-through window as visible, so the
    highlighted node(s) are never covered by it.
 
+## Revision 4 — further changes requested by the map author
+
+1. **Cross-life chains** (no stage in the data) stay cross-life: expanding a system turns its bar into a box that spans
+   every stage, covers the stage dividers, and houses the system's chains; each chain gets a full-width row with its
+   steps spread across the box.
+2. **No truncation anywhere:** every title, subtitle and label is shown in full. Boxes grow to fit (chips are 260 px
+   wide and all share the height of the longest title; chain steps share the height of their chain's longest label;
+   loop steps likewise per loop; interventions share one fitted size). Expanded chain headers widen their chain to fit
+   on one line. A unit test asserts that no node text is cut off.
+3. **No overlapping lines:** the router penalises running along an already-routed line, and a final pass spreads any
+   remaining parallel segments 6 px apart (or the nearest free offset), never at the cost of crossing a node. Lines no
+   longer run through the left gutter or under a loop hub's title. A unit test asserts zero overlapping segments in the
+   default, fully expanded (with all intervention links) and each-loop-expanded states. The gap in front of the
+   outcomes column was widened from 80 to 150 px to give converging lines room.
+4. The outcomes column is titled **"Consequences/outcomes"**.
+5. **Outcome nodes** are tall bars: bold name, then the outcome's full `description` (regular), then the ▲/▼ polarity
+   marker. Each bar shows its own description from the data.
+6. **Substages** split their stage bar into equal shares (order only, never age) and together span it exactly.
+7. Legend and Menu buttons are half their previous size (12 px tall).
+
+**Data edit requested by the author:** `xl_edu3` chain title and its first step (`xl_edu3_s1`) now read
+"Academic admissions / employability discourse …" instead of "College admissions …" (changed in `data/` and in
+`tools/build_data.py`). The late-adolescence substage's `rewardSystemShift` ("College admissions, employability, …")
+was not changed.
+
 ## Interpretations
 
 ### Project & data

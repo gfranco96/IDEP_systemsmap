@@ -125,6 +125,66 @@ function midOf(pts: Pt[]): { mid: Pt; angle: number } {
 
 const r1 = (n: number) => Math.round(n * 10) / 10;
 
+/** Axis-aligned segments already used by routed edges, so later edges prefer free channels. */
+class Occupancy {
+  private h = new Map<number, [number, number][]>();
+  private v = new Map<number, [number, number][]>();
+  add(pts: Pt[]) {
+    for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i];
+      const b = pts[i + 1];
+      if (Math.abs(a.y - b.y) < 0.5) this.put(this.h, a.y, a.x, b.x);
+      else if (Math.abs(a.x - b.x) < 0.5) this.put(this.v, a.x, a.y, b.y);
+    }
+  }
+  private put(m: Map<number, [number, number][]>, c: number, p: number, q: number) {
+    const k = Math.round(c);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k)!.push([Math.min(p, q), Math.max(p, q)]);
+  }
+  private hit(m: Map<number, [number, number][]>, c: number, p: number, q: number): boolean {
+    const lo = Math.min(p, q);
+    const hi = Math.max(p, q);
+    const k = Math.round(c);
+    for (let d = -4; d <= 4; d++) for (const [a, b] of m.get(k + d) ?? []) if (Math.min(hi, b) - Math.max(lo, a) > 2) return true;
+    return false;
+  }
+  hitH(y: number, x1: number, x2: number) {
+    return this.hit(this.h, y, x1, x2);
+  }
+  hitV(x: number, y1: number, y2: number) {
+    return this.hit(this.v, x, y1, y2);
+  }
+  /** number of segments of `pts` that run along an existing route */
+  count(pts: Pt[]): number {
+    let n = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i];
+      const b = pts[i + 1];
+      if (Math.abs(a.y - b.y) < 0.5 ? this.hitH(a.y, a.x, b.x) : Math.abs(a.x - b.x) < 0.5 && this.hitV(a.x, a.y, b.y)) n++;
+    }
+    return n;
+  }
+}
+
+/** Drop duplicate and collinear points so every segment is a single straight run. */
+function simplify(pts: Pt[]): Pt[] {
+  const q: Pt[] = [];
+  for (const p of pts) {
+    const last = q[q.length - 1];
+    if (last && Math.abs(last.x - p.x) < 0.01 && Math.abs(last.y - p.y) < 0.01) continue;
+    while (q.length >= 2) {
+      const a = q[q.length - 2];
+      const b = q[q.length - 1];
+      const cross = (b.x - a.x) * (p.y - b.y) - (b.y - a.y) * (p.x - b.x);
+      if (Math.abs(cross) < 0.01) q.pop();
+      else break;
+    }
+    q.push(p);
+  }
+  return q;
+}
+
 /** Rounded orthogonal polyline → SVG path. */
 function roundedPath(pts: Pt[], radius = 12): string {
   const clean: Pt[] = [];
@@ -202,6 +262,8 @@ interface Endpoint {
   stub: number;
   /** fixed absolute port point (outcome slots) */
   fixed?: { side: Side; p: Pt };
+  /** loop hubs carry their title under the circle: never attach a line there */
+  noBottom?: boolean;
 }
 
 interface Candidate {
@@ -273,10 +335,14 @@ function route(
   obstacles: Box[],
   world: { w: number; h: number },
   channelUse: Map<string, number>,
+  occ: Occupancy,
 ): Candidate {
   const [ss, ds] = preferredSides(src.box, dst.box);
-  const srcSides = src.fixed ? [src.fixed.side] : src.sides.length ? src.sides : ss;
-  const dstSides = dst.fixed ? [dst.fixed.side] : dst.sides.length ? dst.sides : ds;
+  const okSide = (e: Endpoint) => (sd: Side) => !(e.noBottom && sd === 'bottom');
+  const srcSides = (src.fixed ? [src.fixed.side] : src.sides.length ? src.sides : ss).filter(okSide(src));
+  const dstSides = (dst.fixed ? [dst.fixed.side] : dst.sides.length ? dst.sides : ds).filter(okSide(dst));
+  if (!srcSides.length) srcSides.push(...(['right', 'left', 'top'] as Side[]));
+  if (!dstSides.length) dstSides.push(...(['left', 'right', 'top'] as Side[]));
   const near = obstacles.filter((o) => {
     const minX = Math.min(src.box.x, dst.box.x) - 700;
     const maxX = Math.max(src.box.x + src.box.w, dst.box.x + dst.box.w) + 700;
@@ -309,9 +375,10 @@ function route(
     const inner = pts.slice(1, -1);
     let col = polyCollisions(pts, near);
     if (inner.length >= 2) col += polyCollisions(inner, all, 1);
-    const score = col * 1e6 + polyLength(pts) + (pts.length + extraBends) * 25;
-    cands.push({ pts, d: roundedPath(pts), kind: 'ortho', collisions: col, score });
-    return col === 0;
+    const shared = occ.count(simplify(pts));
+    const score = col * 1e6 + shared * 4000 + polyLength(pts) + (pts.length + extraBends) * 25;
+    cands.push({ pts: simplify(pts), d: roundedPath(pts), kind: 'ortho', collisions: col, score });
+    return col === 0 && shared === 0;
   };
   let best: Candidate | null = null;
   const pick = () => {
@@ -366,7 +433,7 @@ function route(
     const p = port(dst, sd);
     return { p, stub: stubPoint(dst, sd, p), side: sd };
   });
-  const path = gridRoute(starts, goals, near, all);
+  const path = gridRoute(starts, goals, near, all, occ);
   if (path) tryPts(path, 0);
   return pick();
 }
@@ -433,6 +500,7 @@ function gridRoute(
   goals: { p: Pt; stub: Pt; side: Side }[],
   obstacles: Box[],
   endpoints: Box[],
+  occ?: Occupancy,
 ): Pt[] | null {
   const PAD = 8;
   const blocks = [...obstacles, ...endpoints].map((o) => ({ x0: o.x - PAD, x1: o.x + o.w + PAD, y0: o.y - PAD, y1: o.y + o.h + PAD }));
@@ -548,7 +616,10 @@ function gridRoute(
       const ncell = idx(ni, nj);
       if (blockedNode[ncell] && !goalIdx.has(ncell)) continue;
       if ((nd ^ d) === 1) continue; // no U-turns
-      const cost = base + Math.abs(xs[ni] - xs[i]) + Math.abs(ys[nj] - ys[j]) + (nd === d ? 0 : BEND);
+      const len = Math.abs(xs[ni] - xs[i]) + Math.abs(ys[nj] - ys[j]);
+      // running along another edge is allowed but expensive, so free channels win
+      const shared = occ && (D.x !== 0 ? occ.hitH(ys[j], xs[i], xs[ni]) : occ.hitV(xs[i], ys[j], ys[nj])) ? 300 + len * 3 : 0;
+      const cost = base + len + (nd === d ? 0 : BEND) + shared;
       const ns = ncell * 4 + nd;
       if (cost < dist[ns]) {
         dist[ns] = cost;
@@ -577,10 +648,12 @@ function gridRoute(
 
 /** §4.2 / §5 edge routing for the currently visible (aggregated) edges. */
 export function routeEdges(g: Graph, layout: Layout, aggs: AggEdge[]): RoutedEdge[] {
-  const obstacleNodes = layout.nodes;
+  // nodes, plus the left gutter that holds the rotated row titles (lines never run over it)
+  const obstacleNodes: Box[] & { id?: string }[] = [...layout.nodes, gutterBox(layout)];
   const world = { w: layout.width, h: layout.height };
   const out: RoutedEdge[] = [];
   const channelUse = new Map<string, number>();
+  const occ = new Occupancy();
   const ringByLoop = new Map(layout.rings.map((r) => [r.loopId, r]));
 
   // outcome slots: edges converge on the target's left side, ≥10px apart
@@ -646,16 +719,187 @@ export function routeEdges(g: Graph, layout: Layout, aggs: AggEdge[]): RoutedEdg
     const sl = srcOutcomeLinks.get(a.source);
     const srcOff = sl && sl.length > 1 ? (sl.indexOf(a) - (sl.length - 1) / 2) * 10 : pairOff;
     const slot = outcomeSlots.get(a.key);
-    const src: Endpoint = { box: s, sides: slot ? ['right', 'bottom', 'top'] : [], offset: srcOff, stub: 14 };
+    const src: Endpoint = { box: s, sides: slot ? ['right', 'bottom', 'top'] : [], offset: srcOff, stub: 14, noBottom: s0.kind === 'loop' };
     const dst: Endpoint = slot
       ? { box: t, sides: ['left'], offset: 0, stub: outcomeStub.get(a.key)!, fixed: { side: 'left', p: slot } }
-      : { box: t, sides: [], offset: pairOff, stub: 14 };
-    const obstacles = obstacleNodes.filter((n) => n.id !== s.id && n.id !== t.id);
-    const c = route(src, dst, obstacles, world, channelUse);
+      : { box: t, sides: [], offset: pairOff, stub: 14, noBottom: t0.kind === 'loop' };
+    const obstacles = obstacleNodes.filter((n) => (n as { id?: string }).id !== s.id && (n as { id?: string }).id !== t.id);
+    const c = route(src, dst, obstacles, world, channelUse, occ);
+    if (c.kind === 'ortho') occ.add(c.pts);
     const { mid, angle } = midOf(c.pts);
     out.push({ key: a.key, agg: a, d: c.d, mid, angle, color, kind: c.kind, collisions: c.collisions, pts: c.pts });
   }
+  separateOverlaps(out, layout);
   return out;
+}
+
+// ---------------------------------------------------------------------------
+// Overlap separation: parallel segments of different edges that lie on top of each other are spread
+// apart (6 px) so every line stays distinguishable without hovering. A shift is undone if it would make
+// an edge cross a node.
+// ---------------------------------------------------------------------------
+const SEP = 6;
+
+interface Seg {
+  r: RoutedEdge;
+  i: number;
+  horiz: boolean;
+  c: number;
+  lo: number;
+  hi: number;
+}
+
+function segmentsOf(routes: RoutedEdge[], interiorOnly: boolean): Seg[] {
+  const segs: Seg[] = [];
+  for (const r of routes) {
+    if (r.kind !== 'ortho') continue;
+    const p = r.pts;
+    const from = interiorOnly ? 1 : 0;
+    const to = interiorOnly ? p.length - 2 : p.length - 1;
+    for (let i = from; i < to; i++) {
+      const a = p[i];
+      const b = p[i + 1];
+      if (Math.abs(a.y - b.y) < 0.5 && Math.abs(a.x - b.x) > 0.5)
+        segs.push({ r, i, horiz: true, c: a.y, lo: Math.min(a.x, b.x), hi: Math.max(a.x, b.x) });
+      else if (Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) > 0.5)
+        segs.push({ r, i, horiz: false, c: a.x, lo: Math.min(a.y, b.y), hi: Math.max(a.y, b.y) });
+    }
+  }
+  return segs;
+}
+
+/** Pairs of segments from different edges that run along each other (closer than `tol`, overlapping > 2px). */
+export function overlappingPairs(routes: RoutedEdge[], tol = 2): [Seg, Seg][] {
+  const segs = segmentsOf(routes, false);
+  const out: [Seg, Seg][] = [];
+  for (let i = 0; i < segs.length; i++)
+    for (let j = i + 1; j < segs.length; j++) {
+      const a = segs[i];
+      const b = segs[j];
+      if (a.r === b.r || a.horiz !== b.horiz) continue;
+      if (Math.abs(a.c - b.c) >= tol) continue;
+      if (Math.min(a.hi, b.hi) - Math.max(a.lo, b.lo) > 2) out.push([a, b]);
+    }
+  return out;
+}
+
+/** End points must stay on their node's edge (≥ 4px from the corners) when a stub is slid sideways. */
+function attached(p: Pt, b: Box): boolean {
+  const onX = p.x >= b.x - 0.5 && p.x <= b.x + b.w + 0.5;
+  const onY = p.y >= b.y - 0.5 && p.y <= b.y + b.h + 0.5;
+  if (!onX || !onY) return false;
+  const left = Math.abs(p.x - b.x) < 0.5 || Math.abs(p.x - (b.x + b.w)) < 0.5;
+  if (left) return p.y >= b.y + 4 && p.y <= b.y + b.h - 4;
+  return p.x >= b.x + 4 && p.x <= b.x + b.w - 4;
+}
+
+function edgeCollides(r: RoutedEdge, layout: Layout): number {
+  const s = layout.byId.get(r.agg.source)!;
+  const t = layout.byId.get(r.agg.target)!;
+  if (!attached(r.pts[0], anchorBox(s)) || !attached(r.pts[r.pts.length - 1], anchorBox(t))) return 1;
+  const obstacles: Box[] = [...layout.nodes.filter((n) => n.id !== s.id && n.id !== t.id), gutterBox(layout)];
+  let col = polyCollisions(r.pts, obstacles);
+  const inner = r.pts.slice(1, -1);
+  if (inner.length >= 2) col += polyCollisions(inner, [anchorBox(s), anchorBox(t)], 1);
+  return col;
+}
+
+function rebuild(r: RoutedEdge) {
+  r.d = roundedPath(r.pts);
+  const m = midOf(r.pts);
+  r.mid = m.mid;
+  r.angle = m.angle;
+}
+
+function separateOverlaps(routes: RoutedEdge[], layout: Layout) {
+  for (let pass = 0; pass < 4; pass++) {
+    const segs = segmentsOf(routes, false);
+    // union-find clusters of near-collinear, overlapping segments from different edges
+    const parent = segs.map((_, i) => i);
+    const find = (i: number): number => (parent[i] === i ? i : (parent[i] = find(parent[i])));
+    let any = false;
+    for (let i = 0; i < segs.length; i++)
+      for (let j = i + 1; j < segs.length; j++) {
+        const a = segs[i];
+        const b = segs[j];
+        if (a.r === b.r || a.horiz !== b.horiz) continue;
+        if (Math.abs(a.c - b.c) >= SEP - 0.5) continue;
+        if (Math.min(a.hi, b.hi) - Math.max(a.lo, b.lo) <= 2) continue;
+        parent[find(i)] = find(j);
+        any = true;
+      }
+    if (!any) return;
+    const clusters = new Map<number, Seg[]>();
+    segs.forEach((sg, i) => {
+      const root = find(i);
+      if (!clusters.has(root)) clusters.set(root, []);
+      clusters.get(root)!.push(sg);
+    });
+    for (const members of clusters.values()) {
+      if (members.length < 2) continue;
+      members.sort((a, b) => a.c - b.c || a.r.key.localeCompare(b.r.key) || a.i - b.i);
+      const n = members.length;
+      const mean = members.reduce((acc, m) => acc + m.c, 0) / n;
+      const saved = new Map<RoutedEdge, Pt[]>();
+      for (const m of members) if (!saved.has(m.r)) saved.set(m.r, m.r.pts.map((p) => ({ ...p })));
+      const touched = new Set(members.map((m) => m.r));
+      // try: centred spread, then spread to one side or the other, with decreasing spacing
+      const attempts: ((k: number, sep: number) => number)[] = [
+        (k, sep) => mean + (k - (n - 1) / 2) * sep,
+        (k, sep) => Math.min(...members.map((m) => m.c)) + k * sep,
+        (k, sep) => Math.max(...members.map((m) => m.c)) - (n - 1 - k) * sep,
+      ];
+      let ok = false;
+      for (const sep of [SEP, 4.5, 3.5]) {
+        for (const at of attempts) {
+          members.forEach((m, k) => {
+            const v = at(k, sep);
+            const p = m.r.pts;
+            if (m.horiz) p[m.i].y = p[m.i + 1].y = v;
+            else p[m.i].x = p[m.i + 1].x = v;
+          });
+          if (![...touched].some((r) => edgeCollides(r, layout) > 0)) {
+            ok = true;
+            break;
+          }
+          for (const [r, pts] of saved) r.pts = pts.map((p) => ({ ...p }));
+        }
+        if (ok) break;
+      }
+      if (!ok) {
+        // greedy fallback: keep the first line, move each other one to the nearest free offset that is valid
+        const placed: Seg[] = [members[0]];
+        for (const m of members.slice(1)) {
+          const p = m.r.pts;
+          const orig = m.c;
+          const clash = (v: number) =>
+            placed.some(
+              (o) => o.r !== m.r && Math.abs(o.c - v) < SEP - 0.5 && Math.min(o.hi, m.hi) - Math.max(o.lo, m.lo) > 2,
+            );
+          let done = false;
+          for (const step of [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]) {
+            const v = orig + step * SEP;
+            if (clash(v)) continue;
+            const keep = p.map((q) => ({ ...q }));
+            if (m.horiz) p[m.i].y = p[m.i + 1].y = v;
+            else p[m.i].x = p[m.i + 1].x = v;
+            if (edgeCollides(m.r, layout) === 0) {
+              m.c = v;
+              done = true;
+              break;
+            }
+            m.r.pts = keep;
+          }
+          if (done) placed.push(m);
+        }
+      }
+      for (const r of touched) rebuild(r);
+    }
+  }
+}
+
+function gutterBox(layout: Layout): Box & { id: string } {
+  return { id: '__gutter', x: 0, y: 0, w: layout.contentX0 - 2, h: layout.height };
 }
 
 /** Loop hubs connect at their circle, not at the title block underneath. */

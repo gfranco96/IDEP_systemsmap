@@ -381,3 +381,30 @@ test('walk-through keeps the highlighted node above its window', async ({ page }
     }
   }
 });
+
+test('Legend and Menu buttons are compact (half the previous size)', async ({ page }) => {
+  await open(page, BASE);
+  for (const name of ['Legend', 'Menu']) {
+    const bb = (await page.getByRole('button', { name, exact: true }).boundingBox())!;
+    expect(bb.height).toBeLessThanOrEqual(13);
+  }
+});
+
+test('an expanded cross-life system box covers the stage dividers and holds its chains', async ({ page }) => {
+  await open(page, `${BASE}&exp=sys_education`);
+  const house = (await page.getByTestId('house-sys_education').boundingBox())!;
+  for (const id of ['xl_edu1_s1', 'xl_edu3_s2']) {
+    const b = (await page.locator(`[data-id="${id}"]`).boundingBox())!;
+    expect(b.x).toBeGreaterThanOrEqual(house.x);
+    expect(b.x + b.width).toBeLessThanOrEqual(house.x + house.width + 0.5);
+  }
+  // the box is painted after (above) the dividers
+  const order = await page.evaluate(() => {
+    const all = [...document.querySelectorAll('.backdrop > *')];
+    const d = all.findIndex((e) => e.classList.contains('stage-divider'));
+    const h = all.findIndex((e) => e.classList.contains('system-house'));
+    return [d, h];
+  });
+  expect(order[1]).toBeGreaterThan(order[0]);
+  await expect(page.locator('[data-id="xl_edu3"]')).toHaveAttribute('aria-label', /^Academic admissions/);
+});
