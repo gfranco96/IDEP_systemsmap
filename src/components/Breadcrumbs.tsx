@@ -24,7 +24,7 @@ export function trail(id: string): string[] {
 
 export function Breadcrumbs() {
   const { state, dispatch } = useStore();
-  if (!state.selected) return null;
+  if (!state.selected || state.tourStep != null) return null;
   const t = trail(state.selected);
   if (t.length < 2) return null;
   return (

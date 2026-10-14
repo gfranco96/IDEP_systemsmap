@@ -121,7 +121,8 @@ export function reducer(state: State, a: Action): State {
     case 'setAbout':
       return { ...state, about: a.value };
     case 'tour':
-      return { ...state, tourStep: a.step };
+      // leaving the walk-through clears its selection so no details window pops up afterwards
+      return { ...state, tourStep: a.step, selected: a.step == null ? null : state.selected };
     case 'theme':
       return { ...state, theme: a.value };
     case 'focus':

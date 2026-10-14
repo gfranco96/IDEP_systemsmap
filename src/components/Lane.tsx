@@ -22,7 +22,16 @@ export function Backdrop({ layout, laneFocus }: { layout: Layout; laneFocus: Cur
       ))}
       {/* stage column dividers */}
       {layout.stageBands.slice(1).map((sb) => (
-        <line key={sb.stage} className="stage-divider" x1={sb.x} x2={sb.x} y1={L.stageRowY} y2={lanesBottom} />
+        <line
+          key={sb.stage}
+          className="stage-divider"
+          x1={sb.x}
+          x2={sb.x}
+          y1={L.stageRowY}
+          y2={lanesBottom}
+          vectorEffect="non-scaling-stroke"
+          data-testid="stage-divider"
+        />
       ))}
       {/* other bands */}
       {layout.bands
@@ -70,35 +79,42 @@ export function LaneLabels({
 }) {
   return (
     <g className="lane-labels">
-      {layout.laneLabels.map((l) => (
-        <g
-          key={l.current}
-          className={`lane-label${laneFocus === l.current ? ' active' : ''}${l.current === 'cultural' ? ' overlay' : ''}`}
-          transform={`translate(${l.x},${l.y})`}
-          role="button"
-          tabIndex={0}
-          aria-pressed={laneFocus === l.current}
-          aria-label={`Focus lane: ${l.block.lines.map((x) => x.text).join(' ')}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onLane(l.current);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              onLane(l.current);
-            }
-          }}
-        >
-          <rect className="lane-label-bg" width={l.w} height={l.h} rx={8} />
-          <rect className="lane-swatch" x={4} y={8} width={6} height={l.h - 16} rx={3} style={{ fill: `var(--c-${l.current})` }} />
-          <rect className="focus-ring" x={-3} y={-3} width={l.w + 6} height={l.h + 6} rx={10} />
-          <Texts blocks={[l.block, ...(l.sub ? [l.sub] : [])]} />
-          <text className="t-sec t-marker lane-hint" x={16} y={l.h - 12} fontSize={9.5}>
-            {laneFocus === l.current ? 'click to clear focus' : 'click to focus lane'}
-          </text>
-        </g>
-      ))}
+      {layout.laneLabels.map((l) => {
+        const text = l.block.lines.map((x) => x.text).join(' ');
+        const interactive = !!l.current;
+        const activate = () => l.current && onLane(l.current);
+        return (
+          <g
+            key={l.id}
+            data-current={l.current}
+            className={`lane-label${laneFocus && laneFocus === l.current ? ' active' : ''}${l.current === 'cultural' ? ' overlay' : ''}${interactive ? '' : ' static'}`}
+            transform={`translate(${l.x},${l.y})`}
+            role={interactive ? 'button' : undefined}
+            tabIndex={interactive ? 0 : undefined}
+            aria-pressed={interactive ? laneFocus === l.current : undefined}
+            aria-label={interactive ? `Focus lane: ${text}` : text}
+            onClick={(e) => {
+              if (!interactive) return;
+              e.stopPropagation();
+              activate();
+            }}
+            onKeyDown={(e) => {
+              if (interactive && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                activate();
+              }
+            }}
+          >
+            {interactive && <title>{`${text} — click to ${laneFocus === l.current ? 'clear focus' : 'focus this lane'}`}</title>}
+            <rect className="lane-label-bg" width={l.w} height={l.h} rx={6} />
+            {l.current && <rect className="lane-swatch" x={3} y={6} width={4} height={l.h - 12} rx={2} style={{ fill: `var(--c-${l.current})` }} />}
+            <rect className="focus-ring" x={-3} y={-3} width={l.w + 6} height={l.h + 6} rx={8} />
+            <g transform={`translate(${l.w / 2 + 2},${l.h / 2}) rotate(-90)`}>
+              <Texts blocks={[l.block]} />
+            </g>
+          </g>
+        );
+      })}
     </g>
   );
 }

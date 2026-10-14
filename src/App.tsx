@@ -7,7 +7,6 @@ import { MapCanvas, type CanvasHandle } from './components/MapCanvas';
 import { EdgeMarkers } from './components/EdgePath';
 import { Toolbar } from './components/Toolbar';
 import { DetailPanel } from './components/DetailPanel';
-import { Legend } from './components/Legend';
 import { AboutPanel } from './components/AboutPanel';
 import { ListView } from './components/ListView';
 import { Tour } from './components/Tour';
@@ -129,7 +128,6 @@ export function App() {
         </div>
       )}
       <main className="main" id="outline-toggle">
-        <Legend />
         <div className="stage">
           {state.outline ? (
             <ListView />

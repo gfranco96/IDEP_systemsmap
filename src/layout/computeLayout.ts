@@ -7,7 +7,7 @@ import { textWidth, wrapText } from './text';
 // Constants (SVG user units at zoom 1) — §5
 // ---------------------------------------------------------------------------
 export const L = {
-  gutter: 220,
+  gutter: 56,
   substageCol: 200,
   stagePad: 40,
   outcomeGap: 80,
@@ -113,14 +113,17 @@ export interface Band {
   sublabel?: TextBlock;
 }
 
+/** Row title in the left gutter, drawn rotated 90° counter-clockwise (reads bottom → top). */
 export interface LaneLabel {
-  current: CurrentId;
+  id: string;
+  /** set for the five current lanes (clickable lane focus); absent for other rows */
+  current?: CurrentId;
   x: number;
   y: number;
   w: number;
   h: number;
+  /** text block in the rotated frame: origin at the label centre, x along the reading direction */
   block: TextBlock;
-  sub?: TextBlock;
 }
 
 export interface Ring {
@@ -600,6 +603,30 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     return 6 + 44 + 16 + f.h + 20;
   };
 
+  /** Rotated row title for the left gutter, wrapped to the row height (max 3 lines). */
+  const gutterLabel = (id: string, text: string, top: number, h: number, current?: CurrentId): LaneLabel => {
+    const size = 10.5;
+    const lh = 13;
+    const w = wrapText(text, h - 16, size, 3, true);
+    const n = w.lines.length;
+    return {
+      id,
+      current,
+      x: 6,
+      y: top,
+      w: L.gutter - 12,
+      h,
+      block: {
+        lines: w.lines.map((t, i) => ({ text: t, x: 0, y: (i - (n - 1) / 2) * lh + size * 0.35 })),
+        size,
+        bold: true,
+        cls: 't-lane',
+        anchor: 'middle',
+        maxWidth: h - 16,
+      },
+    };
+  };
+
   // ---- lanes ------------------------------------------------------------
   let y = L.lanesTop;
   const laneRows = new Map<CurrentId, { y: number; stageH: number; h: number }>();
@@ -635,21 +662,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     }
     const h = stageH + crossH;
     laneRows.set(lane, { y, stageH, h });
-    const cur = g.currentById.get(lane)!;
-    const lb = block(cur.label, 16, 24, L.gutter - 34, 12, 3, { bold: true, cls: 't-lane', lh: 15 });
-    laneLabels.push({
-      current: lane,
-      x: 6,
-      y,
-      w: L.gutter - 14,
-      h,
-      block: lb.block,
-      sub: isOverlay
-        ? block('overlay · spans all lanes', 16, 24 + lb.block.lines.length * 15 + 4, L.gutter - 34, 10, 1, {
-            cls: 't-sec t-marker',
-          }).block
-        : undefined,
-    });
+    laneLabels.push(gutterLabel(`lane_${lane}`, g.currentById.get(lane)!.label, y, h, lane));
     y += h + L.laneGap;
   }
   const lanesBottom = y - L.laneGap;
@@ -692,11 +705,8 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
       y,
       w: contentW,
       h: bandH,
-      label: block('Main feedback loops (A–D) · cross the whole life course', 14, 22, contentW - 28, 12, 1, {
-        bold: true,
-        cls: 't-band',
-      }).block,
     });
+    laneLabels.push(gutterLabel('mainloops', 'Main feedback loops', y, bandH));
     y += bandH + L.bandGap;
   }
 

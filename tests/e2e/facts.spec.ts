@@ -99,7 +99,18 @@ test('10 interventions are identical in style and none is selected by default', 
 
 test('legend shows bidirectional with 0 instances and live counts', async ({ page }) => {
   await open(page, BASE);
-  await expect(page.getByTestId('legend')).toBeVisible(); // always-visible left column
+  await expect(page.getByTestId('legend')).toHaveCount(0); // a toggle next to Menu
+  await page.getByRole('button', { name: 'Legend' }).click();
+  await expect(page.getByTestId('legend')).toBeVisible();
+  const lb = (await page.getByRole('button', { name: 'Legend' }).boundingBox())!;
+  const mb = (await page.getByRole('button', { name: 'Menu' }).boundingBox())!;
+  expect(mb.x - (lb.x + lb.width)).toBeLessThan(12); // right next to Menu
+  const drop = (await page.locator('#tb-legend').boundingBox())!;
+  expect(drop.y).toBeGreaterThanOrEqual(lb.y + lb.height); // born out of the button
+  expect(drop.x + drop.width).toBeGreaterThan(lb.x);
+  expect(drop.x).toBeLessThan(lb.x + lb.width);
+  const fs = await page.getByTestId('legend').evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(fs).toBeLessThanOrEqual(9);
   await expect(page.getByTestId('count-bidirectional')).toHaveText('0, supported but not used in this dataset');
   await expect(page.getByTestId('count-downward')).toHaveText('62 links');
   await expect(page.getByTestId('count-dashed')).toHaveText('20 links');
@@ -268,7 +279,7 @@ test('clicking an edge opens its provenance and meaning', async ({ page }) => {
 
 test('lane focus and trace pathways', async ({ page }) => {
   await open(page, BASE);
-  await page.locator('.lane-label').filter({ hasText: 'Media, platform' }).dispatchEvent('click');
+  await page.locator('.lane-label[data-current="platform"]').dispatchEvent('click');
   await expect(page.locator('[data-id="ch_a3"]')).toHaveClass(/emph-hl/);
   await expect(page.locator('[data-id="ch_a1"]')).toHaveClass(/emph-soft/); // platform is a secondary current of ch_a1
   await expect(page.locator('[data-id="ch_c3"]')).toHaveClass(/emph-faded/);
@@ -292,4 +303,57 @@ test('double-clicking a stage expands every chain and loop in it; reduced motion
   await expect(page.locator('[data-id="ch_c1_s1"]')).toHaveCount(0);
   const transition = await page.locator('.node').first().evaluate((e) => getComputedStyle(e).transitionDuration);
   expect(transition.split(',').every((d) => parseFloat(d) === 0)).toBe(true);
+});
+
+test('walk-through and node details are never shown together; fixed-size, scrolling, explicit order', async ({ page }) => {
+  await open(page, `${BASE}&sel=ch_c3`);
+  await expect(page.getByTestId('detail-panel')).toBeVisible();
+  await page.getByRole('button', { name: 'Menu' }).click();
+  await page.getByRole('button', { name: 'Walk through the map' }).click();
+  const tour = page.getByTestId('tour');
+  await expect(tour).toBeVisible();
+  await expect(page.getByTestId('detail-panel')).toHaveCount(0);
+  await expect(tour.locator('.tour-parts li')).toHaveCount(7);
+  const heights = new Set<number>();
+  for (let i = 0; i < 17; i++) {
+    await expect(page.getByTestId('detail-panel')).toHaveCount(0);
+    const bb = (await tour.boundingBox())!;
+    heights.add(Math.round(bb.height));
+    const body = page.getByTestId('tour-body');
+    const fits = await body.evaluate((e) => e.scrollHeight <= e.clientHeight || getComputedStyle(e).overflowY === 'auto');
+    expect(fits).toBe(true);
+    await tour.getByRole('button', { name: 'Next' }).click();
+  }
+  expect(heights.size).toBe(1); // same window size for every step
+  await expect(tour.locator('.tour-pos')).toContainText('Part 7/7');
+  // jump to a part from the order strip
+  await tour.getByRole('button', { name: '5. Consequences' }).click();
+  await expect(tour.locator('.tour-pos')).toContainText('Part 5/7 · Consequences · 1 of 5');
+  // clicking a node ends the tour, then shows its details
+  await page.locator('[data-id="out_burnout"]').dispatchEvent('click');
+  await expect(tour).toHaveCount(0);
+  await expect(page.getByTestId('detail-panel')).toContainText('Burnout');
+});
+
+test('row titles are rotated in a narrow gutter; stage dividers keep their width at any zoom', async ({ page }) => {
+  await open(page, `${BASE}&z=0,0,0.05`);
+  const labels = page.locator('.lane-label');
+  await expect(labels).toHaveCount(6); // 4 lanes + cultural + main feedback loops
+  const t = await labels.first().locator('g[transform*="rotate(-90)"]').count();
+  expect(t).toBe(1);
+  const w = await labels.first().locator('.lane-label-bg').getAttribute('width');
+  expect(Number(w)).toBeLessThan(60);
+  const d = page.getByTestId('stage-divider').first();
+  await expect(d).toHaveAttribute('vector-effect', 'non-scaling-stroke');
+  const sw = await d.evaluate((e) => parseFloat(getComputedStyle(e).strokeWidth));
+  expect(sw).toBeGreaterThanOrEqual(2.5);
+});
+
+test('pop-up type is small', async ({ page }) => {
+  await open(page, `${BASE}&sel=out_joy_deficit`);
+  const panelFs = await page.getByTestId('detail-panel').evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(panelFs).toBeLessThanOrEqual(9);
+  await page.getByRole('button', { name: 'Menu' }).click();
+  const menuFs = await page.getByTestId('menu').locator('.menu-item').first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(menuFs).toBeLessThanOrEqual(9);
 });

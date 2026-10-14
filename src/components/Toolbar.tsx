@@ -4,6 +4,7 @@ import { ARROW_TYPES } from '../model/types';
 import type { Layers } from '../model/graph';
 import { useStore, type StageFilterKey } from '../state/store';
 import { ALL_CONTAINERS } from '../state/actions';
+import { Legend } from './Legend';
 
 export const APP_TITLE = 'Reward systems of intrinsic vs extrinsic joy: A chronological view';
 
@@ -33,7 +34,11 @@ interface Props {
 
 export function Toolbar({ onReset, onFit, onCopyLink, onExportPng, copied, exporting }: Props) {
   const { state, dispatch } = useStore();
-  const [menu, setMenu] = useState(false);
+  // Menu and Legend are mutually exclusive drop-down columns
+  const [open, setOpen] = useState<'menu' | 'legend' | null>(null);
+  const menu = open === 'menu';
+  const legend = open === 'legend';
+  const setMenu = (v: boolean) => setOpen(v ? 'menu' : null);
   const [filters, setFilters] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const themeNext = state.theme === 'system' ? 'light' : state.theme === 'light' ? 'dark' : 'system';
@@ -41,18 +46,18 @@ export function Toolbar({ onReset, onFit, onCopyLink, onExportPng, copied, expor
 
   // close the menu on outside click / Escape
   useEffect(() => {
-    if (!menu) return;
+    if (!open) return;
     const onDown = (e: PointerEvent) => {
-      if (wrap.current && !wrap.current.contains(e.target as Node)) setMenu(false);
+      if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(null);
     };
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(false);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null);
     window.addEventListener('pointerdown', onDown);
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('pointerdown', onDown);
       window.removeEventListener('keydown', onKey);
     };
-  }, [menu]);
+  }, [open]);
 
   const run = (f: () => void) => () => {
     f();
@@ -117,9 +122,26 @@ export function Toolbar({ onReset, onFit, onCopyLink, onExportPng, copied, expor
     <header className="toolbar">
       <h1 className="tb-title">{APP_TITLE}</h1>
       <div className="menu-wrap" ref={wrap}>
-        <button type="button" className="btn menu-btn" aria-expanded={menu} aria-controls="tb-menu" onClick={() => setMenu(!menu)}>
-          Menu
-        </button>
+        <span className="drop-anchor">
+          <button
+            type="button"
+            className={`btn menu-btn${legend ? ' active' : ''}`}
+            aria-expanded={legend}
+            aria-controls="tb-legend"
+            onClick={() => setOpen(legend ? null : 'legend')}
+          >
+            Legend
+          </button>
+          {legend && (
+            <div id="tb-legend" className="menu-col legend-drop">
+              <Legend />
+            </div>
+          )}
+        </span>
+        <span className="drop-anchor">
+          <button type="button" className={`btn menu-btn${menu ? ' active' : ''}`} aria-expanded={menu} aria-controls="tb-menu" onClick={() => setMenu(!menu)}>
+            Menu
+          </button>
         {menu && (
           <nav id="tb-menu" className="menu-col" aria-label="Menu" data-testid="menu">
             <button type="button" className="menu-item" onClick={run(() => dispatch({ type: 'setAbout', value: true }))}>
@@ -166,6 +188,7 @@ export function Toolbar({ onReset, onFit, onCopyLink, onExportPng, copied, expor
             </button>
           </nav>
         )}
+        </span>
       </div>
     </header>
   );

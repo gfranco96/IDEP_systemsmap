@@ -761,9 +761,12 @@ ol.steps li.current {
 .lane-bg.lane-dim {
   opacity: 0.35;
 }
+/* constant on-screen width at every zoom level (non-scaling stroke) */
 .stage-divider {
-  stroke: var(--line);
-  stroke-dasharray: 4 6;
+  stroke: var(--neutral);
+  stroke-width: 2.5px;
+  stroke-dasharray: 8 6;
+  opacity: 0.85;
 }
 .band rect {
   fill: var(--band-fill);
@@ -785,6 +788,9 @@ ol.steps li.current {
 }
 .lane-label {
   cursor: pointer;
+}
+.lane-label.static {
+  cursor: default;
 }
 .lane-label-bg {
   fill: var(--surface);
@@ -1131,4 +1137,213 @@ ol.steps li.current {
 }
 .callout {
   padding: 6px 8px;
+}
+
+/* ================================================================ revision 3: compact pop-ups */
+/* every pop-up (details, legend, menu, about, walk-through, tooltip, breadcrumbs) uses ~9px type */
+.detail-panel {
+  font-size: 9px;
+  line-height: 1.4;
+  width: 260px;
+  padding: 6px 9px 9px;
+}
+.detail-panel h2 {
+  font-size: 10px;
+}
+.detail-panel .type-badge {
+  font-size: 7.5px;
+}
+.dp-section h3 {
+  font-size: 7.5px;
+  margin: 8px 0 2px;
+}
+.kv {
+  grid-template-columns: 74px 1fr;
+}
+.kv dt {
+  font-size: 8px;
+}
+.detail-panel .fine,
+.detail-panel .tag,
+.detail-panel .prov,
+.detail-panel .badge-inline {
+  font-size: 7.5px;
+}
+.detail-panel .btn,
+.detail-panel .icon-btn {
+  font-size: 8.5px;
+  min-height: 16px;
+  padding: 0 5px;
+}
+.detail-panel .icon-btn {
+  font-size: 12px;
+  min-width: 16px;
+}
+.breadcrumbs {
+  right: 280px;
+}
+.breadcrumbs ol {
+  font-size: 8.5px;
+  padding: 2px 8px;
+}
+.tooltip {
+  font-size: 8.5px;
+  max-width: 260px;
+  padding: 5px 7px;
+}
+
+/* header drop-down columns (Legend, Menu) born out of their buttons */
+.menu-wrap {
+  display: flex;
+  gap: 4px;
+}
+.drop-anchor {
+  position: relative;
+}
+.menu-col {
+  font-size: 9px;
+  width: 210px;
+}
+.menu-item {
+  font-size: 9px;
+  padding: 3px 6px;
+}
+.filters,
+.check {
+  font-size: 8.5px;
+}
+.check {
+  min-height: 15px;
+}
+.check input {
+  width: 10px;
+  height: 10px;
+}
+.filters legend {
+  font-size: 7.5px;
+}
+.legend-drop {
+  width: 230px;
+  max-height: calc(100vh - 60px);
+  padding: 6px 8px 8px;
+}
+.legend {
+  font-size: 8px;
+  line-height: 1.3;
+}
+.legend h3 {
+  font-size: 7px;
+  margin: 6px 0 2px;
+}
+.legend .count,
+.legend .fine,
+.legend .badge-inline {
+  font-size: 7.5px;
+}
+.legend li {
+  margin: 2px 0;
+}
+.legend-arrows li svg {
+  height: 16px;
+}
+
+/* About */
+.modal {
+  max-width: 520px;
+  font-size: 9px;
+  padding: 10px 14px 12px;
+}
+.modal h2 {
+  font-size: 11px;
+}
+.modal h3 {
+  font-size: 10px;
+}
+.modal h4 {
+  font-size: 7.5px;
+  margin: 9px 0 2px;
+}
+.modal .btn,
+.modal .fine {
+  font-size: 8.5px;
+}
+
+/* walk-through: one fixed size for every step; long text scrolls inside */
+.tour {
+  display: flex;
+  flex-direction: column;
+  width: min(440px, calc(100% - 24px));
+  height: 210px;
+  padding: 6px 10px 8px;
+  font-size: 9px;
+}
+.tour-head {
+  gap: 8px;
+}
+.tour-pos {
+  font-weight: 700;
+  flex: 1;
+}
+.tour-head .icon-btn {
+  font-size: 12px;
+  min-width: 16px;
+  min-height: 16px;
+}
+.tour-parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  list-style: none;
+  margin: 4px 0;
+  padding: 0;
+}
+.tour-parts button {
+  font-size: 7.5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: 1px 6px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.tour-parts li.done button {
+  color: var(--ink);
+}
+.tour-parts li.current button {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.tour-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border-top: 1px solid var(--line);
+  padding-top: 4px;
+}
+.tour-body h2 {
+  font-size: 10px;
+  margin: 2px 0 4px;
+}
+.tour-body p {
+  margin: 3px 0;
+}
+.tour-why {
+  color: var(--muted);
+  font-style: italic;
+}
+.tour-actions {
+  margin-top: 6px;
+}
+.tour .btn {
+  font-size: 8.5px;
+  min-height: 18px;
+}
+
+/* rotated row titles in the narrow left gutter */
+.map-svg .t-lane {
+  fill: var(--ink);
+}
+.lane-label.static .lane-label-bg {
+  fill: var(--band-fill);
 }

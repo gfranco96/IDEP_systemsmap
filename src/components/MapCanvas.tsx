@@ -43,6 +43,11 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
     const [tip, setTip] = useState<Tip | null>(null);
     const layoutRef = useRef(layout);
     layoutRef.current = layout;
+    const touring = useRef(false);
+    touring.current = state.tourStep != null;
+    useEffect(() => {
+      if (state.tourStep != null) setTip(null);
+    }, [state.tourStep]);
 
     const applyZoomClass = (k: number) => {
       // on the transform group: React never rewrites its className
@@ -245,7 +250,7 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
     const onHover = useCallback(
       (n: LNode | null) => {
         dispatch({ type: 'hover', id: n?.id ?? null });
-        setTip(n ? tipFor(n) : null);
+        setTip(n && !touring.current ? tipFor(n) : null);
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [dispatch],
@@ -255,7 +260,7 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
     const onEdgeHover = useCallback(
       (e: RoutedEdge | null) => {
         dispatch({ type: 'hover', id: e ? 'edge:' + e.key : null });
-        if (!e) return setTip(null);
+        if (!e || touring.current) return setTip(null);
         const a = e.agg;
         const s = layoutRef.current.byId.get(a.source)?.full ?? a.source;
         const t = layoutRef.current.byId.get(a.target)?.full ?? a.target;
@@ -273,6 +278,8 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
 
     const activate = useCallback(
       (n: LNode) => {
+        // one or the other: opening a node's details ends the walk-through
+        if (touring.current) dispatch({ type: 'tour', step: null });
         if (n.kind === 'stage') {
           dispatch({ type: 'select', id: n.id });
           const sb = layoutRef.current.stageBands.find((b) => b.stage === g.nodeById.get(n.id)?.stage);
@@ -391,7 +398,13 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
       [activate, dispatch, routed, announce, setTransform],
     );
 
-    const onEdgeClick = useCallback((e: RoutedEdge) => dispatch({ type: 'select', id: 'edge:' + e.key }), [dispatch]);
+    const onEdgeClick = useCallback(
+      (e: RoutedEdge) => {
+        if (touring.current) dispatch({ type: 'tour', step: null });
+        dispatch({ type: 'select', id: 'edge:' + e.key });
+      },
+      [dispatch],
+    );
 
     const onLane = useCallback(
       (c: (typeof state)['laneFocus']) => {

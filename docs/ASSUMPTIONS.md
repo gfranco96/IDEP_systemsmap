@@ -34,6 +34,25 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
     current layers/filters and showing all intervention links if that layer is on, adds the title, and downloads
     `joy-deficit-systems-map.png` (≈ 6900 × 9000 px, scaled to ≤ 9000 px on the long side).
 
+## Revision 3 — further changes requested by the map author
+
+1. Stage dividers are 2.5 px dashed lines drawn with `vector-effect: non-scaling-stroke`, so they keep the same on-screen
+   thickness at every zoom level (visible even at the minimum zoom).
+2. All pop-ups (details window, Legend, Menu, About, walk-through, tooltips, breadcrumbs) use ~8–9 px type
+   (headings ~10 px); the details window is 260 px wide.
+3. The left gutter is 56 px wide; row titles (the five lanes and "Main feedback loops") are rotated 90° counter-clockwise
+   and wrapped to the row height. Lane titles remain clickable for lane focus.
+4. The walk-through and node details are mutually exclusive: while the walk-through runs, no details window,
+   breadcrumbs or hover tooltips are shown; clicking a node ends the walk-through and opens that node's details;
+   leaving the walk-through clears its selection.
+5. The Legend is again a toggle button, placed directly left of Menu; it opens a drop-down column under itself.
+   Legend and Menu close each other.
+6. Every walk-through step uses the same fixed-size window (440 × 210 px); longer text scrolls inside it.
+7. The walk-through order is explicit: a strip of seven numbered parts (Central claim → Life stages → Stage loops →
+   Main loops A–D → Consequences → Interventions → Design framing) with the current part highlighted and clickable,
+   a "Part n/7 · name · k of m" header, an overall step counter, and a one-line italic note on why each part comes where
+   it does. These part names and notes are UI text; step bodies remain data text.
+
 ## Interpretations
 
 ### Project & data

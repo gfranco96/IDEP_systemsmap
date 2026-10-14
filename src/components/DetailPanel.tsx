@@ -579,7 +579,7 @@ const TYPE_BADGE: Record<string, string> = {
 export function DetailPanel() {
   const { state, dispatch } = useStore();
   const id = state.selected;
-  if (!id) return null;
+  if (!id || state.tourStep != null) return null; // never shown together with the walk-through
   let title = '';
   let badge = '';
   let source = '';

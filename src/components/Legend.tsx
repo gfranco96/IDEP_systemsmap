@@ -42,8 +42,7 @@ function ArrowSample({ t, inferred = false }: { t: ArrowType | 'inferred'; infer
 export function Legend() {
   const counts = arrowCounts();
   return (
-    <aside className="legend legend-col" aria-label="Legend" data-testid="legend" tabIndex={0}>
-      <h2>Legend</h2>
+    <section className="legend" aria-label="Legend" data-testid="legend">
       <h3>Arrow types</h3>
       <ul className="legend-arrows">
         {g.data.meta.arrowTypes.map((a) => (
@@ -125,6 +124,6 @@ export function Legend() {
           Secondary lanes of a chain
         </li>
       </ul>
-    </aside>
+    </section>
   );
 }
