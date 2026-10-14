@@ -5,6 +5,35 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
 
 ---
 
+## Revision 2 — changes requested by the map author (supersede the original prompt where they conflict)
+
+1. Zoom buttons and the Menu button are half their former size (22 px); there is no Legend toggle or search bar any more.
+2. "Zoom to fit everything" (⤢ and in the Menu) fits the **current** layout, including everything expanded; the minimum
+   zoom was lowered from 0.25 to 0.03 so the whole map can always be shown at once.
+3. The detail panel is a compact picture-in-picture window at the top right (300 px wide, ≤ 62 % of the height, 11 px text).
+   Clicking a node that sits underneath it pans the map (same zoom) so the node is visible beside the window.
+   About / tour / outline text was reduced as well.
+4. The five outcome nodes sit inside one full-height column labelled **"Consequences"** (sub-label "core outcome nodes",
+   the source's own term). All five outcomes are inside it, including "Joy deficit".
+5. The comparative-references row (Denmark, Japan) and its leader lines were removed from the map, the layer toggle and
+   the outline view (`references` layer is now off). Their data is untouched. This overrides prompt §3.9 / §9.
+6. Two-finger trackpad scrolling (and the mouse wheel) pans; pinch / spread (ctrl+wheel, or Safari gesture events) zooms.
+7. The legend is a permanent left column (a bottom strip on screens ≤ 720 px).
+8. All UI and map text uses a monospace system font stack (ui-monospace / SF Mono / Menlo / Consolas …); label sizes were
+   reduced ~10 % and text measurement switched to monospace metrics, so long labels truncate earlier (full text in tooltips/panel).
+9. The Menu button sits at the top-right corner and opens a narrow column beneath it with all actions
+   (About, Walk through, Outline view, Expand/Collapse all, Reset view, Zoom to fit, Layers & filters, Export as PNG,
+   Copy link, Theme).
+10. The search bar (and the `/` shortcut) were removed.
+11. Edge icons (▼ ▲ ↻ and the inferred "i") were kept, as confirmed.
+12. The header shows only the centred title "Reward systems of intrinsic vs extrinsic joy: A chronological view"
+    (also the browser-tab title). The in-map banner (data title, subtitle, central-visual-claim and design-framing
+    callouts) was removed; the central visual claim and design framing remain in the About panel and the guided tour.
+    This overrides prompt §3.1 / §9.
+13. **Export as PNG** renders the entire map off-screen with every chain, loop and cross-life system expanded, using the
+    current layers/filters and showing all intervention links if that layer is on, adds the title, and downloads
+    `joy-deficit-systems-map.png` (≈ 6900 × 9000 px, scaled to ≤ 9000 px on the long side).
+
 ## Interpretations
 
 ### Project & data

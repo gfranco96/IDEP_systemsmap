@@ -104,7 +104,7 @@ export const DEFAULT_LAYERS: Layers = {
   cultural: true,
   crossLife: true,
   loops: true,
-  references: true,
+  references: false, // the comparative-references row was removed from the map at the user's request
   interventions: false,
   inferred: true,
 };

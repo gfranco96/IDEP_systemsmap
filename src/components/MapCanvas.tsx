@@ -19,6 +19,8 @@ export interface CanvasHandle {
   getTransform: () => ZoomT;
 }
 
+const MIN_K = 0.03;
+
 const reducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
@@ -89,14 +91,43 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
         if (!wrap) return;
         const L = layoutRef.current;
         const W = wrap.clientWidth;
-        const H = wrap.clientHeight;
         // Overview: fit the full width (timeline → outcomes), anchored at the top-left; pan for the rest.
         const k = Math.max(0.25, Math.min(1, (W - 16) / L.width));
-        if (L.height * k <= H && L.width * k <= W) fitBox({ x: 0, y: 0, w: L.width, h: L.height }, 1, 0.25, animate);
-        else setTransform(zoomIdentity.translate(Math.max(8, (W - L.width * k) / 2), 4).scale(k), animate);
+        setTransform(zoomIdentity.translate(Math.max(8, (W - L.width * k) / 2), 8).scale(k), animate);
       },
       [fitBox, setTransform],
     );
+
+    /** Zoom out (or in) so the entire current map — including everything expanded — is visible. */
+    const fitAll = () => {
+      const L = layoutRef.current;
+      const pad = 24;
+      fitBox({ x: -pad, y: -pad, w: L.width + 2 * pad, h: L.height + 2 * pad }, 3, MIN_K);
+    };
+
+    /** If a node sits under the details window, pan (same zoom) so it lands in the free part of the canvas. */
+    const ensureVisible = (id: string) => {
+      const wrap = wrapRef.current;
+      const panel = wrap?.parentElement?.querySelector<HTMLElement>('.detail-panel');
+      const n = layoutRef.current.byId.get(id);
+      if (!wrap || !panel || !n) return;
+      const t = tRef.current;
+      const wr = wrap.getBoundingClientRect();
+      const pr = panel.getBoundingClientRect();
+      const p = { x: pr.left - wr.left, y: pr.top - wr.top, w: pr.width, h: pr.height };
+      const nx = t.x + n.x * t.k;
+      const ny = t.y + n.y * t.k;
+      const nw = n.w * t.k;
+      const nh = n.h * t.k;
+      const hit = nx < p.x + p.w && nx + nw > p.x && ny < p.y + p.h && ny + nh > p.y;
+      if (!hit) return;
+      const v = visibleArea();
+      const dx = v.x + v.w / 2 - (nx + nw / 2);
+      const dy = v.y + v.h / 2 - (ny + nh / 2);
+      // desktop: the window is on the right → shift horizontally only; mobile sheet → shift vertically only
+      const horizontal = p.x > 0;
+      setTransform(zoomIdentity.translate(t.x + (horizontal ? dx : 0), t.y + (horizontal ? 0 : dy)).scale(t.k));
+    };
 
     useImperativeHandle(ref, () => ({
       zoomBy: (f) => {
@@ -108,10 +139,7 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
         else sel.transition().duration(250).call(z.scaleBy, f);
       },
       reset: () => defaultView(true),
-      fit: () => {
-        const L = layoutRef.current;
-        fitBox({ x: 0, y: 0, w: L.width, h: L.height }, 3, 0.25);
-      },
+      fit: () => fitAll(),
       getTransform: () => ({ x: tRef.current.x, y: tRef.current.y, k: tRef.current.k }),
     }));
 
@@ -119,11 +147,13 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
     useEffect(() => {
       const svg = svgRef.current!;
       const z = d3zoom<SVGSVGElement, unknown>()
-        .scaleExtent([0.25, 3])
+        .scaleExtent([MIN_K, 3])
         .filter((ev: Event) => {
           if (ev.type === 'dblclick') return false; // double-click reserved for expand
+          // trackpad: two-finger scroll pans (handled below); pinch arrives as ctrl+wheel and zooms
+          if (ev.type === 'wheel') return (ev as WheelEvent).ctrlKey;
           const me = ev as MouseEvent;
-          return (!me.ctrlKey || ev.type === 'wheel') && !me.button;
+          return !me.ctrlKey && !me.button;
         })
         .on('zoom', (ev: { transform: ZoomTransform }) => {
           tRef.current = ev.transform;
@@ -134,6 +164,29 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
         });
       zoomRef.current = z;
       select(svg).call(z).on('dblclick.zoom', null);
+      // two-finger scroll / mouse wheel → pan
+      const onWheel = (ev: WheelEvent) => {
+        if (ev.ctrlKey) return;
+        ev.preventDefault();
+        const unit = ev.deltaMode === 1 ? 16 : ev.deltaMode === 2 ? svg.clientHeight : 1;
+        const k = tRef.current.k;
+        select(svg).call(z.translateBy, (-ev.deltaX * unit) / k, (-ev.deltaY * unit) / k);
+      };
+      svg.addEventListener('wheel', onWheel, { passive: false });
+      // Safari reports trackpad pinch as gesture events rather than ctrl+wheel
+      let gestureStartK = 1;
+      const onGestureStart = (ev: Event) => {
+        ev.preventDefault();
+        gestureStartK = tRef.current.k;
+      };
+      const onGestureChange = (ev: Event) => {
+        ev.preventDefault();
+        const ge = ev as Event & { scale: number; clientX: number; clientY: number };
+        const r = svg.getBoundingClientRect();
+        select(svg).call(z.scaleTo, gestureStartK * ge.scale, [ge.clientX - r.left, ge.clientY - r.top]);
+      };
+      svg.addEventListener('gesturestart', onGestureStart);
+      svg.addEventListener('gesturechange', onGestureChange);
       if (state.initialZoom) {
         const t = state.initialZoom;
         select(svg).call(z.transform, zoomIdentity.translate(t.x, t.y).scale(t.k));
@@ -165,11 +218,9 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
     }, [state.focusRequest, layout]);
 
     useEffect(() => {
-      if (state.fitRequest) {
-        const L = layoutRef.current;
-        fitBox({ x: 0, y: 0, w: L.width, h: L.height }, 3, 0.25);
-      }
-    }, [state.fitRequest, fitBox]);
+      if (state.fitRequest) fitAll();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.fitRequest]);
 
     // ------------------------------------------------------------------ events
     const toScreen = (x: number, y: number) => {
@@ -232,14 +283,17 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
           announce(`Selected stage ${n.full}`);
           return;
         }
+        const afterRender = () => requestAnimationFrame(() => requestAnimationFrame(() => ensureVisible(n.id)));
         if (isContainer(n.id)) {
           dispatch({ type: 'toggleExpand', id: n.id });
           dispatch({ type: 'select', id: n.id });
           announce(`${n.full} ${n.expanded ? 'collapsed' : 'expanded'}`);
+          afterRender();
           return;
         }
         dispatch({ type: 'select', id: n.id });
         announce(`Selected ${n.full}`);
+        afterRender();
       },
       [dispatch, fitBox, announce],
     );

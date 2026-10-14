@@ -1,16 +1,16 @@
-import { forwardRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { graph as g } from '../data/loadData';
 import { ARROW_TYPES } from '../model/types';
 import type { Layers } from '../model/graph';
 import { useStore, type StageFilterKey } from '../state/store';
 import { ALL_CONTAINERS } from '../state/actions';
-import { SearchBox } from './SearchBox';
+
+export const APP_TITLE = 'Reward systems of intrinsic vs extrinsic joy: A chronological view';
 
 const LAYER_LABELS: [keyof Layers, string][] = [
   ['cultural', 'Cultural overlay'],
   ['crossLife', 'Cross-life systems'],
   ['loops', 'Feedback loops'],
-  ['references', 'International references'],
   ['interventions', 'Possible interventions'],
   ['inferred', 'Show inferred links'],
 ];
@@ -24,16 +24,40 @@ const STAGE_LABELS: [StageFilterKey, string][] = [
 
 interface Props {
   onReset: () => void;
+  onFit: () => void;
   onCopyLink: () => void;
+  onExportPng: () => void;
   copied: boolean;
+  exporting: boolean;
 }
 
-export const Toolbar = forwardRef<HTMLInputElement, Props>(function Toolbar({ onReset, onCopyLink, copied }, searchRef) {
+export function Toolbar({ onReset, onFit, onCopyLink, onExportPng, copied, exporting }: Props) {
   const { state, dispatch } = useStore();
   const [menu, setMenu] = useState(false);
   const [filters, setFilters] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
   const themeNext = state.theme === 'system' ? 'light' : state.theme === 'light' ? 'dark' : 'system';
   const activeFilterCount = state.laneFilter.size + state.stageFilter.size + state.edgeFilter.size;
+
+  // close the menu on outside click / Escape
+  useEffect(() => {
+    if (!menu) return;
+    const onDown = (e: PointerEvent) => {
+      if (wrap.current && !wrap.current.contains(e.target as Node)) setMenu(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(false);
+    window.addEventListener('pointerdown', onDown);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [menu]);
+
+  const run = (f: () => void) => () => {
+    f();
+    setMenu(false);
+  };
 
   const filterPanel = (
     <div className="filters" role="group" aria-label="Layers and filters" data-testid="filters">
@@ -41,11 +65,7 @@ export const Toolbar = forwardRef<HTMLInputElement, Props>(function Toolbar({ on
         <legend>Layers</legend>
         {LAYER_LABELS.map(([k, label]) => (
           <label key={k} className="check">
-            <input
-              type="checkbox"
-              checked={state.layers[k]}
-              onChange={(e) => dispatch({ type: 'setLayer', layer: k, value: e.target.checked })}
-            />
+            <input type="checkbox" checked={state.layers[k]} onChange={(e) => dispatch({ type: 'setLayer', layer: k, value: e.target.checked })} />
             {label}
           </label>
         ))}
@@ -93,72 +113,60 @@ export const Toolbar = forwardRef<HTMLInputElement, Props>(function Toolbar({ on
     </div>
   );
 
-  const actions = (
-    <div className="tb-actions">
-      <button type="button" className="btn" onClick={() => dispatch({ type: 'setAbout', value: true })}>
-        About
-      </button>
-      <button type="button" className="btn" onClick={() => dispatch({ type: 'tour', step: 0 })}>
-        Walk through
-      </button>
-      <button
-        type="button"
-        className={`btn${state.outline ? ' active' : ''}`}
-        aria-pressed={state.outline}
-        onClick={() => dispatch({ type: 'setOutline', value: !state.outline })}
-      >
-        Outline view
-      </button>
-      <button type="button" className={`btn${state.legend ? ' active' : ''}`} aria-pressed={state.legend} onClick={() => dispatch({ type: 'setLegend', value: !state.legend })}>
-        Legend
-      </button>
-      <span className="tb-sep" />
-      <button type="button" className="btn" onClick={() => dispatch({ type: 'setExpanded', ids: ALL_CONTAINERS })}>
-        Expand all
-      </button>
-      <button type="button" className="btn" onClick={() => dispatch({ type: 'collapseAll' })}>
-        Collapse all
-      </button>
-      <button type="button" className="btn" onClick={onReset}>
-        Reset view
-      </button>
-      <div className="filter-wrap">
-        <button
-          type="button"
-          className={`btn${filters ? ' active' : ''}`}
-          aria-expanded={filters}
-          onClick={() => setFilters(!filters)}
-        >
-          Layers & filters{activeFilterCount ? ` (${activeFilterCount})` : ''}
-        </button>
-        {filters && filterPanel}
-      </div>
-      <button type="button" className="btn" onClick={onCopyLink} title="Copy link to this view">
-        {copied ? 'Link copied' : 'Copy link'}
-      </button>
-      <button
-        type="button"
-        className="btn"
-        aria-label={`Theme: ${state.theme}. Switch to ${themeNext}`}
-        onClick={() => dispatch({ type: 'theme', value: themeNext })}
-      >
-        <span aria-hidden>{state.theme === 'dark' ? '☾' : state.theme === 'light' ? '☀' : '◐'}</span> Theme
-      </button>
-    </div>
-  );
-
   return (
     <header className="toolbar">
-      <div className="tb-title">
-        <h1>{g.data.meta.title}</h1>
-      </div>
-      <SearchBox ref={searchRef} onDone={() => setMenu(false)} />
-      <button type="button" className="btn menu-btn" aria-expanded={menu} aria-controls="tb-menu" onClick={() => setMenu(!menu)}>
-        Menu
-      </button>
-      <div id="tb-menu" className={`tb-menu${menu ? ' open' : ''}`}>
-        {actions}
+      <h1 className="tb-title">{APP_TITLE}</h1>
+      <div className="menu-wrap" ref={wrap}>
+        <button type="button" className="btn menu-btn" aria-expanded={menu} aria-controls="tb-menu" onClick={() => setMenu(!menu)}>
+          Menu
+        </button>
+        {menu && (
+          <nav id="tb-menu" className="menu-col" aria-label="Menu" data-testid="menu">
+            <button type="button" className="menu-item" onClick={run(() => dispatch({ type: 'setAbout', value: true }))}>
+              About this map
+            </button>
+            <button type="button" className="menu-item" onClick={run(() => dispatch({ type: 'tour', step: 0 }))}>
+              Walk through the map
+            </button>
+            <button
+              type="button"
+              className="menu-item"
+              aria-pressed={state.outline}
+              onClick={run(() => dispatch({ type: 'setOutline', value: !state.outline }))}
+            >
+              {state.outline ? 'Back to map view' : 'Outline view'}
+            </button>
+            <hr />
+            <button type="button" className="menu-item" onClick={run(() => dispatch({ type: 'setExpanded', ids: ALL_CONTAINERS }))}>
+              Expand all
+            </button>
+            <button type="button" className="menu-item" onClick={run(() => dispatch({ type: 'collapseAll' }))}>
+              Collapse all
+            </button>
+            <button type="button" className="menu-item" onClick={run(onReset)}>
+              Reset view
+            </button>
+            <button type="button" className="menu-item" onClick={run(onFit)}>
+              Zoom to fit everything
+            </button>
+            <hr />
+            <button type="button" className="menu-item" aria-expanded={filters} onClick={() => setFilters(!filters)}>
+              Layers & filters{activeFilterCount ? ` (${activeFilterCount})` : ''} {filters ? '▴' : '▾'}
+            </button>
+            {filters && filterPanel}
+            <hr />
+            <button type="button" className="menu-item" onClick={onExportPng} disabled={exporting}>
+              {exporting ? 'Exporting PNG…' : 'Export as PNG'}
+            </button>
+            <button type="button" className="menu-item" onClick={onCopyLink}>
+              {copied ? 'Link copied' : 'Copy link to this view'}
+            </button>
+            <button type="button" className="menu-item" onClick={() => dispatch({ type: 'theme', value: themeNext })}>
+              Theme: {state.theme} (switch to {themeNext})
+            </button>
+          </nav>
+        )}
       </div>
     </header>
   );
-});
+}

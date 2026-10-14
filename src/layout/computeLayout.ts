@@ -1,4 +1,4 @@
-import type { Chain, CurrentId, Loop, MapNode, StageKey } from '../model/types';
+import type { Chain, CurrentId, Loop, StageKey } from '../model/types';
 import { STAGE_KEYS } from '../model/types';
 import type { Graph, ViewState } from '../model/graph';
 import { textWidth, wrapText } from './text';
@@ -12,19 +12,17 @@ export const L = {
   stagePad: 40,
   outcomeGap: 80,
   outcomeColW: 280,
-  bannerH: 140,
-  stageRowY: 140,
+  stageRowY: 64,
   stageRowH: 70,
-  substageRowY: 210,
+  substageRowY: 134,
   substageRowH: 120,
-  lanesTop: 350,
+  lanesTop: 274,
   laneGap: 10,
   laneMinH: 150,
   laneCellPad: 20,
   crossCollapsedH: 56,
   culturalStageRowH: 48,
   mainLoopsMinH: 220,
-  referencesH: 120,
   interventionsH: 160,
   bandGap: 24,
   chipW: 220,
@@ -105,13 +103,14 @@ export interface LNode {
 
 export interface Band {
   id: string;
-  kind: 'stageBand' | 'laneStage' | 'laneCross' | 'overlay' | 'mainLoops' | 'references' | 'interventions';
+  kind: 'stageBand' | 'laneStage' | 'laneCross' | 'overlay' | 'mainLoops' | 'interventions' | 'outcomes';
   x: number;
   y: number;
   w: number;
   h: number;
   current?: CurrentId;
   label?: TextBlock;
+  sublabel?: TextBlock;
 }
 
 export interface LaneLabel {
@@ -138,8 +137,6 @@ export interface Layout {
   laneLabels: LaneLabel[];
   stageBands: { stage: StageKey; x: number; w: number }[];
   rings: Ring[];
-  leaders: { id: string; x1: number; y1: number; x2: number; y2: number }[];
-  banner: { blocks: TextBlock[]; claimBox: { x: number; y: number; w: number; h: number }; framingBox: { x: number; y: number; w: number; h: number } };
   contentX0: number;
   contentX1: number;
   outcomeX: number;
@@ -220,9 +217,6 @@ export function overlaps(a: Box, b: Box, margin = 0): boolean {
     a.x < b.x + b.w + margin && b.x < a.x + a.w + margin && a.y < b.y + b.h + margin && b.y < a.y + a.h + margin
   );
 }
-
-const stageKeyOf = (s: string | null | undefined): StageKey | null =>
-  s && (STAGE_KEYS as string[]).includes(s) ? (s as StageKey) : null;
 
 // ---------------------------------------------------------------------------
 // Container geometry (relative coordinates)
@@ -311,7 +305,6 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   const bands: Band[] = [];
   const laneLabels: LaneLabel[] = [];
   const rings: Ring[] = [];
-  const leaders: Layout['leaders'] = [];
   let order = 0;
   const push = (n: Omit<LNode, 'order'>) => {
     const ln = { ...n, order: order++ } as LNode;
@@ -368,31 +361,6 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   const contentW = contentX1 - contentX0;
   const bandOf = (st: StageKey) => stageBands.find((b) => b.stage === st)!;
 
-  // ---- banner -----------------------------------------------------------
-  const m = g.data.meta;
-  const bannerBlocks: TextBlock[] = [];
-  bannerBlocks.push(block(m.title, 24, 34, 1400, 26, 1, { bold: true, cls: 't-title' }).block);
-  bannerBlocks.push(block(m.subtitle, 24, 56, 1400, 14, 1, { cls: 't-subtitle' }).block);
-  const claimBox = { x: 24, y: 66, w: Math.min(1240, Math.max(900, contentW * 0.56)), h: 68 };
-  bannerBlocks.push(
-    block('Central visual claim', claimBox.x + 14, claimBox.y + 16, 300, 10, 1, { bold: true, cls: 't-kicker' }).block,
-  );
-  bannerBlocks.push(
-    block(m.centralVisualClaim, claimBox.x + 14, claimBox.y + 35, claimBox.w - 28, 14.5, 2, { bold: true, cls: 't-claim', lh: 18 })
-      .block,
-  );
-  const framingBox = { x: claimBox.x + claimBox.w + 20, y: 66, w: 640, h: 68 };
-  bannerBlocks.push(
-    block('Design framing (a framing, not a finding)', framingBox.x + 14, framingBox.y + 16, 600, 10, 1, {
-      bold: true,
-      cls: 't-kicker',
-    }).block,
-  );
-  bannerBlocks.push(
-    block(m.designFraming, framingBox.x + 14, framingBox.y + 35, framingBox.w - 28, 13, 2, { cls: 't-claim', lh: 17 })
-      .block,
-  );
-
   // ---- stages & substages ----------------------------------------------
   for (const st of STAGE_KEYS) {
     const b = bandOf(st);
@@ -401,8 +369,8 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   for (const s of g.stages) {
     const b = bandOf(s.stage as StageKey);
     const w = b.w - 40;
-    const lab = block(s.label, 14, 25, w - 28, 18, 1, { bold: true });
-    const tag = block(s.tagline ?? '', 14, 45, w - 28, 12, 1, { cls: 't-sec', italic: true });
+    const lab = block(s.label, 14, 25, w - 28, 16, 1, { bold: true });
+    const tag = block(s.tagline ?? '', 14, 45, w - 28, 11, 1, { cls: 't-sec', italic: true });
     push({
       id: s.id,
       kind: 'stage',
@@ -425,7 +393,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     const startX = b.x + (b.w - groupW) / 2;
     subs.forEach((s, i) => {
       const w = L.substageCol - 40;
-      const lab = block(s.label, 10, 20, w - 20, 12.5, 3, { bold: true, lh: 15 });
+      const lab = block(s.label, 10, 20, w - 20, 11, 4, { bold: true, lh: 14 });
       const age = block(s.ageRangeLabel ?? '', 10, 94, w - 20, 11, 1, { cls: 't-sec' });
       push({
         id: s.id,
@@ -454,8 +422,8 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
       const badgeW = ambivalent ? textWidth('double-edged', 9, true) + 12 : 0;
       const dotsW = ch.secondaryCurrents.length * 12;
       const markerText = `${stageLabel.get(ch.stage as StageKey) ?? ''} · chain · ${n} steps`;
-      const marker = block(markerText, 10, 16, L.chipW - 20 - badgeW - dotsW - 8, 9, 1, { cls: 't-sec t-marker' });
-      const title = block(ch.title, 10, 33, L.chipW - 20, 11.5, 2, { bold: true, lh: 14 });
+      const marker = block(markerText, 10, 16, L.chipW - 20 - badgeW - dotsW - 8, 8.5, 1, { cls: 't-sec t-marker' });
+      const title = block(ch.title, 10, 32, L.chipW - 20, 10.5, 2, { bold: true, lh: 13 });
       const pills: Pill[] = [];
       if (ambivalent)
         pills.push({ text: 'double-edged', x: L.chipW - 8 - badgeW, y: 6, w: badgeW, h: 14 });
@@ -502,7 +470,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     });
     for (const s of geo.steps) {
       const node = g.nodeById.get(s.id)!;
-      const c = centredBlock(node.label, L.stepW, L.stepH, 10, 11, 4);
+      const c = centredBlock(node.label, L.stepW, L.stepH, 8, 10, 4);
       push({
         id: s.id,
         kind: 'factor',
@@ -522,7 +490,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   };
 
   const hubNode = (lp: Loop, x0: number, y0: number, stage: LNode['stage'], isExpanded: boolean) => {
-    const t = block(lp.title, L.hubW / 2, L.hubR * 2 + 16, L.hubW - 4, 11, 2, { bold: true, anchor: 'middle', lh: 13 });
+    const t = block(lp.title, L.hubW / 2, L.hubR * 2 + 16, L.hubW - 4, 10, 2, { bold: true, anchor: 'middle', lh: 12 });
     const sub = block(`${lp.stepNodeIds.length} steps`, L.hubW / 2, L.hubR + 30, 80, 9, 1, {
       anchor: 'middle',
       cls: 't-sec',
@@ -556,7 +524,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     hubNode(lp, cx - L.hubW / 2, cy - L.hubH / 2, stage, true);
     for (const s of geo.steps) {
       const node = g.nodeById.get(s.id)!;
-      const c = centredBlock(node.label, L.loopStepW, L.loopStepH, 9, 10.5, 4);
+      const c = centredBlock(node.label, L.loopStepW, L.loopStepH, 8, 9.5, 4);
       push({
         id: s.id,
         kind: 'loop_step',
@@ -579,8 +547,8 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     const sys = g.nodeById.get(sysId)!;
     const isExp = expanded.has(sysId);
     const w = contentW - 20;
-    const lab = block(sys.label, 34, 27, 330, 13, 1, { bold: true });
-    const labW = Math.min(330, textWidth(lab.block.lines[0]?.text ?? '', 13, true));
+    const lab = block(sys.label, 34, 27, 330, 12, 1, { bold: true });
+    const labW = Math.min(330, textWidth(lab.block.lines[0]?.text ?? '', 12, true));
     // leadsTo pills, laid left-to-right, never overflowing the bar
     const pills: Pill[] = [];
     let px = 34 + labW + 16;
@@ -589,7 +557,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     px += kickW + 4;
     let truncated = lab.truncated;
     for (const t of sys.leadsTo ?? []) {
-      const tw = textWidth(t, 10.5) + 16;
+      const tw = textWidth(t, 9.5) + 14;
       if (px + tw > w - 10) {
         truncated = true;
         break;
@@ -668,7 +636,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     const h = stageH + crossH;
     laneRows.set(lane, { y, stageH, h });
     const cur = g.currentById.get(lane)!;
-    const lb = block(cur.label, 16, 24, L.gutter - 34, 13, 3, { bold: true, cls: 't-lane', lh: 16 });
+    const lb = block(cur.label, 16, 24, L.gutter - 34, 12, 3, { bold: true, cls: 't-lane', lh: 15 });
     laneLabels.push({
       current: lane,
       x: 6,
@@ -677,7 +645,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
       h,
       block: lb.block,
       sub: isOverlay
-        ? block('overlay · spans all lanes', 16, 24 + lb.block.lines.length * 16 + 4, L.gutter - 34, 10, 1, {
+        ? block('overlay · spans all lanes', 16, 24 + lb.block.lines.length * 15 + 4, L.gutter - 34, 10, 1, {
             cls: 't-sec t-marker',
           }).block
         : undefined,
@@ -735,13 +703,13 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   // ---- outcomes (far right) --------------------------------------------
   const outcomeX = contentX1 + L.outcomeGap;
   {
-    const top = L.lanesTop;
+    const top = Math.max(L.lanesTop, L.stageRowY + 70);
     const bottom = Math.max(lanesBottom, top + g.outcomes.length * (L.outcomeH + 40));
     const pitch = (bottom - top) / g.outcomes.length;
     g.outcomes.forEach((o, i) => {
       const cy = top + pitch * (i + 0.5);
       const sym = o.polarity === 'protective' ? '▲' : '▼';
-      const lab = centredBlock(o.label, L.outcomeW, L.outcomeH - 18, 30, 14, 2, { bold: true });
+      const lab = centredBlock(o.label, L.outcomeW, L.outcomeH - 18, 26, 13, 2, { bold: true });
       const pol = block(`${sym} ${o.polarity ?? ''}`, L.outcomeW / 2, L.outcomeH - 16, L.outcomeW - 60, 10.5, 1, {
         anchor: 'middle',
         cls: 't-polarity',
@@ -765,78 +733,13 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   // reorder: spec tab order is stages → substages → lanes → loops → outcomes; outcomes were pushed
   // after the main loops band already, so order is correct.
 
-  // ---- comparative references -----------------------------------------
-  if (layers.references) {
-    const refs = g.references;
-    const groups = new Map<StageKey, MapNode[]>();
-    for (const r of refs) {
-      const st = stageKeyOf(r.anchor?.stage) ?? 'adulthood';
-      if (!groups.has(st)) groups.set(st, []);
-      groups.get(st)!.push(r);
-    }
-    const top = y + 12;
-    for (const [st, list] of groups) {
-      const b = bandOf(st);
-      const totalW = list.length * L.refW + (list.length - 1) * L.itemGap;
-      let px = b.x + Math.max(10, (b.w - totalW) / 2);
-      for (const r of list) {
-        const head = block(`Comparative reference · ${r.country ?? ''}`, 34, 16, L.refW - 44, 9.5, 1, {
-          bold: true,
-          cls: 't-marker',
-        });
-        const lab = block(r.label, 12, 33, L.refW - 24, 11.5, 2, { bold: true, lh: 14 });
-        const cy0 = 33 + lab.block.lines.length * 14 + 2;
-        const caution = block(`Caution: ${r.caution ?? ''}`, 12, cy0, L.refW - 24, 10, 3, {
-          italic: true,
-          cls: 't-caution',
-          lh: 12,
-        });
-        push({
-          id: r.id,
-          kind: 'reference',
-          x: px,
-          y: top,
-          w: L.refW,
-          h: L.refH,
-          blocks: [head.block, lab.block, caution.block],
-          full: r.label,
-          truncated: lab.truncated || caution.truncated,
-          current: null,
-          secondary: [],
-          stage: 'reference',
-        });
-        // dotted leader lines to the anchor stage/lanes (not graph edges)
-        for (const c of r.anchor?.currents ?? []) {
-          const row = laneRows.get(c);
-          if (!row) continue;
-          const lx = px + L.refW / 2 + (r.anchor!.currents.indexOf(c) - (r.anchor!.currents.length - 1) / 2) * 40;
-          leaders.push({ id: `${r.id}->${c}`, x1: lx, y1: top, x2: lx, y2: row.y + row.stageH - 4 });
-        }
-        px += L.refW + L.itemGap;
-      }
-    }
-    bands.push({
-      id: 'band_references',
-      kind: 'references',
-      x: contentX0,
-      y,
-      w: contentW,
-      h: L.referencesH + 4,
-      label: block('Comparative references · not the map’s central scope', 14, 22, 420, 12, 1, {
-        bold: true,
-        cls: 't-band',
-      }).block,
-    });
-    y += L.referencesH + 4 + L.bandGap;
-  }
-
   // ---- interventions ----------------------------------------------------
   if (layers.interventions) {
     const list = g.interventions;
     const top = y + 74;
     const gap = Math.max(L.itemGap, (contentW - list.length * L.intW) / (list.length + 1));
     list.forEach((n, i) => {
-      const lab = centredBlock(n.label, L.intW, L.intH - 16, 12, 12, 2, { bold: true });
+      const lab = centredBlock(n.label, L.intW, L.intH - 16, 10, 11, 2, { bold: true });
       const typ = block(n.interventionType ?? '', L.intW / 2, L.intH - 10, L.intW - 20, 9.5, 1, {
         anchor: 'middle',
         cls: 't-sec',
@@ -886,6 +789,20 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
 
   const width = outcomeX + L.outcomeColW + L.margin;
   const height = y + L.margin;
+  // the outcome nodes sit in one full-height column, labelled as a category
+  bands.push({
+    id: 'band_outcomes',
+    kind: 'outcomes',
+    x: outcomeX,
+    y: L.stageRowY,
+    w: L.outcomeColW,
+    h: height - L.margin / 2 - L.stageRowY,
+    label: block('Consequences', L.outcomeColW / 2, 30, L.outcomeColW - 24, 15, 1, { bold: true, anchor: 'middle', cls: 't-band' }).block,
+  });
+  bands[bands.length - 1].sublabel = block('core outcome nodes', L.outcomeColW / 2, 48, L.outcomeColW - 24, 10.5, 1, {
+    anchor: 'middle',
+    cls: 't-sec',
+  }).block;
   for (const b of bands) if (b.kind === 'overlay') b.w = contentX1 + 20;
 
   // tab order already follows push order; outcomes are pushed after lanes+main loops, before refs.
@@ -897,8 +814,6 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     laneLabels,
     stageBands,
     rings,
-    leaders,
-    banner: { blocks: bannerBlocks, claimBox, framingBox },
     contentX0,
     contentX1,
     outcomeX,

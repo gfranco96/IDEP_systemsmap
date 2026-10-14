@@ -1,60 +1,42 @@
-import type { Layout } from '../layout/computeLayout';
+import { L, type Layout } from '../layout/computeLayout';
 import type { CurrentId } from '../model/types';
 import { Texts } from './NodeShape';
 
-/** Background structure: banner, stage columns, lanes, cultural overlay, bottom bands. */
+/** Background structure: stage columns, lanes, bottom bands, outcomes column. */
 export function Backdrop({ layout, laneFocus }: { layout: Layout; laneFocus: CurrentId | null }) {
-  const lanesTop = 350;
   const laneBands = layout.bands.filter((b) => b.kind === 'laneStage' || b.kind === 'laneCross');
-  const lanesBottom = Math.max(...laneBands.map((b) => b.y + b.h), lanesTop);
+  const lanesBottom = Math.max(...laneBands.map((b) => b.y + b.h), L.lanesTop);
   return (
     <g className="backdrop">
-      {/* banner */}
-      <g className="banner">
-        {[
-          ['claim-box', layout.banner.claimBox],
-          ['framing-box', layout.banner.framingBox],
-        ].map(([cls, b]) => {
-          const r = b as { x: number; y: number; w: number; h: number };
-          return <rect key={cls as string} className={cls as string} x={r.x} y={r.y} width={r.w} height={r.h} rx={8} />;
-        })}
-        <Texts blocks={layout.banner.blocks} />
-      </g>
       {/* lane backgrounds */}
-      {layout.bands
-        .filter((b) => b.kind === 'laneStage' || b.kind === 'laneCross')
-        .map((b) => (
-          <rect
-            key={b.id}
-            className={`lane-bg ${b.kind}${laneFocus && laneFocus !== b.current ? ' lane-dim' : ''}`}
-            x={b.x}
-            y={b.y}
-            width={b.w}
-            height={b.h}
-            style={{ fill: `var(--t-${b.current})` }}
-          />
-        ))}
+      {laneBands.map((b) => (
+        <rect
+          key={b.id}
+          className={`lane-bg ${b.kind}${laneFocus && laneFocus !== b.current ? ' lane-dim' : ''}`}
+          x={b.x}
+          y={b.y}
+          width={b.w}
+          height={b.h}
+          style={{ fill: `var(--t-${b.current})` }}
+        />
+      ))}
       {/* stage column dividers */}
       {layout.stageBands.slice(1).map((sb) => (
-        <line key={sb.stage} className="stage-divider" x1={sb.x} x2={sb.x} y1={140} y2={lanesBottom} />
+        <line key={sb.stage} className="stage-divider" x1={sb.x} x2={sb.x} y1={L.stageRowY} y2={lanesBottom} />
       ))}
       {/* other bands */}
       {layout.bands
-        .filter((b) => b.kind === 'mainLoops' || b.kind === 'references' || b.kind === 'interventions')
+        .filter((b) => b.kind === 'mainLoops' || b.kind === 'interventions' || b.kind === 'outcomes')
         .map((b) => (
-          <g key={b.id} className={`band band-${b.kind}`}>
+          <g key={b.id} className={`band band-${b.kind}`} data-testid={`band-${b.kind}`}>
             {b.w > 0 && <rect x={b.x} y={b.y} width={b.w} height={b.h} rx={10} />}
             {b.label && (
               <g transform={`translate(${b.x},${b.y})`}>
-                <Texts blocks={[b.label]} />
+                <Texts blocks={[b.label, ...(b.sublabel ? [b.sublabel] : [])]} />
               </g>
             )}
           </g>
         ))}
-      {/* leader lines for comparative references (not graph edges) */}
-      {layout.leaders.map((l) => (
-        <line key={l.id} className="leader" x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} aria-hidden />
-      ))}
     </g>
   );
 }

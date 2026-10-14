@@ -6,7 +6,7 @@
   --c-platform: #cc79a7;
   --c-cultural: #6a51a3;
 
-  --font: 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Mono', Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
 
   --bg: #f6f6f3;
   --surface: #ffffff;

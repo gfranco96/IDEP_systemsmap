@@ -37,7 +37,7 @@ function Pills({ pills, cls }: { pills: Pill[]; cls: string }) {
             x={p.x + p.w / 2}
             y={p.y + p.h / 2 + (cls === 'badge' ? 3.2 : 3.8)}
             textAnchor="middle"
-            fontSize={cls === 'badge' ? 9 : 10.5}
+            fontSize={cls === 'badge' ? 9 : 9.5}
             fontWeight={cls === 'badge' ? 700 : 400}
             data-maxw={p.w}
           >

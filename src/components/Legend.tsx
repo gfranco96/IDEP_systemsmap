@@ -1,6 +1,5 @@
 import { graph as g } from '../data/loadData';
 import { ARROW_TYPES, type ArrowType } from '../model/types';
-import { useStore } from '../state/store';
 
 export function arrowCounts(): Record<ArrowType, number> {
   const c = Object.fromEntries(ARROW_TYPES.map((a) => [a, 0])) as Record<ArrowType, number>;
@@ -41,22 +40,10 @@ function ArrowSample({ t, inferred = false }: { t: ArrowType | 'inferred'; infer
 }
 
 export function Legend() {
-  const { state, dispatch } = useStore();
   const counts = arrowCounts();
-  if (!state.legend)
-    return (
-      <button type="button" className="legend-toggle btn" onClick={() => dispatch({ type: 'setLegend', value: true })} aria-expanded={false}>
-        Legend
-      </button>
-    );
   return (
-    <section className="legend" aria-label="Legend" data-testid="legend">
-      <header>
-        <h2>Legend</h2>
-        <button type="button" className="icon-btn" aria-label="Hide legend" onClick={() => dispatch({ type: 'setLegend', value: false })}>
-          ×
-        </button>
-      </header>
+    <aside className="legend legend-col" aria-label="Legend" data-testid="legend" tabIndex={0}>
+      <h2>Legend</h2>
       <h3>Arrow types</h3>
       <ul className="legend-arrows">
         {g.data.meta.arrowTypes.map((a) => (
@@ -137,13 +124,7 @@ export function Legend() {
           </svg>
           Secondary lanes of a chain
         </li>
-        <li>
-          <svg width={34} height={20} aria-hidden>
-            <line x1={17} x2={17} y1={0} y2={20} className="leader" />
-          </svg>
-          Leader line to a comparative reference’s anchor (not a causal link)
-        </li>
       </ul>
-    </section>
+    </aside>
   );
 }

@@ -12,18 +12,24 @@ import { AboutPanel } from './components/AboutPanel';
 import { ListView } from './components/ListView';
 import { Tour } from './components/Tour';
 import { Breadcrumbs } from './components/Breadcrumbs';
+import { ExportPng } from './components/ExportPng';
+import { APP_TITLE } from './components/Toolbar';
 
 export function App() {
   const { state, dispatch } = useStore();
   const model = useMapModel(state);
   const canvas = useRef<CanvasHandle>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
+  const [exporting, setExporting] = useState(false);
   const zoomRef = useRef<ZoomT | null>(state.initialZoom);
   const [announcement, setAnnouncement] = useState('');
   const [copied, setCopied] = useState(false);
   const lastHash = useRef<string>('');
 
   const announce = useCallback((s: string) => setAnnouncement(s), []);
+
+  useEffect(() => {
+    document.title = APP_TITLE;
+  }, []);
 
   // theme
   useEffect(() => {
@@ -78,10 +84,7 @@ export function App() {
         return;
       }
       if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === '/') {
-        e.preventDefault();
-        searchRef.current?.focus();
-      } else if (e.key === '+' || e.key === '=') canvas.current?.zoomBy(1.3);
+      if (e.key === '+' || e.key === '=') canvas.current?.zoomBy(1.3);
       else if (e.key === '-' || e.key === '_') canvas.current?.zoomBy(1 / 1.3);
       else if (e.key === '0') canvas.current?.reset();
     };
@@ -113,10 +116,12 @@ export function App() {
         Skip to outline view
       </a>
       <Toolbar
-        ref={searchRef}
         onReset={() => canvas.current?.reset()}
+        onFit={() => canvas.current?.fit()}
         onCopyLink={copyLink}
+        onExportPng={() => setExporting(true)}
         copied={copied}
+        exporting={exporting}
       />
       {validationErrors.length > 0 && (
         <div className="data-error" role="alert">
@@ -124,29 +129,41 @@ export function App() {
         </div>
       )}
       <main className="main" id="outline-toggle">
-        {state.outline ? (
-          <ListView />
-        ) : (
-          <MapCanvas ref={canvas} model={model} onTransform={onTransform} announce={announce} />
-        )}
-        {!state.outline && (
-          <div className="zoom-controls" role="group" aria-label="Zoom">
-            <button type="button" className="btn icon" aria-label="Zoom in" onClick={() => canvas.current?.zoomBy(1.3)}>
-              +
-            </button>
-            <button type="button" className="btn icon" aria-label="Zoom out" onClick={() => canvas.current?.zoomBy(1 / 1.3)}>
-              −
-            </button>
-            <button type="button" className="btn icon" aria-label="Fit to screen" title="Fit to screen" onClick={() => canvas.current?.fit()}>
-              ⤢
-            </button>
-          </div>
-        )}
-        {!state.outline && <Legend />}
-        <Breadcrumbs />
-        <DetailPanel />
-        <Tour />
+        <Legend />
+        <div className="stage">
+          {state.outline ? (
+            <ListView />
+          ) : (
+            <MapCanvas ref={canvas} model={model} onTransform={onTransform} announce={announce} />
+          )}
+          {!state.outline && (
+            <div className="zoom-controls" role="group" aria-label="Zoom">
+              <button type="button" className="btn icon" aria-label="Zoom in" title="Zoom in" onClick={() => canvas.current?.zoomBy(1.3)}>
+                +
+              </button>
+              <button type="button" className="btn icon" aria-label="Zoom out" title="Zoom out" onClick={() => canvas.current?.zoomBy(1 / 1.3)}>
+                −
+              </button>
+              <button type="button" className="btn icon" aria-label="Fit to screen" title="Zoom to fit everything" onClick={() => canvas.current?.fit()}>
+                ⤢
+              </button>
+            </div>
+          )}
+          <Breadcrumbs />
+          <DetailPanel />
+          <Tour />
+        </div>
       </main>
+      {exporting && (
+        <ExportPng
+          state={state}
+          onDone={(err) => {
+            setExporting(false);
+            announce(err ? `PNG export failed: ${err.message}` : 'PNG downloaded');
+            if (err) console.error(err);
+          }}
+        />
+      )}
       <AboutPanel />
       <div className="sr-only" aria-live="polite" role="status">
         {announcement}

@@ -53,12 +53,21 @@ describe('layout invariants (§5 hard requirements)', () => {
     });
   }
 
-  it('shows the banner claims verbatim (never truncated)', () => {
-    const L = computeLayout(g, view());
-    const texts = L.banner.blocks.map((b) => b.lines.map((l) => l.text).join(' '));
-    expect(texts).toContain(g.data.meta.centralVisualClaim);
-    expect(texts).toContain(g.data.meta.designFraming);
-    for (const b of L.banner.blocks) for (const l of b.lines) expect(textWidth(l.text, b.size, b.bold)).toBeLessThanOrEqual(b.maxWidth);
+  it('encloses all outcomes in one full-height "Consequences" column and drops the references row', () => {
+    for (const v of [view(), view(ALL_CONTAINERS, { interventions: true })]) {
+      const L = computeLayout(g, v);
+      const col = L.bands.find((b) => b.kind === 'outcomes')!;
+      expect(col.label!.lines[0].text).toBe('Consequences');
+      expect(col.y).toBeLessThanOrEqual(Math.min(...L.nodes.map((n) => n.y)));
+      expect(col.y + col.h).toBeGreaterThanOrEqual(Math.max(...L.nodes.map((n) => n.y + n.h)));
+      for (const o of g.outcomes) {
+        const n = L.byId.get(o.id)!;
+        expect(n.x).toBeGreaterThanOrEqual(col.x);
+        expect(n.x + n.w).toBeLessThanOrEqual(col.x + col.w);
+        expect(n.y).toBeGreaterThan(col.y + 50); // below the column heading
+      }
+      expect(L.nodes.some((n) => n.kind === 'reference')).toBe(false);
+    }
   });
 
   it('is deterministic (same input → identical output)', () => {

@@ -99,32 +99,23 @@ test('10 interventions are identical in style and none is selected by default', 
 
 test('legend shows bidirectional with 0 instances and live counts', async ({ page }) => {
   await open(page, BASE);
-  await page.getByRole('button', { name: 'Legend', exact: true }).first().click();
+  await expect(page.getByTestId('legend')).toBeVisible(); // always-visible left column
   await expect(page.getByTestId('count-bidirectional')).toHaveText('0, supported but not used in this dataset');
   await expect(page.getByTestId('count-downward')).toHaveText('62 links');
   await expect(page.getByTestId('count-dashed')).toHaveText('20 links');
 });
 
-test('required copy is visible: caveats, cautions, framing note, design question', async ({ page }) => {
+test('required copy is visible: consequences column, framing note, design question', async ({ page }) => {
   await open(page, BASE);
-  // Denmark and Japan cautions are rendered with the node on the canvas
-  const caution = await page.locator('.kind-reference text.t-caution').allTextContents();
-  expect(caution.join(' ')).toContain('Caution:');
-  expect(await page.locator('.kind-reference').count()).toBe(2);
-  // banner claims
-  const banner = (await page.locator('.banner text').allTextContents()).join(' ');
-  expect(banner).toContain('Central visual claim');
-  expect(banner).toContain('Design framing');
-  // ch_d3 framing note in panel; loop_C design question
+  await expect(page.locator('.tb-title')).toHaveText('Reward systems of intrinsic vs extrinsic joy: A chronological view');
+  await expect(page.getByTestId('band-outcomes')).toContainText('Consequences');
+  await expect(page.locator('.kind-reference')).toHaveCount(0); // comparative-references row removed on request
   await page.goto(`/${BASE}&sel=ch_d3`);
   await expect(page.getByTestId('detail-panel')).toContainText('Framing note');
   await page.goto(`/${BASE}&sel=loop_C`);
   await expect(page.getByTestId('detail-panel')).toContainText('How could an object preserve the boundary between play and proof?');
   await page.goto(`/${BASE}&sel=ch_d4`);
   await expect(page.getByTestId('detail-panel')).toContainText('Design implication');
-  await page.goto(`/${BASE}&sel=ref_denmark`);
-  await expect(page.getByTestId('detail-panel')).toContainText('as cited in the source; not independently verified');
-  await expect(page.getByTestId('detail-panel').locator('a').first()).toHaveText('oecd-better-life-index.truth-and-beauty.net');
 });
 
 test('ch_d3 chip tooltip shows its framing note', async ({ page }) => {
@@ -144,16 +135,85 @@ test('keyboard: tab to a node, Enter selects, E expands, Esc clears', async ({ p
   await expect(page.locator('[data-id="ch_c3_s1"]')).toHaveCount(0);
   await page.keyboard.press('Escape');
   await expect(page.getByTestId('detail-panel')).toHaveCount(0);
-  await page.keyboard.press('/');
-  await expect(page.getByRole('combobox', { name: 'Search the map' })).toBeFocused();
 });
 
-test('search expands containers and selects the result', async ({ page }) => {
+test('menu opens a column under the top-right button; export downloads a PNG of the whole map', async ({ page }) => {
   await open(page, BASE);
-  await page.getByRole('combobox', { name: 'Search the map' }).fill('Burnout risk');
-  await page.getByRole('option').first().click();
-  await expect(page.locator('[data-id="ch_d2_s4"]')).toHaveCount(1);
-  await expect(page.getByTestId('detail-panel')).toContainText('Burnout risk');
+  await expect(page.getByRole('combobox')).toHaveCount(0); // no search bar
+  await page.getByRole('button', { name: 'Menu' }).click();
+  const menu = page.getByTestId('menu');
+  await expect(menu).toBeVisible();
+  const mb = (await menu.boundingBox())!;
+  const vw = page.viewportSize()!.width;
+  expect(mb.x + mb.width).toBeGreaterThan(vw - 20);
+  expect(mb.y).toBeLessThan(60);
+  const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 60_000 }), menu.getByRole('button', { name: 'Export as PNG' }).click()]);
+  expect(dl.suggestedFilename()).toBe('joy-deficit-systems-map.png');
+  const path = await dl.path();
+  const fs = await import('node:fs');
+  const buf = fs.readFileSync(path!);
+  expect(buf.subarray(1, 4).toString()).toBe('PNG');
+  const w = buf.readUInt32BE(16);
+  const h = buf.readUInt32BE(20);
+  expect(h).toBeGreaterThan(w); // the fully expanded map is taller than wide
+  expect(w).toBeGreaterThan(4000);
+});
+
+test('two-finger scroll pans, pinch (ctrl+wheel) zooms', async ({ page }) => {
+  await open(page, `${BASE}&z=0,0,0.5`);
+  const tf = () => page.locator('.map-svg > g').getAttribute('transform');
+  await page.mouse.move(700, 450);
+  await page.mouse.wheel(120, 200);
+  await page.waitForTimeout(200);
+  const after = (await tf())!;
+  expect(after).toContain('scale(0.5)');
+  expect(after).toMatch(/translate\(-120,-200\)/);
+  await page.keyboard.down('Control');
+  await page.mouse.wheel(0, -100);
+  await page.keyboard.up('Control');
+  await page.waitForTimeout(200);
+  expect(await tf()).not.toContain('scale(0.5)');
+});
+
+test('zoom to fit shows every node after everything is expanded', async ({ page }) => {
+  await open(page, BASE);
+  await page.getByRole('button', { name: 'Menu' }).click();
+  await page.getByTestId('menu').getByRole('button', { name: 'Expand all' }).click();
+  await page.waitForTimeout(500);
+  await page.getByRole('button', { name: 'Fit to screen' }).click();
+  await page.waitForTimeout(700);
+  const stage = (await page.locator('.canvas-wrap').boundingBox())!;
+  const boxes = await page.locator('.map-svg .node').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => [r.left, r.top, r.right, r.bottom]));
+  expect(boxes.length).toBeGreaterThan(190);
+  for (const [l, t, r, b] of boxes) {
+    expect(l).toBeGreaterThanOrEqual(stage.x - 1);
+    expect(t).toBeGreaterThanOrEqual(stage.y - 1);
+    expect(r).toBeLessThanOrEqual(stage.x + stage.width + 1);
+    expect(b).toBeLessThanOrEqual(stage.y + stage.height + 1);
+  }
+});
+
+test('clicking a node under the details window pans it into view', async ({ page }) => {
+  await open(page, BASE);
+  await page.locator('[data-id="ch_c1"]').dispatchEvent('click'); // left side: opens the window, no pan needed
+  await page.waitForTimeout(700);
+  const panel = (await page.getByTestId('detail-panel').boundingBox())!;
+  expect(panel.width).toBeLessThan(340); // picture-in-picture, not a full-height sidebar
+  const id = await page.evaluate((p) => {
+    for (const el of document.querySelectorAll<SVGGElement>('.map-svg .node')) {
+      const r = el.getBoundingClientRect();
+      const cx = (r.left + r.right) / 2;
+      const cy = (r.top + r.bottom) / 2;
+      if (cx > p.x && cx < p.x + p.width && cy > p.y && cy < p.y + p.height) return el.dataset.id!;
+    }
+    return null;
+  }, panel);
+  expect(id).not.toBeNull();
+  await page.locator(`[data-id="${id}"]`).dispatchEvent('click');
+  await page.waitForTimeout(900);
+  const r = (await page.locator(`[data-id="${id}"]`).boundingBox())!;
+  const p2 = (await page.getByTestId('detail-panel').boundingBox())!;
+  expect(r.x + r.width / 2).toBeLessThan(p2.x);
 });
 
 test('URL hash restores state and inferred toggle hides inferred links', async ({ page }) => {
@@ -175,7 +235,8 @@ test('guided tour walks through every data-driven step', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await open(page, BASE);
-  await page.getByRole('button', { name: 'Walk through' }).click();
+  await page.getByRole('button', { name: 'Menu' }).click();
+  await page.getByRole('button', { name: 'Walk through the map' }).click();
   const tour = page.getByTestId('tour');
   await expect(tour).toContainText('Central visual claim');
   const titles: string[] = [];

@@ -23,7 +23,6 @@ export interface State {
   showAllInterventionLinks: boolean;
   outline: boolean;
   about: boolean;
-  legend: boolean;
   tourStep: number | null;
   theme: 'system' | 'light' | 'dark';
   /** transform restored from the URL (applied once by the canvas) */
@@ -46,7 +45,6 @@ export const initialState: State = {
   showAllInterventionLinks: false,
   outline: false,
   about: true,
-  legend: false,
   tourStep: null,
   theme: 'system',
   initialZoom: null,
@@ -71,7 +69,6 @@ export type Action =
   | { type: 'setShowAllInterventionLinks'; value: boolean }
   | { type: 'setOutline'; value: boolean }
   | { type: 'setAbout'; value: boolean }
-  | { type: 'setLegend'; value: boolean }
   | { type: 'tour'; step: number | null }
   | { type: 'theme'; value: State['theme'] }
   | { type: 'focus'; id: string; zoom?: number }
@@ -123,8 +120,6 @@ export function reducer(state: State, a: Action): State {
       return { ...state, outline: a.value };
     case 'setAbout':
       return { ...state, about: a.value };
-    case 'setLegend':
-      return { ...state, legend: a.value };
     case 'tour':
       return { ...state, tourStep: a.step };
     case 'theme':

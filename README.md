@@ -1,4 +1,6 @@
-# Joy Deficit — Life-Course Systems Map
+# Reward systems of intrinsic vs extrinsic joy: A chronological view
+
+Live: https://gfranco96.github.io/IDEP_systemsmap/
 
 An interactive, navigable systems map rendered from `data/*.json` (the single source of truth; never edited by the app).
 Static build: no backend, no runtime network calls, no storage. View state lives in memory and the URL hash.
@@ -29,9 +31,12 @@ npm run report       # layout/routing diagnostics for default and fully-expanded
 - **Click** a chain chip, loop hub or cross-life bar to expand it; click again (or its header) to collapse.
 - **Click** any node or edge for details; **Trace pathways** highlights everything upstream and downstream.
 - **Click a lane label** to focus a lane. **Double-click a stage** to expand everything in it.
+- **Trackpad:** two-finger scroll pans; pinch / spread zooms. ⤢ zooms to fit everything currently on the map.
 - **Keyboard:** Tab through nodes · Enter/Space select · `E` expand/collapse · arrows move to a neighbour ·
-  `Esc` clear · `/` search · `+` `-` `0` zoom.
-- **Layers & filters:** cultural overlay, cross-life systems, feedback loops, international references,
+  `Esc` clear · `+` `-` `0` zoom.
+- **Menu** (top right): About, walk-through, outline view, expand/collapse all, layers & filters,
+  **Export as PNG** (whole map, everything expanded), copy link, theme.
+- **Layers & filters:** cultural overlay, cross-life systems, feedback loops,
   possible interventions (off by default, none selected), inferred links; lane, stage and arrow-type filters.
 - **Outline view** shows the same content as a nested list (screen-reader friendly).
 - **Copy link** shares the exact view (selection, expanded containers, layers, filters, zoom).
@@ -46,7 +51,7 @@ src/data/               loader + validation
 src/model/              types, graph indexes, containment, edge lifting, tracing
 src/layout/             deterministic layout, text measurement, edge routing
 src/components/         MapCanvas, NodeShape, EdgePath, Lane, Legend, DetailPanel, Toolbar,
-                        SearchBox, Breadcrumbs, ListView (outline), AboutPanel, Tour
+                        ExportPng, Breadcrumbs, ListView (outline), AboutPanel, Tour
 src/state/              store (useReducer), URL hash, derived model, actions
 scripts/                validate-data.ts, layout-report.ts
 tests/unit, tests/e2e   Vitest and Playwright
