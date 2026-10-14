@@ -1,0 +1,2493 @@
+[
+  {
+    "id": "stage_childhood",
+    "type": "stage",
+    "label": "Childhood",
+    "tagline": "Joy is expected, scaffolded, and increasingly assessed",
+    "ageRangeLabel": "Prenatal/family formation through approximately age 10–12.",
+    "mainTransition": "From embodied and relational joy toward school-mediated evaluation and structured accomplishment.",
+    "stage": "childhood",
+    "order": 1,
+    "sourceSection": "Childhood parent node"
+  },
+  {
+    "id": "stage_adolescence",
+    "type": "stage",
+    "label": "Adolescence",
+    "tagline": "Joy becomes socially mediated, visible, and comparative",
+    "ageRangeLabel": "Approximately 12–18/early 20s.",
+    "mainTransition": "Play does not disappear; it becomes socially regulated through identity, status, surveillance, credentials, and platform visibility.",
+    "stage": "adolescence",
+    "order": 2,
+    "sourceSection": "Adolescence parent node"
+  },
+  {
+    "id": "stage_adulthood",
+    "type": "stage",
+    "label": "Adulthood",
+    "tagline": "Joy must be justified, optimized, purchased, or made productive",
+    "ageRangeLabel": "Approximately 25 onward, with subgroups determined less by age alone than by work, care, economic security, and health.",
+    "mainTransition": "Play is often treated as a reward after work, a purchasable experience, a wellness tool, a performance of identity, or an optimization mechanism—rather than a legitimate dimension of ordinary life.",
+    "stage": "adulthood",
+    "order": 3,
+    "sourceSection": "Adulthood parent node"
+  },
+  {
+    "id": "sub_infancy",
+    "type": "substage",
+    "label": "Infancy and early caregiving",
+    "stage": "childhood",
+    "parent": "stage_childhood",
+    "ageRangeLabel": "birth–18 months",
+    "ageStart": 0,
+    "ageEnd": 1.5,
+    "centralJoyMode": "Sensory pleasure, attachment, movement, shared attention, laughter, repetition",
+    "rewardSystemShift": "Caregiver attunement and comfort are the principal regulatory system; joy is largely relational and embodied",
+    "leadsTo": [
+      "Secure exploration",
+      "Early agency",
+      "Social trust",
+      "Capacity to seek connection"
+    ],
+    "order": 1,
+    "sourceSection": "Childhood substage table"
+  },
+  {
+    "id": "sub_toddler",
+    "type": "substage",
+    "label": "Toddlerhood and early autonomy",
+    "stage": "childhood",
+    "parent": "stage_childhood",
+    "ageRangeLabel": "18 months–3 years",
+    "ageStart": 1.5,
+    "ageEnd": 3,
+    "centralJoyMode": "“I do it myself,” imitation, pretend, messy experimentation, object play",
+    "rewardSystemShift": "Adult approval and boundaries enter more visibly; praise can either support agency or become controlling",
+    "leadsTo": [
+      "Autonomy development",
+      "Early internalization of “good” versus “bad” behavior"
+    ],
+    "order": 2,
+    "sourceSection": "Childhood substage table"
+  },
+  {
+    "id": "sub_early_childhood",
+    "type": "substage",
+    "label": "Early childhood / imaginative play",
+    "stage": "childhood",
+    "parent": "stage_childhood",
+    "ageRangeLabel": "3–6 years",
+    "ageStart": 3,
+    "ageEnd": 6,
+    "centralJoyMode": "Pretend worlds, role play, absurdity, storytelling, social play, sensory making",
+    "rewardSystemShift": "Preschool routines, behavioral charts, developmental milestones, and branded media begin organizing play",
+    "leadsTo": [
+      "Play scripts",
+      "Gender norms",
+      "Consumer desire",
+      "Early performance orientation"
+    ],
+    "order": 3,
+    "sourceSection": "Childhood substage table"
+  },
+  {
+    "id": "sub_middle_childhood",
+    "type": "substage",
+    "label": "Middle childhood / school-age play",
+    "stage": "childhood",
+    "parent": "stage_childhood",
+    "ageRangeLabel": "6–11 years",
+    "ageStart": 6,
+    "ageEnd": 11,
+    "centralJoyMode": "Peer play, games, collecting, making, competition, skill-building, rule negotiation",
+    "rewardSystemShift": "Grades, standardized comparison, sports ranking, extracurricular credentials, screen engagement metrics become more salient",
+    "leadsTo": [
+      "Competence identity",
+      "Peer status sensitivity",
+      "Achievement–worth association"
+    ],
+    "order": 4,
+    "sourceSection": "Childhood substage table"
+  },
+  {
+    "id": "sub_early_transition",
+    "type": "substage",
+    "label": "Early transition to adolescence",
+    "stage": "childhood",
+    "parent": "stage_childhood",
+    "ageRangeLabel": "10–13 years",
+    "ageStart": 10,
+    "ageEnd": 13,
+    "centralJoyMode": "Belonging, identity experimentation, group humor, fandom, gaming, social media",
+    "rewardSystemShift": "Likes, follows, appearance feedback, academic sorting, and peer comparison become increasingly intertwined",
+    "leadsTo": [
+      "Externalized self-evaluation",
+      "Platform-mediated belonging"
+    ],
+    "order": 5,
+    "sourceSection": "Childhood substage table"
+  },
+  {
+    "id": "sub_early_adolescence",
+    "type": "substage",
+    "label": "Early adolescence",
+    "stage": "adolescence",
+    "parent": "stage_adolescence",
+    "ageRangeLabel": "11–14",
+    "ageStart": 11,
+    "ageEnd": 14,
+    "centralJoyMode": "Friendship, humor, fandom, games, music, experimenting with self-presentation",
+    "rewardSystemShift": "Peer approval, school ranking, body/image norms, early social metrics",
+    "leadsTo": [
+      "Social comparison",
+      "Belonging through visible signals"
+    ],
+    "order": 6,
+    "sourceSection": "Adolescence substage table"
+  },
+  {
+    "id": "sub_middle_adolescence",
+    "type": "substage",
+    "label": "Middle adolescence",
+    "stage": "adolescence",
+    "parent": "stage_adolescence",
+    "ageRangeLabel": "14–17",
+    "ageStart": 14,
+    "ageEnd": 17,
+    "centralJoyMode": "Skill development, subcultures, team activity, creative production, romantic connection",
+    "rewardSystemShift": "Academic competition, extracurricular achievement, likes/follows, gaming rank, parental monitoring",
+    "leadsTo": [
+      "Credentialization of hobbies",
+      "Identity performance"
+    ],
+    "order": 7,
+    "sourceSection": "Adolescence substage table"
+  },
+  {
+    "id": "sub_late_adolescence",
+    "type": "substage",
+    "label": "Late adolescence / emerging adulthood",
+    "stage": "adolescence",
+    "parent": "stage_adolescence",
+    "ageRangeLabel": "17–24",
+    "ageStart": 17,
+    "ageEnd": 24,
+    "centralJoyMode": "Independence, collective projects, nightlife, making, political/creative communities, experimentation",
+    "rewardSystemShift": "College admissions, employability, internships, personal branding, debt, productivity tools",
+    "leadsTo": [
+      "Career identity",
+      "Self-optimization",
+      "Commodified leisure"
+    ],
+    "order": 8,
+    "sourceSection": "Adolescence substage table"
+  },
+  {
+    "id": "sub_early_working",
+    "type": "substage",
+    "label": "Early working adulthood",
+    "stage": "adulthood",
+    "parent": "stage_adulthood",
+    "ageRangeLabel": "roughly 22–34",
+    "ageStart": 22,
+    "ageEnd": 34,
+    "centralJoyMode": "Building relationships, exploration, hobbies, travel, creative identity, gaming, nightlife",
+    "rewardSystemShift": "Career precarity, debt, productivity apps, professional visibility, side-hustle pressure",
+    "leadsTo": [
+      "Work identity",
+      "Leisure compression"
+    ],
+    "order": 9,
+    "sourceSection": "Adulthood substage table"
+  },
+  {
+    "id": "sub_established",
+    "type": "substage",
+    "label": "Established adulthood",
+    "stage": "adulthood",
+    "parent": "stage_adulthood",
+    "ageRangeLabel": "roughly 35–54",
+    "ageStart": 35,
+    "ageEnd": 54,
+    "centralJoyMode": "Family/social rituals, craft, social hobbies, community participation, home-based play",
+    "rewardSystemShift": "Promotion, caregiving, household logistics, financial obligations, time scarcity",
+    "leadsTo": [
+      "Scheduled leisure",
+      "Reduced spontaneity"
+    ],
+    "order": 10,
+    "sourceSection": "Adulthood substage table"
+  },
+  {
+    "id": "sub_later_adulthood",
+    "type": "substage",
+    "label": "Later adulthood",
+    "stage": "adulthood",
+    "parent": "stage_adulthood",
+    "ageRangeLabel": "roughly 55–74",
+    "ageStart": 55,
+    "ageEnd": 74,
+    "centralJoyMode": "Generativity, cultural participation, mentoring, companionship, hobbies, play with younger generations",
+    "rewardSystemShift": "Retirement security, health constraints, age norms, caregiving, digital inclusion/exclusion",
+    "leadsTo": [
+      "Potential recovery of non-instrumental time",
+      "Intensified isolation"
+    ],
+    "order": 11,
+    "sourceSection": "Adulthood substage table"
+  },
+  {
+    "id": "sub_elderhood",
+    "type": "substage",
+    "label": "Later life / elderhood",
+    "stage": "adulthood",
+    "parent": "stage_adulthood",
+    "ageRangeLabel": "75+",
+    "ageStart": 75,
+    "ageEnd": null,
+    "centralJoyMode": "Connection, reminiscence, embodied or adapted play, storytelling, intergenerational contact",
+    "rewardSystemShift": "Care systems, accessibility, mobility, institutional routines, social isolation",
+    "leadsTo": [
+      "Play as connection and dignity",
+      "Withdrawal from meaningful engagement"
+    ],
+    "order": 12,
+    "sourceSection": "Adulthood substage table"
+  },
+  {
+    "id": "out_intrinsic_joy",
+    "type": "outcome",
+    "label": "Intrinsic joy capacity",
+    "description": "The ability to pursue activity for curiosity, pleasure, meaning, exploration, play, or connection without needing an external payoff",
+    "fedBy": [
+      "Autonomy",
+      "Unstructured time",
+      "Material play",
+      "Safety",
+      "Peer connection",
+      "Agency",
+      "Mastery without surveillance"
+    ],
+    "polarity": "protective",
+    "stage": "outcome",
+    "order": 1,
+    "sourceSection": "Core outcome nodes"
+  },
+  {
+    "id": "out_extrinsic_orientation",
+    "type": "outcome",
+    "label": "Extrinsic reward orientation",
+    "description": "Increased reliance on approval, grades, metrics, money, streaks, status, likes, or productivity as reasons to act",
+    "fedBy": [
+      "Conditional praise",
+      "Rankings",
+      "Platform feedback",
+      "Performance culture",
+      "Scarcity",
+      "Workplace metrics"
+    ],
+    "polarity": "constraining",
+    "stage": "outcome",
+    "order": 2,
+    "sourceSection": "Core outcome nodes"
+  },
+  {
+    "id": "out_joy_deficit",
+    "type": "outcome",
+    "label": "Joy deficit",
+    "description": "A structural imbalance in which attention, time, design resources, and social legitimacy privilege rewardable productivity and screen stimulation over direct connection and open-ended play",
+    "fedBy": [
+      "Compressed time",
+      "Precarious work",
+      "Surveillance",
+      "Optimization norms",
+      "Instrumentalized leisure"
+    ],
+    "polarity": "constraining",
+    "stage": "outcome",
+    "order": 3,
+    "sourceSection": "Core outcome nodes"
+  },
+  {
+    "id": "out_burnout",
+    "type": "outcome",
+    "label": "Burnout / alienation",
+    "description": "Exhaustion, reduced agency, cynicism, depleted curiosity, and difficulty accessing pleasure outside reward or escape loops",
+    "fedBy": [
+      "Chronic overload",
+      "Self-optimization",
+      "Low autonomy",
+      "Economic insecurity",
+      "Work–life blur"
+    ],
+    "polarity": "constraining",
+    "stage": "outcome",
+    "order": 4,
+    "sourceSection": "Core outcome nodes"
+  },
+  {
+    "id": "out_restorative_play",
+    "type": "outcome",
+    "label": "Restorative adult play",
+    "description": "Voluntary, socially meaningful, materially or bodily engaging activity that restores autonomy, relatedness, curiosity, and non-instrumental enjoyment",
+    "fedBy": [
+      "Protected time",
+      "Low-stakes social settings",
+      "Accessible third places",
+      "Playful objects",
+      "Community rituals"
+    ],
+    "polarity": "protective",
+    "stage": "outcome",
+    "order": 5,
+    "sourceSection": "Core outcome nodes"
+  },
+  {
+    "id": "sys_education",
+    "type": "system",
+    "label": "Education system",
+    "current": "education",
+    "stage": "cross",
+    "leadsTo": [
+      "Definitions of competence",
+      "Legitimacy",
+      "Time allocation",
+      "Peer hierarchy",
+      "The extent to which play is protected or subordinated to achievement"
+    ],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "sys_family",
+    "type": "system",
+    "label": "Family and care system",
+    "current": "family",
+    "stage": "cross",
+    "leadsTo": [
+      "Early attachment",
+      "Norms of rest",
+      "Availability of time",
+      "Access to materials",
+      "Household rules around screens",
+      "Beliefs about “earning” leisure"
+    ],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "sys_market",
+    "type": "system",
+    "label": "Labor and economic system",
+    "current": "market",
+    "stage": "cross",
+    "leadsTo": [
+      "Time scarcity",
+      "Income security",
+      "Access to leisure",
+      "Consumer motivations",
+      "Perceived permission to rest"
+    ],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "sys_platform",
+    "type": "system",
+    "label": "Platform, media, and AI system",
+    "current": "platform",
+    "stage": "cross",
+    "leadsTo": [
+      "Behavioral data collection",
+      "Social comparison",
+      "Attention allocation",
+      "Reward architecture",
+      "The cultural expectation of instantaneous stimulation"
+    ],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "sys_cultural",
+    "type": "system",
+    "label": "Cultural narratives and moral norms",
+    "current": "cultural",
+    "stage": "cross",
+    "leadsTo": [
+      "What feels respectable",
+      "What feels childish",
+      "What feels selfish",
+      "What feels mature",
+      "What feels useful",
+      "What feels wasteful",
+      "What feels worthy"
+    ],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "ch_c1_s1",
+    "type": "factor",
+    "label": "Caregiver responsiveness",
+    "chainId": "ch_c1",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #1"
+  },
+  {
+    "id": "ch_c1_s2",
+    "type": "factor",
+    "label": "Felt safety and co-regulation",
+    "chainId": "ch_c1",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #1"
+  },
+  {
+    "id": "ch_c1_s3",
+    "type": "factor",
+    "label": "Free exploration, curiosity, and willingness to make mistakes",
+    "chainId": "ch_c1",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #1"
+  },
+  {
+    "id": "ch_c1_s4",
+    "type": "factor",
+    "label": "Intrinsic competence",
+    "chainId": "ch_c1",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #1",
+    "description": "“I can try because I want to know,” rather than “I must perform to be approved.”"
+  },
+  {
+    "id": "ch_c2_s1",
+    "type": "factor",
+    "label": "Access to loose parts, ordinary objects, outdoor space, art materials, and peer time",
+    "chainId": "ch_c2",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #2"
+  },
+  {
+    "id": "ch_c2_s2",
+    "type": "factor",
+    "label": "Self-authored play scenarios",
+    "chainId": "ch_c2",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #2"
+  },
+  {
+    "id": "ch_c2_s3",
+    "type": "factor",
+    "label": "Choice, negotiation, experimentation, and tolerance for ambiguity",
+    "chainId": "ch_c2",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #2"
+  },
+  {
+    "id": "ch_c2_s4",
+    "type": "factor",
+    "label": "Later ability to enjoy activities without prescribed outcomes",
+    "chainId": "ch_c2",
+    "stage": "childhood",
+    "current": "family",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #2"
+  },
+  {
+    "id": "ch_c3_s1",
+    "type": "factor",
+    "label": "School systems, behavioral charts, grades, and praise framed around “being smart,” speed, or compliance",
+    "chainId": "ch_c3",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #3"
+  },
+  {
+    "id": "ch_c3_s2",
+    "type": "factor",
+    "label": "Attention shifting from process to evaluation",
+    "chainId": "ch_c3",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #3"
+  },
+  {
+    "id": "ch_c3_s3",
+    "type": "factor",
+    "label": "Performance monitoring",
+    "chainId": "ch_c3",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #3",
+    "description": "“Am I doing this correctly?”"
+  },
+  {
+    "id": "ch_c3_s4",
+    "type": "factor",
+    "label": "External reward orientation",
+    "chainId": "ch_c3",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #3",
+    "description": "Especially when mistakes carry social or institutional consequences."
+  },
+  {
+    "id": "ch_c4_s1",
+    "type": "factor",
+    "label": "Children’s media, retailers, licensors, influencers, and toy manufacturers",
+    "chainId": "ch_c4",
+    "stage": "childhood",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #4",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_c4_s2",
+    "type": "factor",
+    "label": "Branded character attachment and collectible desire",
+    "chainId": "ch_c4",
+    "stage": "childhood",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #4",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_c4_s3",
+    "type": "factor",
+    "label": "Learned association between play, acquisition, novelty, and identity display",
+    "chainId": "ch_c4",
+    "stage": "childhood",
+    "current": "market",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #4",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_c4_s4a",
+    "type": "factor",
+    "label": "Later adult collecting, fandom, blind-box consumption, and nostalgia markets",
+    "chainId": "ch_c4",
+    "stage": "childhood",
+    "current": "market",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Childhood: causal chains #4",
+    "description": "Can later feed these.",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_c4_s4b",
+    "type": "factor",
+    "label": "Community and creative practices",
+    "chainId": "ch_c4",
+    "stage": "childhood",
+    "current": "market",
+    "layout": {
+      "col": 3,
+      "row": 1
+    },
+    "sourceSection": "Childhood: causal chains #4",
+    "description": "Can also offer these.",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_a1_s1",
+    "type": "factor",
+    "label": "Peer groups and social platforms",
+    "chainId": "ch_a1",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #1",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_a1_s2",
+    "type": "factor",
+    "label": "Visibility as a condition of belonging",
+    "chainId": "ch_a1",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #1",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_a1_s3",
+    "type": "factor",
+    "label": "Comparison of appearance, popularity, skill, lifestyle, and consumption",
+    "chainId": "ch_a1",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #1",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_a1_s4",
+    "type": "factor",
+    "label": "External validation-seeking",
+    "chainId": "ch_a1",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #1",
+    "description": "Through likes, rankings, streaks, follower counts, gaming levels, or social approval.",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_a2_s1",
+    "type": "factor",
+    "label": "Admissions systems, standardized testing, college/career advice, and parental anxiety",
+    "chainId": "ch_a2",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #2"
+  },
+  {
+    "id": "ch_a2_s2",
+    "type": "factor",
+    "label": "Hobbies recoded as résumé assets",
+    "chainId": "ch_a2",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #2"
+  },
+  {
+    "id": "ch_a2_s3",
+    "type": "factor",
+    "label": "Question shift: from “Do I enjoy this?” to “Will this help me get in, get hired, or stand out?”",
+    "chainId": "ch_a2",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #2"
+  },
+  {
+    "id": "ch_a2_s4",
+    "type": "factor",
+    "label": "Instrumentalized leisure",
+    "chainId": "ch_a2",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #2",
+    "description": "Creative activity may remain pleasurable but becomes burdened by evaluation."
+  },
+  {
+    "id": "ch_a3_s1",
+    "type": "factor",
+    "label": "Notifications, streaks, variable feedback, rank progression, loot systems, and infinite feeds",
+    "chainId": "ch_a3",
+    "stage": "adolescence",
+    "current": "platform",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #3"
+  },
+  {
+    "id": "ch_a3_s2",
+    "type": "factor",
+    "label": "Anticipation and repeated checking",
+    "chainId": "ch_a3",
+    "stage": "adolescence",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #3"
+  },
+  {
+    "id": "ch_a3_s3",
+    "type": "factor",
+    "label": "Attention capture and measurable engagement",
+    "chainId": "ch_a3",
+    "stage": "adolescence",
+    "current": "platform",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #3"
+  },
+  {
+    "id": "ch_a3_s4",
+    "type": "factor",
+    "label": "Engagement data produces revenue and optimization feedback for platforms",
+    "chainId": "ch_a3",
+    "stage": "adolescence",
+    "current": "platform",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #3"
+  },
+  {
+    "id": "ch_a3_s5",
+    "type": "factor",
+    "label": "Further tuning of reward mechanisms",
+    "chainId": "ch_a3",
+    "stage": "adolescence",
+    "current": "platform",
+    "layout": {
+      "col": 4,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #3"
+  },
+  {
+    "id": "ch_a4_s1",
+    "type": "factor",
+    "label": "Shared fandoms, tabletop games, creative communities, modding, cosplay, music scenes, and collaborative making",
+    "chainId": "ch_a4",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #4",
+    "secondaryCurrents": [
+      "market"
+    ]
+  },
+  {
+    "id": "ch_a4_s2",
+    "type": "factor",
+    "label": "Social connection and low-stakes identity exploration",
+    "chainId": "ch_a4",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #4",
+    "secondaryCurrents": [
+      "market"
+    ]
+  },
+  {
+    "id": "ch_a4_s3",
+    "type": "factor",
+    "label": "Intrinsic joy",
+    "chainId": "ch_a4",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adolescence: causal chains #4",
+    "description": "When participants retain autonomy and community ownership.",
+    "secondaryCurrents": [
+      "market"
+    ]
+  },
+  {
+    "id": "ch_a4_s4",
+    "type": "factor",
+    "label": "Commercialization through influencer economies and monetized visibility",
+    "chainId": "ch_a4",
+    "stage": "adolescence",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 1
+    },
+    "sourceSection": "Adolescence: causal chains #4",
+    "description": "The same spaces may be commercialized.",
+    "secondaryCurrents": [
+      "market"
+    ]
+  },
+  {
+    "id": "ch_d1_s1",
+    "type": "factor",
+    "label": "Housing costs, debt, precarious employment, health insurance systems, and wage stagnation",
+    "chainId": "ch_d1",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #1"
+  },
+  {
+    "id": "ch_d1_s2",
+    "type": "factor",
+    "label": "Economic insecurity",
+    "chainId": "ch_d1",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #1"
+  },
+  {
+    "id": "ch_d1_s3",
+    "type": "factor",
+    "label": "Perceived need for constant employability, skill acquisition, and availability",
+    "chainId": "ch_d1",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #1"
+  },
+  {
+    "id": "ch_d1_s4",
+    "type": "factor",
+    "label": "Self-optimization",
+    "chainId": "ch_d1",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #1",
+    "description": "Tracking, upskilling, side hustles, personal branding, and difficulty resting."
+  },
+  {
+    "id": "ch_d1_s5",
+    "type": "factor",
+    "label": "Joy deferral",
+    "chainId": "ch_d1",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 4,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #1",
+    "description": "Play must be earned, justified, monetized, or transformed into self-improvement."
+  },
+  {
+    "id": "ch_d2_s1",
+    "type": "factor",
+    "label": "Managers, enterprise software, performance dashboards, communication tools, and AI systems",
+    "chainId": "ch_d2",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #2",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_d2_s2a",
+    "type": "factor",
+    "label": "Increased measurement and expectations of responsiveness",
+    "chainId": "ch_d2",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #2",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_d2_s2b",
+    "type": "factor",
+    "label": "Higher output expectations, verification work, tool switching, and constant adaptation",
+    "chainId": "ch_d2",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 1
+    },
+    "sourceSection": "Adulthood: adult pathways #2",
+    "description": "AI can automate or assist tasks, but in many settings it also leads to these.",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_d2_s3",
+    "type": "factor",
+    "label": "Less recovery time and reduced autonomy",
+    "chainId": "ch_d2",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #2",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_d2_s4",
+    "type": "factor",
+    "label": "Burnout risk",
+    "chainId": "ch_d2",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #2",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_d2_s5",
+    "type": "factor",
+    "label": "Diminished curiosity and energy for self-directed play",
+    "chainId": "ch_d2",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 4,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #2",
+    "description": "Burnout diminishes curiosity and energy, producing the joy deficit.",
+    "secondaryCurrents": [
+      "platform"
+    ]
+  },
+  {
+    "id": "ch_d3_s1",
+    "type": "factor",
+    "label": "Streaming services, social media, mobile games, retail platforms, and notification systems",
+    "chainId": "ch_d3",
+    "stage": "adulthood",
+    "current": "platform",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #3"
+  },
+  {
+    "id": "ch_d3_s2",
+    "type": "factor",
+    "label": "Frictionless, screen-based stimulation",
+    "chainId": "ch_d3",
+    "stage": "adulthood",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #3"
+  },
+  {
+    "id": "ch_d3_s3",
+    "type": "factor",
+    "label": "Short-term gratification, passive consumption, or repetitive checking",
+    "chainId": "ch_d3",
+    "stage": "adulthood",
+    "current": "platform",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #3",
+    "description": "Often chosen because exhausted people have limited time and energy."
+  },
+  {
+    "id": "ch_d3_s4",
+    "type": "factor",
+    "label": "Low-recovery entertainment",
+    "chainId": "ch_d3",
+    "stage": "adulthood",
+    "current": "platform",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #3",
+    "description": "Can lead to less sleep, less direct sociality, and less capacity for effortful but restorative play."
+  },
+  {
+    "id": "ch_d4_s1",
+    "type": "factor",
+    "label": "LEGO, tabletop games, miniatures, craft kits, collectibles, fidget objects, hobby stores, maker communities, toy designers, and convention cultures",
+    "chainId": "ch_d4",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #4"
+  },
+  {
+    "id": "ch_d4_s2",
+    "type": "factor",
+    "label": "Adult access to playful objects and rituals",
+    "chainId": "ch_d4",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #4"
+  },
+  {
+    "id": "ch_d4_s3a",
+    "type": "factor",
+    "label": "Relaxation, flow, tactile engagement, creativity, nostalgia, identity exploration, and social belonging",
+    "chainId": "ch_d4",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #4"
+  },
+  {
+    "id": "ch_d4_s3b",
+    "type": "factor",
+    "label": "Scarcity-based purchasing, speculative collecting, status display, or blind-box reward loops",
+    "chainId": "ch_d4",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "col": 2,
+      "row": 1
+    },
+    "sourceSection": "Adulthood: adult pathways #4"
+  },
+  {
+    "id": "ch_d5_s1",
+    "type": "factor",
+    "label": "Community centers, libraries, parks, game cafés, workshops, unions, local clubs, friend groups, public festivals, and shared meals",
+    "chainId": "ch_d5",
+    "stage": "adulthood",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #5"
+  },
+  {
+    "id": "ch_d5_s2",
+    "type": "factor",
+    "label": "Recurring in-person contact",
+    "chainId": "ch_d5",
+    "stage": "adulthood",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #5"
+  },
+  {
+    "id": "ch_d5_s3",
+    "type": "factor",
+    "label": "Belonging, laughter, cooperation, and shared ritual",
+    "chainId": "ch_d5",
+    "stage": "adulthood",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #5"
+  },
+  {
+    "id": "ch_d5_s4",
+    "type": "factor",
+    "label": "Relatedness",
+    "chainId": "ch_d5",
+    "stage": "adulthood",
+    "current": "family",
+    "layout": {
+      "col": 3,
+      "row": 0
+    },
+    "sourceSection": "Adulthood: adult pathways #5",
+    "description": "One of the core psychological needs associated with self-motivation and wellbeing (Self-Determination Theory)."
+  },
+  {
+    "id": "xl_fam1_s1",
+    "type": "factor",
+    "label": "Caregiver stress / economic precarity",
+    "chainId": "xl_fam1",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_fam1_s2",
+    "type": "factor",
+    "label": "Less time and emotional bandwidth",
+    "chainId": "xl_fam1",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_fam1_s3",
+    "type": "factor",
+    "label": "Greater reliance on convenient, screen-based entertainment",
+    "chainId": "xl_fam1",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 2,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_fam2_s1",
+    "type": "factor",
+    "label": "Family rituals",
+    "chainId": "xl_fam2",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "description": "Games, shared meals, humor, crafting, storytelling.",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_fam2_s2",
+    "type": "factor",
+    "label": "Intergenerational models of joy and relatedness",
+    "chainId": "xl_fam2",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_fam3_s1",
+    "type": "factor",
+    "label": "Conditional approval",
+    "chainId": "xl_fam3",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_fam3_s2",
+    "type": "factor",
+    "label": "Internalized productivity-based worth",
+    "chainId": "xl_fam3",
+    "stage": "cross",
+    "current": "family",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_family"
+  },
+  {
+    "id": "xl_edu1_s1",
+    "type": "factor",
+    "label": "Testing, grading, ranking, attendance, behavioral management",
+    "chainId": "xl_edu1",
+    "stage": "cross",
+    "current": "education",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_education"
+  },
+  {
+    "id": "xl_edu1_s2",
+    "type": "factor",
+    "label": "External evaluation as the normal condition of learning",
+    "chainId": "xl_edu1",
+    "stage": "cross",
+    "current": "education",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_education"
+  },
+  {
+    "id": "xl_edu2_s1",
+    "type": "factor",
+    "label": "Recess, arts, drama, music, workshop learning, exploratory pedagogy",
+    "chainId": "xl_edu2",
+    "stage": "cross",
+    "current": "education",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_education"
+  },
+  {
+    "id": "xl_edu2_s2",
+    "type": "factor",
+    "label": "Protected autonomy and experimentation",
+    "chainId": "xl_edu2",
+    "stage": "cross",
+    "current": "education",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_education"
+  },
+  {
+    "id": "xl_edu3_s1",
+    "type": "factor",
+    "label": "College admissions / employability discourse",
+    "chainId": "xl_edu3",
+    "stage": "cross",
+    "current": "education",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_education"
+  },
+  {
+    "id": "xl_edu3_s2",
+    "type": "factor",
+    "label": "Adolescent hobbies converted into credentials",
+    "chainId": "xl_edu3",
+    "stage": "cross",
+    "current": "education",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_education"
+  },
+  {
+    "id": "xl_lab1_s1",
+    "type": "factor",
+    "label": "Wage conditions, debt, housing, healthcare, childcare costs",
+    "chainId": "xl_lab1",
+    "stage": "cross",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_market"
+  },
+  {
+    "id": "xl_lab1_s2",
+    "type": "factor",
+    "label": "Time anxiety and risk aversion",
+    "chainId": "xl_lab1",
+    "stage": "cross",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_market"
+  },
+  {
+    "id": "xl_lab2_s1",
+    "type": "factor",
+    "label": "Management culture and performance measurement",
+    "chainId": "xl_lab2",
+    "stage": "cross",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_market"
+  },
+  {
+    "id": "xl_lab2_s2",
+    "type": "factor",
+    "label": "Output visibility as a proxy for value",
+    "chainId": "xl_lab2",
+    "stage": "cross",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_market"
+  },
+  {
+    "id": "xl_lab3_s1",
+    "type": "factor",
+    "label": "Leisure industry and adult toy market",
+    "chainId": "xl_lab3",
+    "stage": "cross",
+    "current": "market",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_market"
+  },
+  {
+    "id": "xl_lab3_s2",
+    "type": "factor",
+    "label": "Commodified access to play",
+    "chainId": "xl_lab3",
+    "stage": "cross",
+    "current": "market",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_market"
+  },
+  {
+    "id": "xl_plat1_s1",
+    "type": "factor",
+    "label": "Metrics",
+    "chainId": "xl_plat1",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "description": "Likes, streaks, points, rank, followers, badges, view counts.",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat1_s2",
+    "type": "factor",
+    "label": "Visibility of externally rewarded behavior",
+    "chainId": "xl_plat1",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat2_s1",
+    "type": "factor",
+    "label": "Variable rewards and notifications",
+    "chainId": "xl_plat2",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat2_s2",
+    "type": "factor",
+    "label": "Anticipation, repeat checking, and measurable engagement",
+    "chainId": "xl_plat2",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat3_s1",
+    "type": "factor",
+    "label": "Recommendation algorithms",
+    "chainId": "xl_plat3",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat3_s2",
+    "type": "factor",
+    "label": "Personalized consumption pathways and narrowed attention",
+    "chainId": "xl_plat3",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat4_s1",
+    "type": "factor",
+    "label": "Creative AI tools",
+    "chainId": "xl_plat4",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat4_s2a",
+    "type": "factor",
+    "label": "Possible reduction of drudgery",
+    "chainId": "xl_plat4",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_plat4_s2b",
+    "type": "factor",
+    "label": "Increased output expectations and homogenized, tool-directed creative labor",
+    "chainId": "xl_plat4",
+    "stage": "cross",
+    "current": "platform",
+    "layout": {
+      "col": 1,
+      "row": 1
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_platform"
+  },
+  {
+    "id": "xl_cul1_s1",
+    "type": "factor",
+    "label": "“Time is money” / hustle culture / self-branding",
+    "chainId": "xl_cul1",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul1_s2",
+    "type": "factor",
+    "label": "Moralization of output and guilt about rest",
+    "chainId": "xl_cul1",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul2_s1",
+    "type": "factor",
+    "label": "“Toys are for children”",
+    "chainId": "xl_cul2",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul2_s2",
+    "type": "factor",
+    "label": "Adult shame around play and material delight",
+    "chainId": "xl_cul2",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul3_s1",
+    "type": "factor",
+    "label": "Wellness culture",
+    "chainId": "xl_cul3",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul3_s2a",
+    "type": "factor",
+    "label": "Can legitimate rest",
+    "chainId": "xl_cul3",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul3_s2b",
+    "type": "factor",
+    "label": "Can instrumentalize joy as another performance requirement",
+    "chainId": "xl_cul3",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 1,
+      "row": 1
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul4_s1",
+    "type": "factor",
+    "label": "Nostalgia and “kidult” discourse",
+    "chainId": "xl_cul4",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 0,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul4_s2a",
+    "type": "factor",
+    "label": "Reopens access to toys and play",
+    "chainId": "xl_cul4",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 1,
+      "row": 0
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "xl_cul4_s2b",
+    "type": "factor",
+    "label": "May package play as consumption",
+    "chainId": "xl_cul4",
+    "stage": "cross",
+    "current": "cultural",
+    "layout": {
+      "col": 1,
+      "row": 1
+    },
+    "sourceSection": "Cross-life systems",
+    "parent": "sys_cultural"
+  },
+  {
+    "id": "loop_childhood_s1",
+    "type": "loop_step",
+    "label": "Adult institutions reward visible achievement.",
+    "loopId": "loop_childhood",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Childhood feedback loop"
+  },
+  {
+    "id": "loop_childhood_s2",
+    "type": "loop_step",
+    "label": "The child learns to seek approval, grades, or winning.",
+    "loopId": "loop_childhood",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Childhood feedback loop"
+  },
+  {
+    "id": "loop_childhood_s3",
+    "type": "loop_step",
+    "label": "These outcomes make adults allocate more attention and opportunities to measurable achievement.",
+    "loopId": "loop_childhood",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Childhood feedback loop"
+  },
+  {
+    "id": "loop_childhood_s4",
+    "type": "loop_step",
+    "label": "Unstructured play appears less defensible or “less valuable.”",
+    "loopId": "loop_childhood",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Childhood feedback loop"
+  },
+  {
+    "id": "loop_childhood_s5",
+    "type": "loop_step",
+    "label": "Reduced unstructured play further increases reliance on externally organized stimulation.",
+    "loopId": "loop_childhood",
+    "stage": "childhood",
+    "current": "education",
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Childhood feedback loop"
+  },
+  {
+    "id": "loop_childhood",
+    "type": "loop",
+    "label": "Measurable competence",
+    "loopId": "loop_childhood",
+    "stage": "childhood",
+    "current": "education",
+    "description": "Reinforcing loop that shifts joy from self-directed exploration toward performance.",
+    "sourceSection": "Childhood feedback loop"
+  },
+  {
+    "id": "loop_adolescence_s1",
+    "type": "loop_step",
+    "label": "Young people engage in art, sport, games, volunteering, or making.",
+    "loopId": "loop_adolescence",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Adolescence feedback loop"
+  },
+  {
+    "id": "loop_adolescence_s2",
+    "type": "loop_step",
+    "label": "Institutions ask them to document outcomes, awards, leadership, audience size, or market value.",
+    "loopId": "loop_adolescence",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Adolescence feedback loop"
+  },
+  {
+    "id": "loop_adolescence_s3",
+    "type": "loop_step",
+    "label": "Activities gain prestige when they become legible as credentials.",
+    "loopId": "loop_adolescence",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Adolescence feedback loop"
+  },
+  {
+    "id": "loop_adolescence_s4",
+    "type": "loop_step",
+    "label": "Time flows toward credential-bearing activity and away from private, purposeless play.",
+    "loopId": "loop_adolescence",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Adolescence feedback loop"
+  },
+  {
+    "id": "loop_adolescence_s5",
+    "type": "loop_step",
+    "label": "The cultural expectation that every activity should “count” becomes stronger.",
+    "loopId": "loop_adolescence",
+    "stage": "adolescence",
+    "current": "education",
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Adolescence feedback loop"
+  },
+  {
+    "id": "loop_adolescence",
+    "type": "loop",
+    "label": "Play becomes proof",
+    "loopId": "loop_adolescence",
+    "stage": "adolescence",
+    "current": "education",
+    "description": "Reinforcing institutional–cultural loop.",
+    "sourceSection": "Adolescence feedback loop"
+  },
+  {
+    "id": "loop_adulthood_s1",
+    "type": "loop_step",
+    "label": "Technology or AI reduces the time needed for a task.",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_adulthood_s2",
+    "type": "loop_step",
+    "label": "Employers, clients, institutions, or the individual raise the expected volume, speed, and availability of output.",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_adulthood_s3",
+    "type": "loop_step",
+    "label": "Time savings are absorbed rather than converted into rest, play, or connection.",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_adulthood_s4",
+    "type": "loop_step",
+    "label": "Fatigue increases, making low-effort digital rewards more attractive.",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_adulthood_s5",
+    "type": "loop_step",
+    "label": "Reduced recovery lowers creative capacity and intrinsic motivation.",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_adulthood_s6",
+    "type": "loop_step",
+    "label": "Lower capacity is interpreted as a personal failure to optimize, restarting the drive for productivity tools.",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "layout": {
+      "order": 6
+    },
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_adulthood",
+    "type": "loop",
+    "label": "Productivity ratchet",
+    "loopId": "loop_adulthood",
+    "stage": "adulthood",
+    "current": "market",
+    "description": "Reinforcing socio-technical extraction loop.",
+    "sourceSection": "Adult feedback loop"
+  },
+  {
+    "id": "loop_A_s1",
+    "type": "loop_step",
+    "label": "Reward system",
+    "loopId": "loop_A",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Main map loops: Loop A"
+  },
+  {
+    "id": "loop_A_s2",
+    "type": "loop_step",
+    "label": "External validation",
+    "loopId": "loop_A",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Main map loops: Loop A"
+  },
+  {
+    "id": "loop_A_s3",
+    "type": "loop_step",
+    "label": "Reduced attention to internal desire",
+    "loopId": "loop_A",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Main map loops: Loop A"
+  },
+  {
+    "id": "loop_A_s4",
+    "type": "loop_step",
+    "label": "Less intrinsic engagement",
+    "loopId": "loop_A",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Main map loops: Loop A"
+  },
+  {
+    "id": "loop_A_s5",
+    "type": "loop_step",
+    "label": "Increased need for external reward",
+    "loopId": "loop_A",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Main map loops: Loop A"
+  },
+  {
+    "id": "loop_A",
+    "type": "loop",
+    "label": "Extrinsic-reward displacement",
+    "loopId": "loop_A",
+    "stage": "cross",
+    "current": null,
+    "description": "Reward conditioning → motivational displacement → reinforcing loop.",
+    "sourceSection": "Main map loops: Loop A"
+  },
+  {
+    "id": "loop_B_s1",
+    "type": "loop_step",
+    "label": "Economic pressure",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B_s2",
+    "type": "loop_step",
+    "label": "Work intensity",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B_s3",
+    "type": "loop_step",
+    "label": "Fatigue",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B_s4",
+    "type": "loop_step",
+    "label": "Low-effort stimulation",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B_s5",
+    "type": "loop_step",
+    "label": "Reduced restorative play",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B_s6",
+    "type": "loop_step",
+    "label": "Lower resilience/creative energy",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 6
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B_s7",
+    "type": "loop_step",
+    "label": "More perceived need to work or optimize",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 7
+    },
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_B",
+    "type": "loop",
+    "label": "Time scarcity and depleted play",
+    "loopId": "loop_B",
+    "stage": "cross",
+    "current": null,
+    "description": "Structural pressure → depletion → convenience substitution → reinforcing loop.",
+    "sourceSection": "Main map loops: Loop B"
+  },
+  {
+    "id": "loop_C_s1",
+    "type": "loop_step",
+    "label": "Play activity",
+    "loopId": "loop_C",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Main map loops: Loop C"
+  },
+  {
+    "id": "loop_C_s2",
+    "type": "loop_step",
+    "label": "Institutional/market recognition",
+    "loopId": "loop_C",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Main map loops: Loop C"
+  },
+  {
+    "id": "loop_C_s3",
+    "type": "loop_step",
+    "label": "Measurement or monetization",
+    "loopId": "loop_C",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Main map loops: Loop C"
+  },
+  {
+    "id": "loop_C_s4",
+    "type": "loop_step",
+    "label": "Performance pressure",
+    "loopId": "loop_C",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Main map loops: Loop C"
+  },
+  {
+    "id": "loop_C_s5",
+    "type": "loop_step",
+    "label": "Reduced freedom to play",
+    "loopId": "loop_C",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Main map loops: Loop C"
+  },
+  {
+    "id": "loop_C",
+    "type": "loop",
+    "label": "Play-to-productivity capture",
+    "loopId": "loop_C",
+    "stage": "cross",
+    "current": null,
+    "description": "Institutional capture / commodification / autonomy erosion.",
+    "sourceSection": "Main map loops: Loop C"
+  },
+  {
+    "id": "loop_D_s1",
+    "type": "loop_step",
+    "label": "Accessible shared space",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 1
+    },
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "loop_D_s2",
+    "type": "loop_step",
+    "label": "Repeated contact",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 2
+    },
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "loop_D_s3",
+    "type": "loop_step",
+    "label": "Trust and relatedness",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 3
+    },
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "loop_D_s4",
+    "type": "loop_step",
+    "label": "Voluntary shared play",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 4
+    },
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "loop_D_s5",
+    "type": "loop_step",
+    "label": "Joy and recovery",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 5
+    },
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "loop_D_s6",
+    "type": "loop_step",
+    "label": "Capacity to sustain relationships and collective spaces",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "layout": {
+      "order": 6
+    },
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "loop_D",
+    "type": "loop",
+    "label": "Social play as restoration",
+    "loopId": "loop_D",
+    "stage": "cross",
+    "current": null,
+    "description": "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop.",
+    "sourceSection": "Main map loops: Loop D"
+  },
+  {
+    "id": "ref_denmark",
+    "type": "reference",
+    "label": "Work-time regulation, leave, flexible work, and social support",
+    "description": "Protective-policy reference (Denmark), not proof of a universally “happier culture.”",
+    "country": "Denmark",
+    "role": "Policy and time-use contrast",
+    "leadsTo": [
+      "More protected time",
+      "Social connection",
+      "Room for leisure"
+    ],
+    "connectionTypes": [
+      "policy-mediated protective condition"
+    ],
+    "caution": "Comparative example; outcomes are shaped by many interacting welfare, labor-market, and cultural conditions.",
+    "datapoints": [
+      {
+        "label": "Satisfaction with time use (OECD, cited cross-country data)",
+        "value": 7.8,
+        "scale": "out of 10"
+      },
+      {
+        "label": "Self-reported life satisfaction, Denmark average",
+        "value": 7.5,
+        "scale": "OECD average 6.7"
+      }
+    ],
+    "evidenceIds": [
+      "ref_oecd_denmark"
+    ],
+    "anchor": {
+      "stage": "adulthood",
+      "currents": [
+        "market"
+      ]
+    },
+    "stage": "reference",
+    "sourceSection": "International reference nodes: Denmark"
+  },
+  {
+    "id": "ref_japan",
+    "type": "reference",
+    "label": "Game and character-industry ecosystem",
+    "description": "Ambivalent play-economy reference (Japan): globally influential games and character industries show how adult-oriented play, collecting, fandom, and creative communities can be culturally legitimate while also deeply commercialized and platform-mediated.",
+    "country": "Japan",
+    "role": "Cultural-industrial play reference",
+    "leadsTo": [
+      "Adult legitimacy for fandom",
+      "Creative participation",
+      "Game literacy",
+      "Collectible cultures",
+      "International cultural exchange"
+    ],
+    "alsoLeadsTo": [
+      "Monetization",
+      "IP-driven consumption",
+      "Scarcity",
+      "Engagement capture"
+    ],
+    "connectionTypes": [
+      "cultural legitimacy + commercial extraction; explicitly double-edged"
+    ],
+    "caution": "Explicitly double-edged: cultural legitimacy and commercial extraction coexist.",
+    "anchor": {
+      "stage": "adulthood",
+      "currents": [
+        "market",
+        "platform"
+      ]
+    },
+    "stage": "reference",
+    "sourceSection": "International reference nodes: Japan"
+  },
+  {
+    "id": "int_protected_time",
+    "type": "intervention",
+    "label": "Protected unstructured time",
+    "effect": "Interrupts early performance conditioning and adult time scarcity",
+    "interventionType": "Policy, school design, organizational practice",
+    "stage": "intervention",
+    "order": 1,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_nonevaluative_feedback",
+    "type": "intervention",
+    "label": "Non-evaluative feedback",
+    "effect": "Interrupts the shift from curiosity to approval-seeking",
+    "interventionType": "Pedagogy, parenting resource, interaction design",
+    "stage": "intervention",
+    "order": 2,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_open_ended_object",
+    "type": "intervention",
+    "label": "Open-ended playful object",
+    "effect": "Reinforces autonomy, tactile exploration, ambiguity, repetition without scoring",
+    "interventionType": "Industrial design / toy design",
+    "stage": "intervention",
+    "order": 3,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_antiextractive_digital",
+    "type": "intervention",
+    "label": "Anti-extractive digital interaction",
+    "effect": "Interrupts streaks, metrics, infinite feeds, and attention capture",
+    "interventionType": "Interface / interaction design",
+    "stage": "intervention",
+    "order": 4,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_adult_third_place",
+    "type": "intervention",
+    "label": "Adult third place for play",
+    "effect": "Reinforces relatedness and recurring, low-cost social play",
+    "interventionType": "Service, community infrastructure, event design",
+    "stage": "intervention",
+    "order": 5,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_play_without_proof",
+    "type": "intervention",
+    "label": "Play without proof ritual",
+    "effect": "Interrupts portfolio logic, content creation pressure, and instrumental leisure",
+    "interventionType": "Participatory design / cultural programming",
+    "stage": "intervention",
+    "order": 6,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_workplace_recovery",
+    "type": "intervention",
+    "label": "Workplace recovery boundary",
+    "effect": "Interrupts AI-enabled output escalation and always-on availability",
+    "interventionType": "Organizational policy, labor design",
+    "stage": "intervention",
+    "order": 7,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_alt_success_metric",
+    "type": "intervention",
+    "label": "Alternative success metric",
+    "effect": "Redefines value around agency, connection, delight, and restoration rather than output alone",
+    "interventionType": "Design-research framework / evaluation tool",
+    "stage": "intervention",
+    "order": 8,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_accessible_play_kit",
+    "type": "intervention",
+    "label": "Accessible material play kit",
+    "effect": "Lowers barriers of money, confidence, time, and “childishness” stigma",
+    "interventionType": "Product-service system",
+    "stage": "intervention",
+    "order": 9,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  },
+  {
+    "id": "int_intergenerational",
+    "type": "intervention",
+    "label": "Intergenerational play format",
+    "effect": "Counteracts age segregation and normalizes play across life stages",
+    "interventionType": "Public program, game, spatial intervention",
+    "stage": "intervention",
+    "order": 10,
+    "selected": false,
+    "sourceSection": "Map-ready intervention nodes"
+  }
+]

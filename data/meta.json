@@ -1,0 +1,156 @@
+{
+  "title": "Joy Deficit — Life-Course Systems Map",
+  "subtitle": "Childhood → Adolescence → Adulthood, across five systems",
+  "centralUser": "adult-in-formation",
+  "centralUserNote": "The map is centered on the “adult-in-formation”: an ordinary adult who is also a creative professional, rather than treating “creative professional” as the sole user. The source recommends a highlighted pathway for people whose work, identity, leisure, and self-promotion are unusually entangled, but does not define one; no such pathway is encoded in this dataset.",
+  "approach": "A life-course approach treats development as a sequence of age-graded roles, opportunities, constraints, and transitions—where earlier conditions shape later ones rather than appearing in isolation.",
+  "thesis": "Across the life course, social systems increasingly reward visible performance, measurable achievement, and externally validated engagement; intrinsic joy—curiosity, voluntary play, absorption, experimentation, connection, and purposeless delight—receives less protected time, legitimacy, and infrastructure.",
+  "centralVisualClaim": "Across the life course, systems increasingly convert play into preparation, performance, data, status, consumption, or recovery for work—while giving progressively less institutional protection to curiosity, direct connection, and purposeless joy.",
+  "designFraming": "Creating conditions in which adults can access play without having to earn, quantify, display, optimize, or justify it.",
+  "designFramingNote": "Position the potential design intervention not as “bringing back childishness.” This framing leaves room for an adult toy, social ritual, service, space, or critical artifact; the eventual intervention should emerge from the most consequential leverage point in the map. Do not select or rank an intervention node.",
+  "caveats": [
+    "This map should not claim that all extrinsic rewards are harmful: Self-Determination Theory distinguishes controlling rewards from informational feedback, and identifies autonomy, competence, and relatedness as psychological needs that sustain self-motivation and wellbeing.",
+    "Evidence suggests expected, tangible, engagement-, completion-, and performance-contingent rewards can reduce later free-choice intrinsic motivation for already-interesting activities.",
+    "Do not label screen use as inherently deficient; distinguish self-directed, social, creative digital play from attention-extractive design.",
+    "International nodes are comparative references, not the map's central scope.",
+    "Age ranges overlap between adjacent substages and are informational only; layout must use substage order, not age."
+  ],
+  "currents": [
+    {
+      "id": "education",
+      "label": "Developmental and educational system",
+      "role": "current",
+      "order": 1,
+      "color": "#0072B2",
+      "systemNodeId": "sys_education"
+    },
+    {
+      "id": "family",
+      "label": "Family, peer, and community system",
+      "role": "current",
+      "order": 2,
+      "color": "#009E73",
+      "systemNodeId": "sys_family"
+    },
+    {
+      "id": "market",
+      "label": "Market, labor, and consumer system",
+      "role": "current",
+      "order": 3,
+      "color": "#E69F00",
+      "systemNodeId": "sys_market"
+    },
+    {
+      "id": "platform",
+      "label": "Media, platform, data, and AI system",
+      "role": "current",
+      "order": 4,
+      "color": "#CC79A7",
+      "systemNodeId": "sys_platform"
+    },
+    {
+      "id": "cultural",
+      "label": "Cultural moral system",
+      "role": "overlay",
+      "order": 5,
+      "color": "#6A51A3",
+      "systemNodeId": "sys_cultural",
+      "description": "Beliefs about worth, maturity, success, discipline, leisure, play, adulthood, and “wasted time.”"
+    }
+  ],
+  "stages": [
+    "stage_childhood",
+    "stage_adolescence",
+    "stage_adulthood"
+  ],
+  "arrowTypes": [
+    {
+      "id": "forward",
+      "meaning": "Development or institutional transition across the timeline"
+    },
+    {
+      "id": "downward",
+      "meaning": "A constraint, loss, or narrowing of possibility"
+    },
+    {
+      "id": "upward",
+      "meaning": "A protective condition, recovery, or restoration of intrinsic joy"
+    },
+    {
+      "id": "circular",
+      "meaning": "A reinforcing feedback loop"
+    },
+    {
+      "id": "dashed",
+      "meaning": "A possible intervention"
+    },
+    {
+      "id": "bidirectional",
+      "meaning": "Reciprocal shaping, such as parent behavior and child preferences (no instances in this dataset)"
+    }
+  ],
+  "valences": [
+    {
+      "id": "protective",
+      "meaning": "Enabling / protective / regenerative"
+    },
+    {
+      "id": "constraining",
+      "meaning": "Constraining / narrowing / extractive"
+    },
+    {
+      "id": "ambivalent",
+      "meaning": "Double-edged; both enabling and extractive outcomes are named in the source"
+    },
+    {
+      "id": "reinforcing",
+      "meaning": "Self-reinforcing feedback (direction of value depends on the loop)"
+    },
+    {
+      "id": "neutral",
+      "meaning": "Structural / sequencing / intervention link without a value direction"
+    }
+  ],
+  "provenanceTypes": [
+    {
+      "id": "explicit",
+      "meaning": "The link or its direction is stated in the source document."
+    },
+    {
+      "id": "inferred",
+      "meaning": "Added by the data author to satisfy the map spec (e.g., 'every pathway should eventually lead toward one or more outcome nodes', arrow semantics, intervention targets). The UI must disclose this."
+    }
+  ],
+  "arrowAssignmentRule": "arrowType was assigned per chain by the data author: protective chains = upward; constraining chains = downward; ambivalent chains use forward for the shared trunk and split into one upward and one downward branch. Renderer must read arrowType from data and must not infer it.",
+  "counts": {
+    "nodes": 178,
+    "edges": 162,
+    "chains": 30,
+    "loops": 7,
+    "references": 5,
+    "nodesByType": {
+      "stage": 3,
+      "substage": 12,
+      "outcome": 5,
+      "system": 5,
+      "factor": 95,
+      "loop_step": 39,
+      "loop": 7,
+      "reference": 2,
+      "intervention": 10
+    },
+    "edgesByArrowType": {
+      "forward": 15,
+      "upward": 25,
+      "downward": 62,
+      "circular": 40,
+      "dashed": 20
+    },
+    "edgesByProvenance": {
+      "inferred": 47,
+      "explicit": 115
+    },
+    "stageChains": 13,
+    "crossChains": 17
+  }
+}

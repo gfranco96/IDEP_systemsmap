@@ -1,0 +1,897 @@
+[
+  {
+    "id": "ch_c1",
+    "title": "Caregiver attunement → agency → intrinsic exploration",
+    "scope": "stage",
+    "stage": "childhood",
+    "system": null,
+    "primaryCurrent": "family",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "enabling",
+      "developmental",
+      "protective"
+    ],
+    "summary": "Responsive caregiving builds felt safety, which allows free exploration and intrinsic competence.",
+    "defaultArrowType": "upward",
+    "defaultValence": "protective",
+    "stepNodeIds": [
+      "ch_c1_s1",
+      "ch_c1_s2",
+      "ch_c1_s3",
+      "ch_c1_s4"
+    ],
+    "edgeIds": [
+      "e012",
+      "e013",
+      "e014"
+    ],
+    "outcomeEdgeIds": [
+      "e015"
+    ],
+    "sourceSection": "Childhood: causal chains #1"
+  },
+  {
+    "id": "ch_c2",
+    "title": "Open-ended objects and unstructured time → imaginative play → flexible meaning-making",
+    "scope": "stage",
+    "stage": "childhood",
+    "system": null,
+    "primaryCurrent": "family",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "affordance",
+      "developmental",
+      "reinforcing"
+    ],
+    "summary": "Loose parts, outdoor space, and peer time enable self-authored play and a lasting capacity to enjoy activity without prescribed outcomes.",
+    "defaultArrowType": "upward",
+    "defaultValence": "protective",
+    "stepNodeIds": [
+      "ch_c2_s1",
+      "ch_c2_s2",
+      "ch_c2_s3",
+      "ch_c2_s4"
+    ],
+    "edgeIds": [
+      "e016",
+      "e017",
+      "e018"
+    ],
+    "outcomeEdgeIds": [
+      "e019"
+    ],
+    "sourceSection": "Childhood: causal chains #2"
+  },
+  {
+    "id": "ch_c3",
+    "title": "School assessment and adult praise → conditional worth → achievement orientation",
+    "scope": "stage",
+    "stage": "childhood",
+    "system": null,
+    "primaryCurrent": "education",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "institutional pressure",
+      "motivational displacement",
+      "cumulative"
+    ],
+    "summary": "Evaluation-centered schooling and praise shift attention from process to performance monitoring and external reward orientation.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_c3_s1",
+      "ch_c3_s2",
+      "ch_c3_s3",
+      "ch_c3_s4"
+    ],
+    "edgeIds": [
+      "e020",
+      "e021",
+      "e022"
+    ],
+    "outcomeEdgeIds": [
+      "e023"
+    ],
+    "sourceSection": "Childhood: causal chains #3"
+  },
+  {
+    "id": "ch_c4",
+    "title": "Toy marketing and intellectual-property ecosystems → desire for branded objects → consumer identity",
+    "scope": "stage",
+    "stage": "childhood",
+    "system": null,
+    "primaryCurrent": "market",
+    "secondaryCurrents": [
+      "platform"
+    ],
+    "order": 4,
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "summary": "Branded media and toys create attachment and collectible desire; the learned link between play, acquisition, and identity can later feed adult consumption markets but can also offer community and creative practices.",
+    "defaultArrowType": "forward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "ch_c4_s1",
+      "ch_c4_s2",
+      "ch_c4_s3",
+      "ch_c4_s4a",
+      "ch_c4_s4b"
+    ],
+    "edgeIds": [
+      "e024",
+      "e025",
+      "e026",
+      "e027"
+    ],
+    "outcomeEdgeIds": [
+      "e028",
+      "e029"
+    ],
+    "sourceSection": "Childhood: causal chains #4"
+  },
+  {
+    "id": "ch_a1",
+    "title": "Peer belonging → social comparison → validation-seeking loop",
+    "scope": "stage",
+    "stage": "adolescence",
+    "system": null,
+    "primaryCurrent": "family",
+    "secondaryCurrents": [
+      "platform"
+    ],
+    "order": 1,
+    "connectionTypes": [
+      "social mediation",
+      "algorithmic amplification",
+      "reinforcing"
+    ],
+    "summary": "Visibility becomes a condition of belonging, driving comparison and external validation-seeking.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_a1_s1",
+      "ch_a1_s2",
+      "ch_a1_s3",
+      "ch_a1_s4"
+    ],
+    "edgeIds": [
+      "e030",
+      "e031",
+      "e032"
+    ],
+    "outcomeEdgeIds": [
+      "e033"
+    ],
+    "sourceSection": "Adolescence: causal chains #1"
+  },
+  {
+    "id": "ch_a2",
+    "title": "Educational credentialization → instrumental hobbies → narrowed play",
+    "scope": "stage",
+    "stage": "adolescence",
+    "system": null,
+    "primaryCurrent": "education",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "institutional incentive",
+      "cultural norm",
+      "motivational displacement"
+    ],
+    "summary": "Admissions and career pressure recode hobbies as résumé assets, shifting the guiding question from enjoyment to advantage.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_a2_s1",
+      "ch_a2_s2",
+      "ch_a2_s3",
+      "ch_a2_s4"
+    ],
+    "edgeIds": [
+      "e034",
+      "e035",
+      "e036"
+    ],
+    "outcomeEdgeIds": [
+      "e037"
+    ],
+    "sourceSection": "Adolescence: causal chains #2"
+  },
+  {
+    "id": "ch_a3",
+    "title": "Digital game design and social media → intermittent reward → repeated engagement",
+    "scope": "stage",
+    "stage": "adolescence",
+    "system": null,
+    "primaryCurrent": "platform",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "summary": "Reward mechanics produce anticipation and repeated checking; engagement data generates revenue and drives further tuning of the mechanics.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_a3_s1",
+      "ch_a3_s2",
+      "ch_a3_s3",
+      "ch_a3_s4",
+      "ch_a3_s5"
+    ],
+    "edgeIds": [
+      "e038",
+      "e039",
+      "e040",
+      "e041",
+      "e043"
+    ],
+    "outcomeEdgeIds": [
+      "e042"
+    ],
+    "sourceSection": "Adolescence: causal chains #3"
+  },
+  {
+    "id": "ch_a4",
+    "title": "Fandom and participatory culture → belonging and making → possible intrinsic-play refuge",
+    "scope": "stage",
+    "stage": "adolescence",
+    "system": null,
+    "primaryCurrent": "family",
+    "secondaryCurrents": [
+      "market"
+    ],
+    "order": 4,
+    "connectionTypes": [
+      "protective social infrastructure",
+      "ambivalent commercialization"
+    ],
+    "summary": "Shared fandoms and making communities can support connection and intrinsic joy when participants keep autonomy and ownership, but the same spaces can be commercialized.",
+    "defaultArrowType": "upward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "ch_a4_s1",
+      "ch_a4_s2",
+      "ch_a4_s3",
+      "ch_a4_s4"
+    ],
+    "edgeIds": [
+      "e044",
+      "e045",
+      "e046"
+    ],
+    "outcomeEdgeIds": [
+      "e047",
+      "e048"
+    ],
+    "sourceSection": "Adolescence: causal chains #4"
+  },
+  {
+    "id": "ch_d1",
+    "title": "Labor market insecurity → productivity imperative → joy deferral",
+    "scope": "stage",
+    "stage": "adulthood",
+    "system": null,
+    "primaryCurrent": "market",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "structural economic pressure",
+      "behavioral adaptation",
+      "cumulative depletion"
+    ],
+    "summary": "Economic insecurity produces a perceived need for constant employability, driving self-optimization and the deferral of joy.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_d1_s1",
+      "ch_d1_s2",
+      "ch_d1_s3",
+      "ch_d1_s4",
+      "ch_d1_s5"
+    ],
+    "edgeIds": [
+      "e049",
+      "e050",
+      "e051",
+      "e052"
+    ],
+    "outcomeEdgeIds": [
+      "e053"
+    ],
+    "sourceSection": "Adulthood: adult pathways #1"
+  },
+  {
+    "id": "ch_d2",
+    "title": "Workplace metrics and AI → accelerated output expectations → burnout risk",
+    "scope": "stage",
+    "stage": "adulthood",
+    "system": null,
+    "primaryCurrent": "market",
+    "secondaryCurrents": [
+      "platform"
+    ],
+    "order": 2,
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "summary": "Measurement and AI tooling raise output and responsiveness expectations, reduce recovery and autonomy, and lead to burnout risk and a joy deficit.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_d2_s1",
+      "ch_d2_s2a",
+      "ch_d2_s2b",
+      "ch_d2_s3",
+      "ch_d2_s4",
+      "ch_d2_s5"
+    ],
+    "edgeIds": [
+      "e054",
+      "e055",
+      "e056",
+      "e057",
+      "e058",
+      "e059"
+    ],
+    "outcomeEdgeIds": [
+      "e060",
+      "e061"
+    ],
+    "sourceSection": "Adulthood: adult pathways #2"
+  },
+  {
+    "id": "ch_d3",
+    "title": "Platform leisure → micro-reward capture → low-recovery entertainment",
+    "scope": "stage",
+    "stage": "adulthood",
+    "system": null,
+    "primaryCurrent": "platform",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "convenience pathway",
+      "behavioral reinforcement",
+      "displacement"
+    ],
+    "summary": "Frictionless screen-based stimulation is often chosen by exhausted people with limited time and energy, and can displace sleep, direct sociality, and effortful restorative play.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "ch_d3_s1",
+      "ch_d3_s2",
+      "ch_d3_s3",
+      "ch_d3_s4"
+    ],
+    "edgeIds": [
+      "e062",
+      "e063",
+      "e064"
+    ],
+    "outcomeEdgeIds": [
+      "e065"
+    ],
+    "sourceSection": "Adulthood: adult pathways #3",
+    "framingNote": "Do not label screen use as inherently deficient; distinguish self-directed, social, creative digital play from attention-extractive design."
+  },
+  {
+    "id": "ch_d4",
+    "title": "Adult toy, hobby, and game markets → material play → dual pathway",
+    "scope": "stage",
+    "stage": "adulthood",
+    "system": null,
+    "primaryCurrent": "market",
+    "secondaryCurrents": [],
+    "order": 4,
+    "connectionTypes": [
+      "material affordance",
+      "market mediation",
+      "ambivalent pathway"
+    ],
+    "summary": "Adult hobby and toy markets provide playful objects and rituals that can support relaxation, flow, and belonging, or can drive scarcity-based purchasing and status display.",
+    "defaultArrowType": "forward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "ch_d4_s1",
+      "ch_d4_s2",
+      "ch_d4_s3a",
+      "ch_d4_s3b"
+    ],
+    "edgeIds": [
+      "e066",
+      "e067",
+      "e068"
+    ],
+    "outcomeEdgeIds": [
+      "e069",
+      "e070"
+    ],
+    "sourceSection": "Adulthood: adult pathways #4",
+    "designImplication": "Your project can seek objects that support repeated, open-ended use without requiring accumulation, competition, or public proof."
+  },
+  {
+    "id": "ch_d5",
+    "title": "Direct social play and third places → relatedness → restorative joy",
+    "scope": "stage",
+    "stage": "adulthood",
+    "system": null,
+    "primaryCurrent": "family",
+    "secondaryCurrents": [],
+    "order": 5,
+    "connectionTypes": [
+      "social infrastructure",
+      "protective",
+      "regenerative"
+    ],
+    "summary": "Recurring in-person contact in shared places builds belonging and ritual, supporting relatedness — one of the core psychological needs associated with self-motivation and wellbeing.",
+    "defaultArrowType": "upward",
+    "defaultValence": "protective",
+    "stepNodeIds": [
+      "ch_d5_s1",
+      "ch_d5_s2",
+      "ch_d5_s3",
+      "ch_d5_s4"
+    ],
+    "edgeIds": [
+      "e071",
+      "e072",
+      "e073"
+    ],
+    "outcomeEdgeIds": [
+      "e074"
+    ],
+    "sourceSection": "Adulthood: adult pathways #5",
+    "evidenceIds": [
+      "ref_sdt_2000"
+    ]
+  },
+  {
+    "id": "xl_fam1",
+    "title": "Caregiver stress / economic precarity → reliance on screen-based entertainment",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_family",
+    "primaryCurrent": "family",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "resource constraint",
+      "indirect"
+    ],
+    "summary": "Less time and emotional bandwidth increases reliance on convenient, screen-based entertainment.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_fam1_s1",
+      "xl_fam1_s2",
+      "xl_fam1_s3"
+    ],
+    "edgeIds": [
+      "e075",
+      "e076"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_fam2",
+    "title": "Family rituals → intergenerational models of joy and relatedness",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_family",
+    "primaryCurrent": "family",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "cultural transmission",
+      "protective"
+    ],
+    "summary": "Games, shared meals, humor, crafting, and storytelling transmit models of joy and relatedness across generations.",
+    "defaultArrowType": "upward",
+    "defaultValence": "protective",
+    "stepNodeIds": [
+      "xl_fam2_s1",
+      "xl_fam2_s2"
+    ],
+    "edgeIds": [
+      "e077"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_fam3",
+    "title": "Conditional approval → internalized productivity-based worth",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_family",
+    "primaryCurrent": "family",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "relational reward conditioning"
+    ],
+    "summary": "Conditional approval becomes internalized as productivity-based worth.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_fam3_s1",
+      "xl_fam3_s2"
+    ],
+    "edgeIds": [
+      "e078"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_edu1",
+    "title": "Testing, grading, ranking → external evaluation as normal",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_education",
+    "primaryCurrent": "education",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "institutional normalization"
+    ],
+    "summary": "Testing, grading, ranking, attendance, and behavioral management make external evaluation the normal condition of learning.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_edu1_s1",
+      "xl_edu1_s2"
+    ],
+    "edgeIds": [
+      "e079"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_edu2",
+    "title": "Recess, arts, exploratory pedagogy → protected autonomy",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_education",
+    "primaryCurrent": "education",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "institutional protection"
+    ],
+    "summary": "Recess, arts, drama, music, workshop learning, and exploratory pedagogy protect autonomy and experimentation.",
+    "defaultArrowType": "upward",
+    "defaultValence": "protective",
+    "stepNodeIds": [
+      "xl_edu2_s1",
+      "xl_edu2_s2"
+    ],
+    "edgeIds": [
+      "e080"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_edu3",
+    "title": "College admissions / employability discourse → hobbies converted into credentials",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_education",
+    "primaryCurrent": "education",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "transition pressure"
+    ],
+    "summary": "Admissions and employability discourse converts adolescent hobbies into credentials.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_edu3_s1",
+      "xl_edu3_s2"
+    ],
+    "edgeIds": [
+      "e081"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_lab1",
+    "title": "Wage conditions, debt, housing, healthcare, childcare costs → time anxiety and risk aversion",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_market",
+    "primaryCurrent": "market",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "material constraint"
+    ],
+    "summary": "Material cost pressures produce time anxiety and risk aversion.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_lab1_s1",
+      "xl_lab1_s2"
+    ],
+    "edgeIds": [
+      "e082"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_lab2",
+    "title": "Management culture and performance measurement → output visibility as proxy for value",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_market",
+    "primaryCurrent": "market",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "managerial incentive"
+    ],
+    "summary": "Management culture and performance measurement make output visibility a proxy for value.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_lab2_s1",
+      "xl_lab2_s2"
+    ],
+    "edgeIds": [
+      "e083"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_lab3",
+    "title": "Leisure industry and adult toy market → commodified access to play",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_market",
+    "primaryCurrent": "market",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "market provisioning; can be both enabling and extractive"
+    ],
+    "summary": "The leisure industry and adult toy market commodify access to play; this can be both enabling and extractive.",
+    "defaultArrowType": "forward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "xl_lab3_s1",
+      "xl_lab3_s2"
+    ],
+    "edgeIds": [
+      "e084"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_plat1",
+    "title": "Metrics → visibility of externally rewarded behavior",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_platform",
+    "primaryCurrent": "platform",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "quantification",
+      "behavioral cue"
+    ],
+    "summary": "Likes, streaks, points, rank, followers, badges, and view counts make externally rewarded behavior visible.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_plat1_s1",
+      "xl_plat1_s2"
+    ],
+    "edgeIds": [
+      "e085"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_plat2",
+    "title": "Variable rewards and notifications → anticipation, repeat checking, engagement",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_platform",
+    "primaryCurrent": "platform",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "behavioral reinforcement",
+      "extraction"
+    ],
+    "summary": "Variable rewards and notifications produce anticipation, repeat checking, and measurable engagement.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_plat2_s1",
+      "xl_plat2_s2"
+    ],
+    "edgeIds": [
+      "e086"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_plat3",
+    "title": "Recommendation algorithms → narrowed attention",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_platform",
+    "primaryCurrent": "platform",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "feedback optimization"
+    ],
+    "summary": "Recommendation algorithms create personalized consumption pathways and narrowed attention.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_plat3_s1",
+      "xl_plat3_s2"
+    ],
+    "edgeIds": [
+      "e087"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_plat4",
+    "title": "Creative AI tools → reduced drudgery or increased output expectations",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_platform",
+    "primaryCurrent": "platform",
+    "secondaryCurrents": [],
+    "order": 4,
+    "connectionTypes": [
+      "contested socio-technical transition"
+    ],
+    "summary": "Creative AI tools may reduce drudgery or increase output expectations and homogenize tool-directed creative labor.",
+    "defaultArrowType": "forward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "xl_plat4_s1",
+      "xl_plat4_s2a",
+      "xl_plat4_s2b"
+    ],
+    "edgeIds": [
+      "e088",
+      "e089"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_cul1",
+    "title": "“Time is money” / hustle culture / self-branding → moralization of output",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_cultural",
+    "primaryCurrent": "cultural",
+    "secondaryCurrents": [],
+    "order": 1,
+    "connectionTypes": [
+      "ideological pressure"
+    ],
+    "summary": "Hustle culture and self-branding moralize output and produce guilt about rest.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_cul1_s1",
+      "xl_cul1_s2"
+    ],
+    "edgeIds": [
+      "e090"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_cul2",
+    "title": "“Toys are for children” → adult shame around play",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_cultural",
+    "primaryCurrent": "cultural",
+    "secondaryCurrents": [],
+    "order": 2,
+    "connectionTypes": [
+      "age norm",
+      "stigma"
+    ],
+    "summary": "The norm that toys are for children produces adult shame around play and material delight.",
+    "defaultArrowType": "downward",
+    "defaultValence": "constraining",
+    "stepNodeIds": [
+      "xl_cul2_s1",
+      "xl_cul2_s2"
+    ],
+    "edgeIds": [
+      "e091"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_cul3",
+    "title": "Wellness culture → legitimated rest or instrumentalized joy",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_cultural",
+    "primaryCurrent": "cultural",
+    "secondaryCurrents": [],
+    "order": 3,
+    "connectionTypes": [
+      "ambivalent cultural translation"
+    ],
+    "summary": "Wellness culture can legitimate rest, but can also instrumentalize joy as another performance requirement.",
+    "defaultArrowType": "forward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "xl_cul3_s1",
+      "xl_cul3_s2a",
+      "xl_cul3_s2b"
+    ],
+    "edgeIds": [
+      "e092",
+      "e093"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  },
+  {
+    "id": "xl_cul4",
+    "title": "Nostalgia and “kidult” discourse → reopened access or packaged consumption",
+    "scope": "cross",
+    "stage": null,
+    "system": "sys_cultural",
+    "primaryCurrent": "cultural",
+    "secondaryCurrents": [],
+    "order": 4,
+    "connectionTypes": [
+      "market-cultural reframing"
+    ],
+    "summary": "Nostalgia and kidult discourse reopen access to toys and play, yet may package play as consumption.",
+    "defaultArrowType": "forward",
+    "defaultValence": "ambivalent",
+    "stepNodeIds": [
+      "xl_cul4_s1",
+      "xl_cul4_s2a",
+      "xl_cul4_s2b"
+    ],
+    "edgeIds": [
+      "e094",
+      "e095"
+    ],
+    "outcomeEdgeIds": [],
+    "sourceSection": "Cross-life systems"
+  }
+]

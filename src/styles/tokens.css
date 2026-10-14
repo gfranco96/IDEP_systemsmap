@@ -1,0 +1,90 @@
+/* Design tokens. Lane colours are the fixed hex values from meta.currents. */
+:root {
+  --c-education: #0072b2;
+  --c-family: #009e73;
+  --c-market: #e69f00;
+  --c-platform: #cc79a7;
+  --c-cultural: #6a51a3;
+
+  --font: 'Helvetica Neue', Helvetica, Arial, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --surface-2: #f0f1f3;
+  --ink: #1b1d22;
+  --muted: #4f5561;
+  --line: #c3c7cf;
+  --neutral: #59606c;
+  --edge-neutral: #636a76;
+  --focus: #1a5fd0;
+  --sel: #111318;
+  --stage-fill: #e9eaee;
+  --out-pro: #e4f1ec;
+  --out-con: #f3e6e3;
+  --ref-fill: #eeeeec;
+  --band-fill: rgba(30, 34, 44, 0.035);
+  --overlay-fill: transparent;
+  --hatch-opacity: 0.16;
+  --shadow: 0 6px 24px rgba(15, 20, 30, 0.16);
+
+  --t-education: rgba(0, 114, 178, 0.12);
+  --t-family: rgba(0, 158, 115, 0.12);
+  --t-market: rgba(230, 159, 0, 0.12);
+  --t-platform: rgba(204, 121, 167, 0.12);
+  --t-cultural: rgba(106, 81, 163, 0.1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #121418;
+    --surface: #1b1e25;
+    --surface-2: #242832;
+    --ink: #eceef2;
+    --muted: #b0b6c2;
+    --line: #3b404c;
+    --neutral: #a3abb8;
+    --edge-neutral: #9aa2af;
+    --focus: #7fb0ff;
+    --sel: #ffffff;
+    --stage-fill: #262a33;
+    --out-pro: #1f3330;
+    --out-con: #3a2729;
+    --ref-fill: #23262d;
+    --band-fill: rgba(255, 255, 255, 0.035);
+    --hatch-opacity: 0.3;
+    --shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+    --t-education: rgba(0, 114, 178, 0.2);
+    --t-family: rgba(0, 158, 115, 0.18);
+    --t-market: rgba(230, 159, 0, 0.16);
+    --t-platform: rgba(204, 121, 167, 0.18);
+    --t-cultural: rgba(106, 81, 163, 0.2);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #121418;
+  --surface: #1b1e25;
+  --surface-2: #242832;
+  --ink: #eceef2;
+  --muted: #b0b6c2;
+  --line: #3b404c;
+  --neutral: #a3abb8;
+  --edge-neutral: #9aa2af;
+  --focus: #7fb0ff;
+  --sel: #ffffff;
+  --stage-fill: #262a33;
+  --out-pro: #1f3330;
+  --out-con: #3a2729;
+  --ref-fill: #23262d;
+  --band-fill: rgba(255, 255, 255, 0.035);
+  --hatch-opacity: 0.3;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  --t-education: rgba(0, 114, 178, 0.2);
+  --t-family: rgba(0, 158, 115, 0.18);
+  --t-market: rgba(230, 159, 0, 0.16);
+  --t-platform: rgba(204, 121, 167, 0.18);
+  --t-cultural: rgba(106, 81, 163, 0.2);
+  color-scheme: dark;
+}

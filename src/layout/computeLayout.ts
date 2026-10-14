@@ -1,0 +1,908 @@
+import type { Chain, CurrentId, Loop, MapNode, StageKey } from '../model/types';
+import { STAGE_KEYS } from '../model/types';
+import type { Graph, ViewState } from '../model/graph';
+import { textWidth, wrapText } from './text';
+
+// ---------------------------------------------------------------------------
+// Constants (SVG user units at zoom 1) — §5
+// ---------------------------------------------------------------------------
+export const L = {
+  gutter: 220,
+  substageCol: 200,
+  stagePad: 40,
+  outcomeGap: 80,
+  outcomeColW: 280,
+  bannerH: 140,
+  stageRowY: 140,
+  stageRowH: 70,
+  substageRowY: 210,
+  substageRowH: 120,
+  lanesTop: 350,
+  laneGap: 10,
+  laneMinH: 150,
+  laneCellPad: 20,
+  crossCollapsedH: 56,
+  culturalStageRowH: 48,
+  mainLoopsMinH: 220,
+  referencesH: 120,
+  interventionsH: 160,
+  bandGap: 24,
+  chipW: 220,
+  chipH: 64,
+  itemGap: 20,
+  hubW: 140,
+  hubH: 136,
+  hubR: 48,
+  stepW: 180,
+  stepH: 72,
+  stepPitch: 220,
+  drift: 20,
+  rowPitch: 88,
+  chainHeaderH: 26,
+  loopStepW: 160,
+  loopStepH: 72,
+  outcomeW: 248,
+  outcomeH: 96,
+  refW: 330,
+  refH: 100,
+  intW: 200,
+  intH: 64,
+  margin: 40,
+};
+
+export type LKind =
+  | 'stage'
+  | 'substage'
+  | 'chip'
+  | 'chainHeader'
+  | 'factor'
+  | 'loop'
+  | 'loop_step'
+  | 'system'
+  | 'outcome'
+  | 'reference'
+  | 'intervention';
+
+export interface TextBlock {
+  lines: { text: string; x: number; y: number }[];
+  size: number;
+  bold: boolean;
+  italic?: boolean;
+  cls: string; // e.g. 't-label', 't-sec' (hidden at low zoom)
+  anchor: 'start' | 'middle';
+  maxWidth: number;
+}
+
+export interface Pill {
+  text: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface LNode {
+  id: string;
+  kind: LKind;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  blocks: TextBlock[];
+  pills?: Pill[];
+  /** full label text (tooltips, aria) */
+  full: string;
+  truncated: boolean;
+  current: CurrentId | null;
+  secondary: CurrentId[];
+  stage: StageKey | 'cross' | 'outcome' | 'reference' | 'intervention' | 'main' | null;
+  expanded?: boolean;
+  /** container that this node is shown inside (chain id / loop id / system id) */
+  container?: string;
+  /** keyboard tab order */
+  order: number;
+}
+
+export interface Band {
+  id: string;
+  kind: 'stageBand' | 'laneStage' | 'laneCross' | 'overlay' | 'mainLoops' | 'references' | 'interventions';
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  current?: CurrentId;
+  label?: TextBlock;
+}
+
+export interface LaneLabel {
+  current: CurrentId;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  block: TextBlock;
+  sub?: TextBlock;
+}
+
+export interface Ring {
+  loopId: string;
+  cx: number;
+  cy: number;
+  r: number;
+}
+
+export interface Layout {
+  nodes: LNode[];
+  byId: Map<string, LNode>;
+  bands: Band[];
+  laneLabels: LaneLabel[];
+  stageBands: { stage: StageKey; x: number; w: number }[];
+  rings: Ring[];
+  leaders: { id: string; x1: number; y1: number; x2: number; y2: number }[];
+  banner: { blocks: TextBlock[]; claimBox: { x: number; y: number; w: number; h: number }; framingBox: { x: number; y: number; w: number; h: number } };
+  contentX0: number;
+  contentX1: number;
+  outcomeX: number;
+  width: number;
+  height: number;
+}
+
+// ---------------------------------------------------------------------------
+// helpers
+// ---------------------------------------------------------------------------
+
+function block(
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  size: number,
+  maxLines: number,
+  opts: { bold?: boolean; italic?: boolean; cls?: string; anchor?: 'start' | 'middle'; lh?: number } = {},
+): { block: TextBlock; truncated: boolean; height: number } {
+  const bold = !!opts.bold;
+  const w = wrapText(text, maxWidth, size, maxLines, bold);
+  const lh = opts.lh ?? Math.round(size * 1.28);
+  return {
+    block: {
+      lines: w.lines.map((t, i) => ({ text: t, x, y: y + i * lh })),
+      size,
+      bold,
+      italic: opts.italic,
+      cls: opts.cls ?? 't-label',
+      anchor: opts.anchor ?? 'start',
+      maxWidth,
+    },
+    truncated: w.truncated,
+    height: w.lines.length * lh,
+  };
+}
+
+/** Wrap text vertically centred in a box of height h starting at padTop. */
+function centredBlock(
+  text: string,
+  boxW: number,
+  boxH: number,
+  pad: number,
+  size: number,
+  maxLines: number,
+  opts: { bold?: boolean; cls?: string; anchor?: 'start' | 'middle'; topReserve?: number } = {},
+) {
+  const lh = Math.round(size * 1.28);
+  const w = wrapText(text, boxW - 2 * pad, size, maxLines, !!opts.bold);
+  const top = opts.topReserve ?? 0;
+  const avail = boxH - top;
+  const textH = w.lines.length * lh;
+  const y0 = top + (avail - textH) / 2 + size * 0.95;
+  const anchor = opts.anchor ?? 'middle';
+  const x = anchor === 'middle' ? boxW / 2 : pad;
+  return {
+    block: {
+      lines: w.lines.map((t, i) => ({ text: t, x, y: y0 + i * lh })),
+      size,
+      bold: !!opts.bold,
+      cls: opts.cls ?? 't-label',
+      anchor,
+      maxWidth: boxW - 2 * pad,
+    } as TextBlock,
+    truncated: w.truncated,
+  };
+}
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+export function overlaps(a: Box, b: Box, margin = 0): boolean {
+  return (
+    a.x < b.x + b.w + margin && b.x < a.x + a.w + margin && a.y < b.y + b.h + margin && b.y < a.y + a.h + margin
+  );
+}
+
+const stageKeyOf = (s: string | null | undefined): StageKey | null =>
+  s && (STAGE_KEYS as string[]).includes(s) ? (s as StageKey) : null;
+
+// ---------------------------------------------------------------------------
+// Container geometry (relative coordinates)
+// ---------------------------------------------------------------------------
+
+interface StepPos {
+  id: string;
+  rx: number;
+  ry: number;
+}
+
+/** §4.3 drift + §5 expanded chain geometry. */
+export function chainGeometry(g: Graph, ch: Chain): { steps: StepPos[]; w: number; h: number } {
+  const drift = ch.defaultArrowType === 'downward' ? L.drift : ch.defaultArrowType === 'upward' ? -L.drift : 0;
+  const raw = ch.stepNodeIds.map((id) => {
+    const n = g.nodeById.get(id)!;
+    const c = n.layout?.col ?? 0;
+    const r = n.layout?.row ?? 0;
+    return { id, rx: c * L.stepPitch, ry: c * drift + r * L.rowPitch };
+  });
+  const minY = Math.min(...raw.map((s) => s.ry));
+  const maxY = Math.max(...raw.map((s) => s.ry));
+  const maxX = Math.max(...raw.map((s) => s.rx));
+  const steps = raw.map((s) => ({ id: s.id, rx: s.rx, ry: s.ry - minY + L.chainHeaderH }));
+  return { steps, w: maxX + L.stepW, h: L.chainHeaderH + (maxY - minY) + L.stepH };
+}
+
+/** §5 expanded loop: ring radius grown from max(110, n×22) until no step overlaps. */
+export function loopGeometry(lp: Loop): { r: number; size: number; steps: { id: string; cx: number; cy: number }[] } {
+  const n = lp.stepNodeIds.length;
+  let r = Math.max(110, n * 22);
+  const place = (rad: number) =>
+    lp.stepNodeIds.map((id, k) => {
+      const phi = (k * 2 * Math.PI) / n;
+      return { id, cx: rad * Math.sin(phi), cy: -rad * Math.cos(phi) };
+    });
+  const hub: Box = { x: -L.hubW / 2, y: -L.hubH / 2, w: L.hubW, h: L.hubH };
+  for (let guard = 0; guard < 200; guard++) {
+    const pos = place(r);
+    const boxes = pos.map((p) => ({ x: p.cx - L.loopStepW / 2, y: p.cy - L.loopStepH / 2, w: L.loopStepW, h: L.loopStepH }));
+    let ok = true;
+    for (let i = 0; i < boxes.length && ok; i++) {
+      if (overlaps(boxes[i], hub, 14)) ok = false;
+      for (let j = i + 1; j < boxes.length && ok; j++) if (overlaps(boxes[i], boxes[j], 14)) ok = false;
+    }
+    if (ok) break;
+    r += 6;
+  }
+  // ring steps are ordered by layout.order
+  const ordered = [...lp.stepNodeIds];
+  return { r, size: 2 * r + 200, steps: place(r).map((p, k) => ({ ...p, id: ordered[k] })) };
+}
+
+// ---------------------------------------------------------------------------
+// Layout
+// ---------------------------------------------------------------------------
+
+interface CellItem {
+  kind: 'chain' | 'loop';
+  id: string;
+  w: number;
+  h: number;
+}
+
+function flow(items: CellItem[], width: number, gap: number) {
+  const pos: { item: CellItem; x: number; y: number }[] = [];
+  let x = 0;
+  let y = 0;
+  let rowH = 0;
+  for (const it of items) {
+    if (x > 0 && x + it.w > width) {
+      x = 0;
+      y += rowH + gap;
+      rowH = 0;
+    }
+    pos.push({ item: it, x, y });
+    x += it.w + gap;
+    rowH = Math.max(rowH, it.h);
+  }
+  return { pos, h: items.length ? y + rowH : 0 };
+}
+
+export function computeLayout(g: Graph, view: ViewState): Layout {
+  const { expanded, layers } = view;
+  const nodes: LNode[] = [];
+  const bands: Band[] = [];
+  const laneLabels: LaneLabel[] = [];
+  const rings: Ring[] = [];
+  const leaders: Layout['leaders'] = [];
+  let order = 0;
+  const push = (n: Omit<LNode, 'order'>) => {
+    const ln = { ...n, order: order++ } as LNode;
+    nodes.push(ln);
+    return ln;
+  };
+
+  const stageLabel = new Map(g.stages.map((s) => [s.stage as StageKey, s.label]));
+
+  const itemFor = (kind: 'chain' | 'loop', id: string): CellItem => {
+    if (kind === 'chain') {
+      if (expanded.has(id)) {
+        const geo = chainGeometry(g, g.chainById.get(id)!);
+        return { kind, id, w: geo.w, h: geo.h };
+      }
+      return { kind, id, w: L.chipW, h: L.chipH };
+    }
+    if (expanded.has(id)) {
+      const s = loopGeometry(g.loopById.get(id)!).size;
+      return { kind, id, w: s, h: s };
+    }
+    return { kind, id, w: L.hubW, h: L.hubH };
+  };
+
+  // ---- cell contents: lane × stage --------------------------------------
+  const laneIds = g.lanes.map((l) => l.id);
+  const cells = new Map<string, CellItem[]>(); // `${lane}|${stage}`
+  for (const lane of [...laneIds, 'cultural' as CurrentId])
+    for (const st of STAGE_KEYS) {
+      const items: CellItem[] = g.stageChains
+        .filter((c) => c.primaryCurrent === lane && c.stage === st)
+        .sort((a, b) => a.order - b.order)
+        .map((c) => itemFor('chain', c.id));
+      if (layers.loops)
+        for (const lp of g.stageLoops.filter((l) => l.primaryCurrent === lane && l.stage === st))
+          items.push(itemFor('loop', lp.id));
+      cells.set(`${lane}|${st}`, items);
+    }
+
+  // ---- stage band widths (§5 Columns) -------------------------------------
+  const stageBands: Layout['stageBands'] = [];
+  let x = L.gutter;
+  for (const st of STAGE_KEYS) {
+    const nSub = g.substagesByStage.get(st)!.length;
+    let widest = 0;
+    for (const lane of [...laneIds, 'cultural'])
+      for (const it of cells.get(`${lane}|${st}`)!) widest = Math.max(widest, it.w);
+    const w = Math.max(nSub * L.substageCol, widest) + L.stagePad;
+    stageBands.push({ stage: st, x, w });
+    x += w;
+  }
+  const contentX0 = L.gutter;
+  const contentX1 = x;
+  const contentW = contentX1 - contentX0;
+  const bandOf = (st: StageKey) => stageBands.find((b) => b.stage === st)!;
+
+  // ---- banner -----------------------------------------------------------
+  const m = g.data.meta;
+  const bannerBlocks: TextBlock[] = [];
+  bannerBlocks.push(block(m.title, 24, 34, 1400, 26, 1, { bold: true, cls: 't-title' }).block);
+  bannerBlocks.push(block(m.subtitle, 24, 56, 1400, 14, 1, { cls: 't-subtitle' }).block);
+  const claimBox = { x: 24, y: 66, w: Math.min(1240, Math.max(900, contentW * 0.56)), h: 68 };
+  bannerBlocks.push(
+    block('Central visual claim', claimBox.x + 14, claimBox.y + 16, 300, 10, 1, { bold: true, cls: 't-kicker' }).block,
+  );
+  bannerBlocks.push(
+    block(m.centralVisualClaim, claimBox.x + 14, claimBox.y + 35, claimBox.w - 28, 14.5, 2, { bold: true, cls: 't-claim', lh: 18 })
+      .block,
+  );
+  const framingBox = { x: claimBox.x + claimBox.w + 20, y: 66, w: 640, h: 68 };
+  bannerBlocks.push(
+    block('Design framing (a framing, not a finding)', framingBox.x + 14, framingBox.y + 16, 600, 10, 1, {
+      bold: true,
+      cls: 't-kicker',
+    }).block,
+  );
+  bannerBlocks.push(
+    block(m.designFraming, framingBox.x + 14, framingBox.y + 35, framingBox.w - 28, 13, 2, { cls: 't-claim', lh: 17 })
+      .block,
+  );
+
+  // ---- stages & substages ----------------------------------------------
+  for (const st of STAGE_KEYS) {
+    const b = bandOf(st);
+    bands.push({ id: `band_${st}`, kind: 'stageBand', x: b.x, y: L.stageRowY, w: b.w, h: 0 });
+  }
+  for (const s of g.stages) {
+    const b = bandOf(s.stage as StageKey);
+    const w = b.w - 40;
+    const lab = block(s.label, 14, 25, w - 28, 18, 1, { bold: true });
+    const tag = block(s.tagline ?? '', 14, 45, w - 28, 12, 1, { cls: 't-sec', italic: true });
+    push({
+      id: s.id,
+      kind: 'stage',
+      x: b.x + 20,
+      y: L.stageRowY + 6,
+      w,
+      h: 58,
+      blocks: [lab.block, tag.block],
+      full: s.label,
+      truncated: lab.truncated || tag.truncated,
+      current: null,
+      secondary: [],
+      stage: s.stage as StageKey,
+    });
+  }
+  for (const st of STAGE_KEYS) {
+    const b = bandOf(st);
+    const subs = g.substagesByStage.get(st)!;
+    const groupW = subs.length * L.substageCol;
+    const startX = b.x + (b.w - groupW) / 2;
+    subs.forEach((s, i) => {
+      const w = L.substageCol - 40;
+      const lab = block(s.label, 10, 20, w - 20, 12.5, 3, { bold: true, lh: 15 });
+      const age = block(s.ageRangeLabel ?? '', 10, 94, w - 20, 11, 1, { cls: 't-sec' });
+      push({
+        id: s.id,
+        kind: 'substage',
+        x: startX + i * L.substageCol + 20,
+        y: L.substageRowY + 8,
+        w,
+        h: 104,
+        blocks: [lab.block, age.block],
+        full: s.label,
+        truncated: lab.truncated || age.truncated,
+        current: null,
+        secondary: [],
+        stage: st,
+      });
+    });
+  }
+
+  // ---- placing helpers --------------------------------------------------
+  const placeChain = (ch: Chain, ox: number, oy: number, stage: LNode['stage']) => {
+    const color = ch.primaryCurrent;
+    if (!expanded.has(ch.id) && ch.scope === 'stage') {
+      // collapsed chip
+      const n = ch.stepNodeIds.length;
+      const ambivalent = ch.defaultValence === 'ambivalent';
+      const badgeW = ambivalent ? textWidth('double-edged', 9, true) + 12 : 0;
+      const dotsW = ch.secondaryCurrents.length * 12;
+      const markerText = `${stageLabel.get(ch.stage as StageKey) ?? ''} · chain · ${n} steps`;
+      const marker = block(markerText, 10, 16, L.chipW - 20 - badgeW - dotsW - 8, 9, 1, { cls: 't-sec t-marker' });
+      const title = block(ch.title, 10, 33, L.chipW - 20, 11.5, 2, { bold: true, lh: 14 });
+      const pills: Pill[] = [];
+      if (ambivalent)
+        pills.push({ text: 'double-edged', x: L.chipW - 8 - badgeW, y: 6, w: badgeW, h: 14 });
+      push({
+        id: ch.id,
+        kind: 'chip',
+        x: ox,
+        y: oy,
+        w: L.chipW,
+        h: L.chipH,
+        blocks: [marker.block, title.block],
+        pills,
+        full: ch.title,
+        truncated: title.truncated,
+        current: color,
+        secondary: ch.secondaryCurrents,
+        stage,
+        expanded: false,
+      });
+      return;
+    }
+    const geo = chainGeometry(g, ch);
+    const ambivalent = ch.defaultValence === 'ambivalent';
+    const badgeW = ambivalent ? textWidth('double-edged', 9, true) + 12 : 0;
+    const headerReserve = ch.scope === 'stage' ? 26 : 0; // room for the collapse button
+    const head = block(ch.title, headerReserve + 4, 15, geo.w - headerReserve - 10 - (badgeW ? badgeW + 8 : 0), 11, 1, {
+      bold: true,
+    });
+    push({
+      id: ch.id,
+      kind: 'chainHeader',
+      x: ox,
+      y: oy,
+      w: geo.w,
+      h: 20,
+      blocks: [head.block],
+      pills: ambivalent ? [{ text: 'double-edged', x: geo.w - badgeW, y: 3, w: badgeW, h: 14 }] : [],
+      full: ch.title,
+      truncated: head.truncated,
+      current: color,
+      secondary: ch.secondaryCurrents,
+      stage,
+      expanded: true,
+    });
+    for (const s of geo.steps) {
+      const node = g.nodeById.get(s.id)!;
+      const c = centredBlock(node.label, L.stepW, L.stepH, 10, 11, 4);
+      push({
+        id: s.id,
+        kind: 'factor',
+        x: ox + s.rx,
+        y: oy + s.ry,
+        w: L.stepW,
+        h: L.stepH,
+        blocks: [c.block],
+        full: node.label,
+        truncated: c.truncated,
+        current: color,
+        secondary: node.secondaryCurrents ?? [],
+        stage,
+        container: ch.scope === 'stage' ? ch.id : ch.system!,
+      });
+    }
+  };
+
+  const hubNode = (lp: Loop, x0: number, y0: number, stage: LNode['stage'], isExpanded: boolean) => {
+    const t = block(lp.title, L.hubW / 2, L.hubR * 2 + 16, L.hubW - 4, 11, 2, { bold: true, anchor: 'middle', lh: 13 });
+    const sub = block(`${lp.stepNodeIds.length} steps`, L.hubW / 2, L.hubR + 30, 80, 9, 1, {
+      anchor: 'middle',
+      cls: 't-sec',
+    });
+    push({
+      id: lp.id,
+      kind: 'loop',
+      x: x0,
+      y: y0,
+      w: L.hubW,
+      h: L.hubH,
+      blocks: [t.block, sub.block],
+      full: lp.title,
+      truncated: t.truncated,
+      current: lp.primaryCurrent,
+      secondary: [],
+      stage,
+      expanded: isExpanded,
+    });
+  };
+
+  const placeLoop = (lp: Loop, ox: number, oy: number, stage: LNode['stage']) => {
+    if (!expanded.has(lp.id)) {
+      hubNode(lp, ox, oy, stage, false);
+      return;
+    }
+    const geo = loopGeometry(lp);
+    const cx = ox + geo.size / 2;
+    const cy = oy + geo.size / 2;
+    rings.push({ loopId: lp.id, cx, cy, r: geo.r });
+    hubNode(lp, cx - L.hubW / 2, cy - L.hubH / 2, stage, true);
+    for (const s of geo.steps) {
+      const node = g.nodeById.get(s.id)!;
+      const c = centredBlock(node.label, L.loopStepW, L.loopStepH, 9, 10.5, 4);
+      push({
+        id: s.id,
+        kind: 'loop_step',
+        x: cx + s.cx - L.loopStepW / 2,
+        y: cy + s.cy - L.loopStepH / 2,
+        w: L.loopStepW,
+        h: L.loopStepH,
+        blocks: [c.block],
+        full: node.label,
+        truncated: c.truncated,
+        current: lp.primaryCurrent,
+        secondary: [],
+        stage,
+        container: lp.id,
+      });
+    }
+  };
+
+  const placeSystem = (sysId: string, laneCurrent: CurrentId, y: number) => {
+    const sys = g.nodeById.get(sysId)!;
+    const isExp = expanded.has(sysId);
+    const w = contentW - 20;
+    const lab = block(sys.label, 34, 27, 330, 13, 1, { bold: true });
+    const labW = Math.min(330, textWidth(lab.block.lines[0]?.text ?? '', 13, true));
+    // leadsTo pills, laid left-to-right, never overflowing the bar
+    const pills: Pill[] = [];
+    let px = 34 + labW + 16;
+    const kickW = textWidth('leads to:', 9.5) + 6;
+    const kick = block('leads to:', px, 26, kickW, 9.5, 1, { cls: 't-sec t-marker' });
+    px += kickW + 4;
+    let truncated = lab.truncated;
+    for (const t of sys.leadsTo ?? []) {
+      const tw = textWidth(t, 10.5) + 16;
+      if (px + tw > w - 10) {
+        truncated = true;
+        break;
+      }
+      pills.push({ text: t, x: px, y: 12, w: tw, h: 20 });
+      px += tw + 6;
+    }
+    push({
+      id: sysId,
+      kind: 'system',
+      x: contentX0 + 10,
+      y,
+      w,
+      h: 44,
+      blocks: [lab.block, kick.block],
+      pills,
+      full: sys.label,
+      truncated,
+      current: laneCurrent,
+      secondary: [],
+      stage: 'cross',
+      expanded: isExp,
+    });
+  };
+
+  /** Cross-life sub-row: returns its height. */
+  const crossRow = (lane: CurrentId, y: number): number => {
+    const cur = g.currentById.get(lane)!;
+    const sysId = cur.systemNodeId;
+    placeSystem(sysId, lane, y + 6);
+    if (!expanded.has(sysId)) return L.crossCollapsedH;
+    const chains = g.crossChainsBySystem.get(sysId) ?? [];
+    const items: CellItem[] = chains.map((c) => {
+      const geo = chainGeometry(g, c);
+      return { kind: 'chain', id: c.id, w: geo.w, h: geo.h };
+    });
+    const f = flow(items, contentW - 40, 32);
+    const top = y + 6 + 44 + 16;
+    for (const p of f.pos) placeChain(g.chainById.get(p.item.id)!, contentX0 + 20 + p.x, top + p.y, 'cross');
+    return 6 + 44 + 16 + f.h + 20;
+  };
+
+  // ---- lanes ------------------------------------------------------------
+  let y = L.lanesTop;
+  const laneRows = new Map<CurrentId, { y: number; stageH: number; h: number }>();
+  const laneList: CurrentId[] = [...laneIds];
+  if (layers.cultural) laneList.push('cultural');
+  for (const lane of laneList) {
+    const isOverlay = lane === 'cultural';
+    // stage sub-row height
+    let maxCell = 0;
+    const flows = new Map<StageKey, ReturnType<typeof flow>>();
+    for (const st of STAGE_KEYS) {
+      const f = flow(cells.get(`${lane}|${st}`)!, bandOf(st).w - L.stagePad, L.itemGap);
+      flows.set(st, f);
+      maxCell = Math.max(maxCell, f.h);
+    }
+    const stageH = isOverlay
+      ? Math.max(L.culturalStageRowH, maxCell ? maxCell + 2 * L.laneCellPad : 0)
+      : Math.max(L.laneMinH, maxCell + 2 * L.laneCellPad);
+    for (const st of STAGE_KEYS) {
+      const b = bandOf(st);
+      bands.push({ id: `lane_${lane}_${st}`, kind: 'laneStage', x: b.x, y, w: b.w, h: stageH, current: lane });
+      for (const p of flows.get(st)!.pos) {
+        const ox = b.x + L.stagePad / 2 + p.x;
+        const oy = y + L.laneCellPad + p.y;
+        if (p.item.kind === 'chain') placeChain(g.chainById.get(p.item.id)!, ox, oy, st);
+        else placeLoop(g.loopById.get(p.item.id)!, ox, oy, st);
+      }
+    }
+    let crossH = 0;
+    if (layers.crossLife) {
+      crossH = crossRow(lane, y + stageH);
+      bands.push({ id: `lanecross_${lane}`, kind: 'laneCross', x: contentX0, y: y + stageH, w: contentW, h: crossH, current: lane });
+    }
+    const h = stageH + crossH;
+    laneRows.set(lane, { y, stageH, h });
+    const cur = g.currentById.get(lane)!;
+    const lb = block(cur.label, 16, 24, L.gutter - 34, 13, 3, { bold: true, cls: 't-lane', lh: 16 });
+    laneLabels.push({
+      current: lane,
+      x: 6,
+      y,
+      w: L.gutter - 14,
+      h,
+      block: lb.block,
+      sub: isOverlay
+        ? block('overlay · spans all lanes', 16, 24 + lb.block.lines.length * 16 + 4, L.gutter - 34, 10, 1, {
+            cls: 't-sec t-marker',
+          }).block
+        : undefined,
+    });
+    y += h + L.laneGap;
+  }
+  const lanesBottom = y - L.laneGap;
+  if (layers.cultural) {
+    bands.push({
+      id: 'overlay_cultural',
+      kind: 'overlay',
+      x: 0,
+      y: L.lanesTop - 4,
+      w: 0, // filled after width is known
+      h: lanesBottom - L.lanesTop + 8,
+      current: 'cultural',
+    });
+  }
+
+  // ---- main loops band ----------------------------------------------------
+  y = lanesBottom + L.bandGap;
+  if (layers.loops) {
+    const items = g.mainLoops.map((lp) => itemFor('loop', lp.id));
+    const total = items.reduce((s, it) => s + it.w, 0);
+    const maxH = Math.max(...items.map((i) => i.h));
+    let bandH = Math.max(L.mainLoopsMinH, maxH + 60);
+    const top = y + 44;
+    if (total + (items.length + 1) * L.itemGap <= contentW) {
+      const gap = (contentW - total) / (items.length + 1);
+      let px = contentX0 + gap;
+      for (const it of items) {
+        placeLoop(g.loopById.get(it.id)!, Math.round(px), top + Math.round((maxH - it.h) / 2), 'main');
+        px += it.w + gap;
+      }
+    } else {
+      const f = flow(items, contentW - 40, 40);
+      for (const p of f.pos) placeLoop(g.loopById.get(p.item.id)!, contentX0 + 20 + p.x, top + p.y, 'main');
+      bandH = Math.max(L.mainLoopsMinH, f.h + 60);
+    }
+    bands.push({
+      id: 'band_mainloops',
+      kind: 'mainLoops',
+      x: contentX0,
+      y,
+      w: contentW,
+      h: bandH,
+      label: block('Main feedback loops (A–D) · cross the whole life course', 14, 22, contentW - 28, 12, 1, {
+        bold: true,
+        cls: 't-band',
+      }).block,
+    });
+    y += bandH + L.bandGap;
+  }
+
+  // ---- outcomes (far right) --------------------------------------------
+  const outcomeX = contentX1 + L.outcomeGap;
+  {
+    const top = L.lanesTop;
+    const bottom = Math.max(lanesBottom, top + g.outcomes.length * (L.outcomeH + 40));
+    const pitch = (bottom - top) / g.outcomes.length;
+    g.outcomes.forEach((o, i) => {
+      const cy = top + pitch * (i + 0.5);
+      const sym = o.polarity === 'protective' ? '▲' : '▼';
+      const lab = centredBlock(o.label, L.outcomeW, L.outcomeH - 18, 30, 14, 2, { bold: true });
+      const pol = block(`${sym} ${o.polarity ?? ''}`, L.outcomeW / 2, L.outcomeH - 16, L.outcomeW - 60, 10.5, 1, {
+        anchor: 'middle',
+        cls: 't-polarity',
+      });
+      push({
+        id: o.id,
+        kind: 'outcome',
+        x: outcomeX + (L.outcomeColW - L.outcomeW) / 2,
+        y: Math.round(cy - L.outcomeH / 2),
+        w: L.outcomeW,
+        h: L.outcomeH,
+        blocks: [lab.block, pol.block],
+        full: o.label,
+        truncated: lab.truncated,
+        current: null,
+        secondary: [],
+        stage: 'outcome',
+      });
+    });
+  }
+  // reorder: spec tab order is stages → substages → lanes → loops → outcomes; outcomes were pushed
+  // after the main loops band already, so order is correct.
+
+  // ---- comparative references -----------------------------------------
+  if (layers.references) {
+    const refs = g.references;
+    const groups = new Map<StageKey, MapNode[]>();
+    for (const r of refs) {
+      const st = stageKeyOf(r.anchor?.stage) ?? 'adulthood';
+      if (!groups.has(st)) groups.set(st, []);
+      groups.get(st)!.push(r);
+    }
+    const top = y + 12;
+    for (const [st, list] of groups) {
+      const b = bandOf(st);
+      const totalW = list.length * L.refW + (list.length - 1) * L.itemGap;
+      let px = b.x + Math.max(10, (b.w - totalW) / 2);
+      for (const r of list) {
+        const head = block(`Comparative reference · ${r.country ?? ''}`, 34, 16, L.refW - 44, 9.5, 1, {
+          bold: true,
+          cls: 't-marker',
+        });
+        const lab = block(r.label, 12, 33, L.refW - 24, 11.5, 2, { bold: true, lh: 14 });
+        const cy0 = 33 + lab.block.lines.length * 14 + 2;
+        const caution = block(`Caution: ${r.caution ?? ''}`, 12, cy0, L.refW - 24, 10, 3, {
+          italic: true,
+          cls: 't-caution',
+          lh: 12,
+        });
+        push({
+          id: r.id,
+          kind: 'reference',
+          x: px,
+          y: top,
+          w: L.refW,
+          h: L.refH,
+          blocks: [head.block, lab.block, caution.block],
+          full: r.label,
+          truncated: lab.truncated || caution.truncated,
+          current: null,
+          secondary: [],
+          stage: 'reference',
+        });
+        // dotted leader lines to the anchor stage/lanes (not graph edges)
+        for (const c of r.anchor?.currents ?? []) {
+          const row = laneRows.get(c);
+          if (!row) continue;
+          const lx = px + L.refW / 2 + (r.anchor!.currents.indexOf(c) - (r.anchor!.currents.length - 1) / 2) * 40;
+          leaders.push({ id: `${r.id}->${c}`, x1: lx, y1: top, x2: lx, y2: row.y + row.stageH - 4 });
+        }
+        px += L.refW + L.itemGap;
+      }
+    }
+    bands.push({
+      id: 'band_references',
+      kind: 'references',
+      x: contentX0,
+      y,
+      w: contentW,
+      h: L.referencesH + 4,
+      label: block('Comparative references · not the map’s central scope', 14, 22, 420, 12, 1, {
+        bold: true,
+        cls: 't-band',
+      }).block,
+    });
+    y += L.referencesH + 4 + L.bandGap;
+  }
+
+  // ---- interventions ----------------------------------------------------
+  if (layers.interventions) {
+    const list = g.interventions;
+    const top = y + 74;
+    const gap = Math.max(L.itemGap, (contentW - list.length * L.intW) / (list.length + 1));
+    list.forEach((n, i) => {
+      const lab = centredBlock(n.label, L.intW, L.intH - 16, 12, 12, 2, { bold: true });
+      const typ = block(n.interventionType ?? '', L.intW / 2, L.intH - 10, L.intW - 20, 9.5, 1, {
+        anchor: 'middle',
+        cls: 't-sec',
+      });
+      push({
+        id: n.id,
+        kind: 'intervention',
+        x: Math.round(contentX0 + gap + i * (L.intW + gap)),
+        y: top,
+        w: L.intW,
+        h: L.intH,
+        blocks: [lab.block, typ.block],
+        full: n.label,
+        truncated: lab.truncated || typ.truncated,
+        current: null,
+        secondary: [],
+        stage: 'intervention',
+      });
+    });
+    const h = Math.max(L.interventionsH, 74 + L.intH + 22);
+    bands.push({
+      id: 'band_interventions',
+      kind: 'interventions',
+      x: contentX0,
+      y,
+      w: contentW,
+      h,
+      label: block('Possible interventions, none selected', 14, 22, contentW - 28, 12, 1, { bold: true, cls: 't-band' })
+        .block,
+    });
+    // design framing note shown in the band header (§9)
+    bands.push({
+      id: 'band_interventions_note',
+      kind: 'interventions',
+      x: contentX0,
+      y,
+      w: 0,
+      h: 0,
+      label: block(g.data.meta.designFramingNote, 14, 42, Math.min(contentW - 28, 1500), 11, 2, {
+        cls: 't-note',
+        italic: true,
+        lh: 14,
+      }).block,
+    });
+    y += h + L.bandGap;
+  }
+
+  const width = outcomeX + L.outcomeColW + L.margin;
+  const height = y + L.margin;
+  for (const b of bands) if (b.kind === 'overlay') b.w = contentX1 + 20;
+
+  // tab order already follows push order; outcomes are pushed after lanes+main loops, before refs.
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  return {
+    nodes,
+    byId,
+    bands,
+    laneLabels,
+    stageBands,
+    rings,
+    leaders,
+    banner: { blocks: bannerBlocks, claimBox, framingBox },
+    contentX0,
+    contentX1,
+    outcomeX,
+    width,
+    height,
+  };
+}

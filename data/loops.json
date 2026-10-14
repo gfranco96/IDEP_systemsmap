@@ -1,0 +1,256 @@
+[
+  {
+    "id": "loop_childhood",
+    "title": "Measurable competence",
+    "scope": "stage",
+    "stage": "childhood",
+    "primaryCurrent": "education",
+    "hubNodeId": "loop_childhood",
+    "loopType": "Reinforcing loop that shifts joy from self-directed exploration toward performance.",
+    "valence": "reinforcing",
+    "stepNodeIds": [
+      "loop_childhood_s1",
+      "loop_childhood_s2",
+      "loop_childhood_s3",
+      "loop_childhood_s4",
+      "loop_childhood_s5"
+    ],
+    "edgeIds": [
+      "e096",
+      "e097",
+      "e098",
+      "e099",
+      "e100"
+    ],
+    "outcomeEdgeIds": [
+      "e101"
+    ],
+    "sourceSection": "Childhood feedback loop",
+    "interventionOpportunities": [
+      "Assessment redesign",
+      "Process-centered feedback",
+      "School recess protection",
+      "Noncompetitive maker/play spaces",
+      "Parent-facing design that values boredom and experimentation"
+    ]
+  },
+  {
+    "id": "loop_adolescence",
+    "title": "Play becomes proof",
+    "scope": "stage",
+    "stage": "adolescence",
+    "primaryCurrent": "education",
+    "hubNodeId": "loop_adolescence",
+    "loopType": "Reinforcing institutional–cultural loop.",
+    "valence": "reinforcing",
+    "stepNodeIds": [
+      "loop_adolescence_s1",
+      "loop_adolescence_s2",
+      "loop_adolescence_s3",
+      "loop_adolescence_s4",
+      "loop_adolescence_s5"
+    ],
+    "edgeIds": [
+      "e102",
+      "e103",
+      "e104",
+      "e105",
+      "e106"
+    ],
+    "outcomeEdgeIds": [
+      "e107"
+    ],
+    "sourceSection": "Adolescence feedback loop",
+    "interventionOpportunities": [
+      "Portfolio systems that preserve process and private experimentation",
+      "Youth spaces not organized around achievement",
+      "Non-ranked games",
+      "Non-public creative tools",
+      "Education policy that protects arts and recess as ends in themselves"
+    ]
+  },
+  {
+    "id": "loop_adulthood",
+    "title": "Productivity ratchet",
+    "scope": "stage",
+    "stage": "adulthood",
+    "primaryCurrent": "market",
+    "hubNodeId": "loop_adulthood",
+    "loopType": "Reinforcing socio-technical extraction loop.",
+    "valence": "reinforcing",
+    "stepNodeIds": [
+      "loop_adulthood_s1",
+      "loop_adulthood_s2",
+      "loop_adulthood_s3",
+      "loop_adulthood_s4",
+      "loop_adulthood_s5",
+      "loop_adulthood_s6"
+    ],
+    "edgeIds": [
+      "e108",
+      "e109",
+      "e110",
+      "e111",
+      "e112",
+      "e113"
+    ],
+    "outcomeEdgeIds": [
+      "e114",
+      "e115"
+    ],
+    "sourceSection": "Adult feedback loop",
+    "interventionOpportunities": [
+      "Organizational norms around workload and AI",
+      "Non-metricated creative rituals",
+      "Playful workplace spaces not tied to output",
+      "Designs that mark recovery as legitimate",
+      "Low-barrier social objects",
+      "Public infrastructure for adult play"
+    ]
+  },
+  {
+    "id": "loop_A",
+    "title": "Extrinsic-reward displacement",
+    "scope": "main",
+    "stage": null,
+    "primaryCurrent": null,
+    "hubNodeId": "loop_A",
+    "loopType": "Reward conditioning → motivational displacement → reinforcing loop.",
+    "valence": "reinforcing",
+    "stepNodeIds": [
+      "loop_A_s1",
+      "loop_A_s2",
+      "loop_A_s3",
+      "loop_A_s4",
+      "loop_A_s5"
+    ],
+    "edgeIds": [
+      "e116",
+      "e117",
+      "e118",
+      "e119",
+      "e120"
+    ],
+    "outcomeEdgeIds": [
+      "e121"
+    ],
+    "sourceSection": "Main map loops: Loop A",
+    "notes": [
+      "Grades, praise, points, money, likes, rankings, and workplace metrics make action legible and socially rewarded.",
+      "People learn to prioritize what can be counted or displayed.",
+      "Their attention can shift away from curiosity, process, and internal satisfaction.",
+      "Reduced access to intrinsically motivated activity makes reward systems feel increasingly necessary."
+    ],
+    "evidenceAnchor": "Anticipated and contingent tangible rewards can undermine free-choice intrinsic motivation for otherwise interesting activities; feedback is different when it is informational rather than controlling.",
+    "evidenceIds": [
+      "ref_rewards_pubmed",
+      "ref_rewards_sagepub"
+    ]
+  },
+  {
+    "id": "loop_B",
+    "title": "Time scarcity and depleted play",
+    "scope": "main",
+    "stage": null,
+    "primaryCurrent": null,
+    "hubNodeId": "loop_B",
+    "loopType": "Structural pressure → depletion → convenience substitution → reinforcing loop.",
+    "valence": "reinforcing",
+    "stepNodeIds": [
+      "loop_B_s1",
+      "loop_B_s2",
+      "loop_B_s3",
+      "loop_B_s4",
+      "loop_B_s5",
+      "loop_B_s6",
+      "loop_B_s7"
+    ],
+    "edgeIds": [
+      "e122",
+      "e123",
+      "e124",
+      "e125",
+      "e126",
+      "e127",
+      "e128"
+    ],
+    "outcomeEdgeIds": [
+      "e129"
+    ],
+    "sourceSection": "Main map loops: Loop B",
+    "notes": [
+      "This loop is central to the “Joy Deficit.”",
+      "It shows why telling individuals to “play more” is insufficient: depleted time, attention, money, and public space are systemic constraints."
+    ]
+  },
+  {
+    "id": "loop_C",
+    "title": "Play-to-productivity capture",
+    "scope": "main",
+    "stage": null,
+    "primaryCurrent": null,
+    "hubNodeId": "loop_C",
+    "loopType": "Institutional capture / commodification / autonomy erosion.",
+    "valence": "reinforcing",
+    "stepNodeIds": [
+      "loop_C_s1",
+      "loop_C_s2",
+      "loop_C_s3",
+      "loop_C_s4",
+      "loop_C_s5"
+    ],
+    "edgeIds": [
+      "e130",
+      "e131",
+      "e132",
+      "e133",
+      "e134"
+    ],
+    "outcomeEdgeIds": [
+      "e135"
+    ],
+    "sourceSection": "Main map loops: Loop C",
+    "notes": [
+      "A hobby becomes a portfolio.",
+      "A creative practice becomes content.",
+      "A game becomes a ranked competition.",
+      "A social activity becomes networking.",
+      "A restorative behavior becomes a wellness metric."
+    ],
+    "designQuestion": "How could an object preserve the boundary between play and proof?"
+  },
+  {
+    "id": "loop_D",
+    "title": "Social play as restoration",
+    "scope": "main",
+    "stage": null,
+    "primaryCurrent": null,
+    "hubNodeId": "loop_D",
+    "loopType": "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop.",
+    "valence": "protective",
+    "stepNodeIds": [
+      "loop_D_s1",
+      "loop_D_s2",
+      "loop_D_s3",
+      "loop_D_s4",
+      "loop_D_s5",
+      "loop_D_s6"
+    ],
+    "edgeIds": [
+      "e136",
+      "e137",
+      "e138",
+      "e139",
+      "e140",
+      "e141"
+    ],
+    "outcomeEdgeIds": [
+      "e142"
+    ],
+    "sourceSection": "Main map loops: Loop D",
+    "notes": [
+      "This is the primary counter-loop.",
+      "It turns joy from a private consumer experience into shared social infrastructure."
+    ]
+  }
+]

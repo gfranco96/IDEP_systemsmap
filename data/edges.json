@@ -1,0 +1,2295 @@
+[
+  {
+    "id": "e001",
+    "source": "stage_childhood",
+    "target": "stage_adolescence",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental / institutional transition"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Timeline progression between parent stages (map spec: forward arrows for institutional transition)."
+  },
+  {
+    "id": "e002",
+    "source": "stage_adolescence",
+    "target": "stage_adulthood",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental / institutional transition"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Timeline progression between parent stages (map spec: forward arrows for institutional transition)."
+  },
+  {
+    "id": "e003",
+    "source": "sub_infancy",
+    "target": "sub_toddler",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e004",
+    "source": "sub_toddler",
+    "target": "sub_early_childhood",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e005",
+    "source": "sub_early_childhood",
+    "target": "sub_middle_childhood",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e006",
+    "source": "sub_middle_childhood",
+    "target": "sub_early_transition",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e007",
+    "source": "sub_early_adolescence",
+    "target": "sub_middle_adolescence",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e008",
+    "source": "sub_middle_adolescence",
+    "target": "sub_late_adolescence",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e009",
+    "source": "sub_early_working",
+    "target": "sub_established",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e010",
+    "source": "sub_established",
+    "target": "sub_later_adulthood",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e011",
+    "source": "sub_later_adulthood",
+    "target": "sub_elderhood",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "developmental sequence"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "note": "Ordered substage sequence within a parent stage."
+  },
+  {
+    "id": "e012",
+    "source": "ch_c1_s1",
+    "target": "ch_c1_s2",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "enabling",
+      "developmental",
+      "protective"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c1",
+    "loopId": null
+  },
+  {
+    "id": "e013",
+    "source": "ch_c1_s2",
+    "target": "ch_c1_s3",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "enabling",
+      "developmental",
+      "protective"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c1",
+    "loopId": null
+  },
+  {
+    "id": "e014",
+    "source": "ch_c1_s3",
+    "target": "ch_c1_s4",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "enabling",
+      "developmental",
+      "protective"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c1",
+    "loopId": null
+  },
+  {
+    "id": "e015",
+    "source": "ch_c1_s4",
+    "target": "out_intrinsic_joy",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "enabling",
+      "developmental",
+      "protective"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_c1",
+    "loopId": null
+  },
+  {
+    "id": "e016",
+    "source": "ch_c2_s1",
+    "target": "ch_c2_s2",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "affordance",
+      "developmental",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c2",
+    "loopId": null
+  },
+  {
+    "id": "e017",
+    "source": "ch_c2_s2",
+    "target": "ch_c2_s3",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "affordance",
+      "developmental",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c2",
+    "loopId": null
+  },
+  {
+    "id": "e018",
+    "source": "ch_c2_s3",
+    "target": "ch_c2_s4",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "affordance",
+      "developmental",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c2",
+    "loopId": null
+  },
+  {
+    "id": "e019",
+    "source": "ch_c2_s4",
+    "target": "out_intrinsic_joy",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "affordance",
+      "developmental",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c2",
+    "loopId": null
+  },
+  {
+    "id": "e020",
+    "source": "ch_c3_s1",
+    "target": "ch_c3_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional pressure",
+      "motivational displacement",
+      "cumulative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c3",
+    "loopId": null
+  },
+  {
+    "id": "e021",
+    "source": "ch_c3_s2",
+    "target": "ch_c3_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional pressure",
+      "motivational displacement",
+      "cumulative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c3",
+    "loopId": null
+  },
+  {
+    "id": "e022",
+    "source": "ch_c3_s3",
+    "target": "ch_c3_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional pressure",
+      "motivational displacement",
+      "cumulative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c3",
+    "loopId": null
+  },
+  {
+    "id": "e023",
+    "source": "ch_c3_s4",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional pressure",
+      "motivational displacement",
+      "cumulative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c3",
+    "loopId": null
+  },
+  {
+    "id": "e024",
+    "source": "ch_c4_s1",
+    "target": "ch_c4_s2",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c4",
+    "loopId": null
+  },
+  {
+    "id": "e025",
+    "source": "ch_c4_s2",
+    "target": "ch_c4_s3",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c4",
+    "loopId": null
+  },
+  {
+    "id": "e026",
+    "source": "ch_c4_s3",
+    "target": "ch_c4_s4a",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c4",
+    "loopId": null
+  },
+  {
+    "id": "e027",
+    "source": "ch_c4_s3",
+    "target": "ch_c4_s4b",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_c4",
+    "loopId": null
+  },
+  {
+    "id": "e028",
+    "source": "ch_c4_s4a",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_c4",
+    "loopId": null
+  },
+  {
+    "id": "e029",
+    "source": "ch_c4_s4b",
+    "target": "out_restorative_play",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "market shaping",
+      "identity formation",
+      "ambivalent"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_c4",
+    "loopId": null
+  },
+  {
+    "id": "e030",
+    "source": "ch_a1_s1",
+    "target": "ch_a1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "social mediation",
+      "algorithmic amplification",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a1",
+    "loopId": null
+  },
+  {
+    "id": "e031",
+    "source": "ch_a1_s2",
+    "target": "ch_a1_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "social mediation",
+      "algorithmic amplification",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a1",
+    "loopId": null
+  },
+  {
+    "id": "e032",
+    "source": "ch_a1_s3",
+    "target": "ch_a1_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "social mediation",
+      "algorithmic amplification",
+      "reinforcing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a1",
+    "loopId": null
+  },
+  {
+    "id": "e033",
+    "source": "ch_a1_s4",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "social mediation",
+      "algorithmic amplification",
+      "reinforcing"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_a1",
+    "loopId": null
+  },
+  {
+    "id": "e034",
+    "source": "ch_a2_s1",
+    "target": "ch_a2_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional incentive",
+      "cultural norm",
+      "motivational displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a2",
+    "loopId": null
+  },
+  {
+    "id": "e035",
+    "source": "ch_a2_s2",
+    "target": "ch_a2_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional incentive",
+      "cultural norm",
+      "motivational displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a2",
+    "loopId": null
+  },
+  {
+    "id": "e036",
+    "source": "ch_a2_s3",
+    "target": "ch_a2_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional incentive",
+      "cultural norm",
+      "motivational displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a2",
+    "loopId": null
+  },
+  {
+    "id": "e037",
+    "source": "ch_a2_s4",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional incentive",
+      "cultural norm",
+      "motivational displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a2",
+    "loopId": null
+  },
+  {
+    "id": "e038",
+    "source": "ch_a3_s1",
+    "target": "ch_a3_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a3",
+    "loopId": null
+  },
+  {
+    "id": "e039",
+    "source": "ch_a3_s2",
+    "target": "ch_a3_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a3",
+    "loopId": null
+  },
+  {
+    "id": "e040",
+    "source": "ch_a3_s3",
+    "target": "ch_a3_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a3",
+    "loopId": null
+  },
+  {
+    "id": "e041",
+    "source": "ch_a3_s4",
+    "target": "ch_a3_s5",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a3",
+    "loopId": null
+  },
+  {
+    "id": "e042",
+    "source": "ch_a3_s3",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_a3",
+    "loopId": null
+  },
+  {
+    "id": "e043",
+    "source": "ch_a3_s5",
+    "target": "ch_a3_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "data extraction",
+      "behavioral reinforcement",
+      "commercial feedback loop"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a3",
+    "loopId": null,
+    "loopClosure": true,
+    "note": "Source names this connection type a 'commercial feedback loop'; closure edge added to depict it."
+  },
+  {
+    "id": "e044",
+    "source": "ch_a4_s1",
+    "target": "ch_a4_s2",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "protective social infrastructure",
+      "ambivalent commercialization"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a4",
+    "loopId": null
+  },
+  {
+    "id": "e045",
+    "source": "ch_a4_s2",
+    "target": "ch_a4_s3",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "protective social infrastructure",
+      "ambivalent commercialization"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a4",
+    "loopId": null
+  },
+  {
+    "id": "e046",
+    "source": "ch_a4_s1",
+    "target": "ch_a4_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "protective social infrastructure",
+      "ambivalent commercialization"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a4",
+    "loopId": null
+  },
+  {
+    "id": "e047",
+    "source": "ch_a4_s3",
+    "target": "out_intrinsic_joy",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "protective social infrastructure",
+      "ambivalent commercialization"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_a4",
+    "loopId": null
+  },
+  {
+    "id": "e048",
+    "source": "ch_a4_s4",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "protective social infrastructure",
+      "ambivalent commercialization"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_a4",
+    "loopId": null
+  },
+  {
+    "id": "e049",
+    "source": "ch_d1_s1",
+    "target": "ch_d1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "structural economic pressure",
+      "behavioral adaptation",
+      "cumulative depletion"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d1",
+    "loopId": null
+  },
+  {
+    "id": "e050",
+    "source": "ch_d1_s2",
+    "target": "ch_d1_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "structural economic pressure",
+      "behavioral adaptation",
+      "cumulative depletion"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d1",
+    "loopId": null
+  },
+  {
+    "id": "e051",
+    "source": "ch_d1_s3",
+    "target": "ch_d1_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "structural economic pressure",
+      "behavioral adaptation",
+      "cumulative depletion"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d1",
+    "loopId": null
+  },
+  {
+    "id": "e052",
+    "source": "ch_d1_s4",
+    "target": "ch_d1_s5",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "structural economic pressure",
+      "behavioral adaptation",
+      "cumulative depletion"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d1",
+    "loopId": null
+  },
+  {
+    "id": "e053",
+    "source": "ch_d1_s5",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "structural economic pressure",
+      "behavioral adaptation",
+      "cumulative depletion"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_d1",
+    "loopId": null
+  },
+  {
+    "id": "e054",
+    "source": "ch_d2_s1",
+    "target": "ch_d2_s2a",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e055",
+    "source": "ch_d2_s1",
+    "target": "ch_d2_s2b",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e056",
+    "source": "ch_d2_s2a",
+    "target": "ch_d2_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e057",
+    "source": "ch_d2_s2b",
+    "target": "ch_d2_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e058",
+    "source": "ch_d2_s3",
+    "target": "ch_d2_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e059",
+    "source": "ch_d2_s4",
+    "target": "ch_d2_s5",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e060",
+    "source": "ch_d2_s4",
+    "target": "out_burnout",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e061",
+    "source": "ch_d2_s5",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "socio-technical acceleration",
+      "workload intensification",
+      "negative feedback on wellbeing"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d2",
+    "loopId": null
+  },
+  {
+    "id": "e062",
+    "source": "ch_d3_s1",
+    "target": "ch_d3_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "convenience pathway",
+      "behavioral reinforcement",
+      "displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d3",
+    "loopId": null
+  },
+  {
+    "id": "e063",
+    "source": "ch_d3_s2",
+    "target": "ch_d3_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "convenience pathway",
+      "behavioral reinforcement",
+      "displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d3",
+    "loopId": null
+  },
+  {
+    "id": "e064",
+    "source": "ch_d3_s3",
+    "target": "ch_d3_s4",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "convenience pathway",
+      "behavioral reinforcement",
+      "displacement"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d3",
+    "loopId": null
+  },
+  {
+    "id": "e065",
+    "source": "ch_d3_s4",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "convenience pathway",
+      "behavioral reinforcement",
+      "displacement"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_d3",
+    "loopId": null
+  },
+  {
+    "id": "e066",
+    "source": "ch_d4_s1",
+    "target": "ch_d4_s2",
+    "arrowType": "forward",
+    "valence": "neutral",
+    "connectionTypes": [
+      "material affordance",
+      "market mediation",
+      "ambivalent pathway"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d4",
+    "loopId": null
+  },
+  {
+    "id": "e067",
+    "source": "ch_d4_s2",
+    "target": "ch_d4_s3a",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "material affordance",
+      "market mediation",
+      "ambivalent pathway"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d4",
+    "loopId": null
+  },
+  {
+    "id": "e068",
+    "source": "ch_d4_s2",
+    "target": "ch_d4_s3b",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "material affordance",
+      "market mediation",
+      "ambivalent pathway"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d4",
+    "loopId": null
+  },
+  {
+    "id": "e069",
+    "source": "ch_d4_s3a",
+    "target": "out_restorative_play",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "material affordance",
+      "market mediation",
+      "ambivalent pathway"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_d4",
+    "loopId": null
+  },
+  {
+    "id": "e070",
+    "source": "ch_d4_s3b",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "material affordance",
+      "market mediation",
+      "ambivalent pathway"
+    ],
+    "provenance": "inferred",
+    "chainId": "ch_d4",
+    "loopId": null
+  },
+  {
+    "id": "e071",
+    "source": "ch_d5_s1",
+    "target": "ch_d5_s2",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "social infrastructure",
+      "protective",
+      "regenerative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d5",
+    "loopId": null
+  },
+  {
+    "id": "e072",
+    "source": "ch_d5_s2",
+    "target": "ch_d5_s3",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "social infrastructure",
+      "protective",
+      "regenerative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d5",
+    "loopId": null
+  },
+  {
+    "id": "e073",
+    "source": "ch_d5_s3",
+    "target": "ch_d5_s4",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "social infrastructure",
+      "protective",
+      "regenerative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d5",
+    "loopId": null
+  },
+  {
+    "id": "e074",
+    "source": "ch_d5_s4",
+    "target": "out_restorative_play",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "social infrastructure",
+      "protective",
+      "regenerative"
+    ],
+    "provenance": "explicit",
+    "chainId": "ch_d5",
+    "loopId": null
+  },
+  {
+    "id": "e075",
+    "source": "xl_fam1_s1",
+    "target": "xl_fam1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "resource constraint",
+      "indirect"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_fam1",
+    "loopId": null
+  },
+  {
+    "id": "e076",
+    "source": "xl_fam1_s2",
+    "target": "xl_fam1_s3",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "resource constraint",
+      "indirect"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_fam1",
+    "loopId": null
+  },
+  {
+    "id": "e077",
+    "source": "xl_fam2_s1",
+    "target": "xl_fam2_s2",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "cultural transmission",
+      "protective"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_fam2",
+    "loopId": null
+  },
+  {
+    "id": "e078",
+    "source": "xl_fam3_s1",
+    "target": "xl_fam3_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "relational reward conditioning"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_fam3",
+    "loopId": null
+  },
+  {
+    "id": "e079",
+    "source": "xl_edu1_s1",
+    "target": "xl_edu1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "institutional normalization"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_edu1",
+    "loopId": null
+  },
+  {
+    "id": "e080",
+    "source": "xl_edu2_s1",
+    "target": "xl_edu2_s2",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "institutional protection"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_edu2",
+    "loopId": null
+  },
+  {
+    "id": "e081",
+    "source": "xl_edu3_s1",
+    "target": "xl_edu3_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "transition pressure"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_edu3",
+    "loopId": null
+  },
+  {
+    "id": "e082",
+    "source": "xl_lab1_s1",
+    "target": "xl_lab1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "material constraint"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_lab1",
+    "loopId": null
+  },
+  {
+    "id": "e083",
+    "source": "xl_lab2_s1",
+    "target": "xl_lab2_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "managerial incentive"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_lab2",
+    "loopId": null
+  },
+  {
+    "id": "e084",
+    "source": "xl_lab3_s1",
+    "target": "xl_lab3_s2",
+    "arrowType": "forward",
+    "valence": "ambivalent",
+    "connectionTypes": [
+      "market provisioning; can be both enabling and extractive"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_lab3",
+    "loopId": null
+  },
+  {
+    "id": "e085",
+    "source": "xl_plat1_s1",
+    "target": "xl_plat1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "quantification",
+      "behavioral cue"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_plat1",
+    "loopId": null
+  },
+  {
+    "id": "e086",
+    "source": "xl_plat2_s1",
+    "target": "xl_plat2_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "behavioral reinforcement",
+      "extraction"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_plat2",
+    "loopId": null
+  },
+  {
+    "id": "e087",
+    "source": "xl_plat3_s1",
+    "target": "xl_plat3_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "feedback optimization"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_plat3",
+    "loopId": null
+  },
+  {
+    "id": "e088",
+    "source": "xl_plat4_s1",
+    "target": "xl_plat4_s2a",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "contested socio-technical transition"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_plat4",
+    "loopId": null
+  },
+  {
+    "id": "e089",
+    "source": "xl_plat4_s1",
+    "target": "xl_plat4_s2b",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "contested socio-technical transition"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_plat4",
+    "loopId": null
+  },
+  {
+    "id": "e090",
+    "source": "xl_cul1_s1",
+    "target": "xl_cul1_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "ideological pressure"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_cul1",
+    "loopId": null
+  },
+  {
+    "id": "e091",
+    "source": "xl_cul2_s1",
+    "target": "xl_cul2_s2",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "age norm",
+      "stigma"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_cul2",
+    "loopId": null
+  },
+  {
+    "id": "e092",
+    "source": "xl_cul3_s1",
+    "target": "xl_cul3_s2a",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "ambivalent cultural translation"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_cul3",
+    "loopId": null
+  },
+  {
+    "id": "e093",
+    "source": "xl_cul3_s1",
+    "target": "xl_cul3_s2b",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "ambivalent cultural translation"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_cul3",
+    "loopId": null
+  },
+  {
+    "id": "e094",
+    "source": "xl_cul4_s1",
+    "target": "xl_cul4_s2a",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "market-cultural reframing"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_cul4",
+    "loopId": null
+  },
+  {
+    "id": "e095",
+    "source": "xl_cul4_s1",
+    "target": "xl_cul4_s2b",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "market-cultural reframing"
+    ],
+    "provenance": "explicit",
+    "chainId": "xl_cul4",
+    "loopId": null
+  },
+  {
+    "id": "e096",
+    "source": "loop_childhood_s1",
+    "target": "loop_childhood_s2",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing loop that shifts joy from self-directed exploration toward performance"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_childhood"
+  },
+  {
+    "id": "e097",
+    "source": "loop_childhood_s2",
+    "target": "loop_childhood_s3",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing loop that shifts joy from self-directed exploration toward performance"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_childhood"
+  },
+  {
+    "id": "e098",
+    "source": "loop_childhood_s3",
+    "target": "loop_childhood_s4",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing loop that shifts joy from self-directed exploration toward performance"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_childhood"
+  },
+  {
+    "id": "e099",
+    "source": "loop_childhood_s4",
+    "target": "loop_childhood_s5",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing loop that shifts joy from self-directed exploration toward performance"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_childhood"
+  },
+  {
+    "id": "e100",
+    "source": "loop_childhood_s5",
+    "target": "loop_childhood_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing loop that shifts joy from self-directed exploration toward performance"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_childhood",
+    "loopClosure": true
+  },
+  {
+    "id": "e101",
+    "source": "loop_childhood",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Reinforcing loop that shifts joy from self-directed exploration toward performance"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": "loop_childhood"
+  },
+  {
+    "id": "e102",
+    "source": "loop_adolescence_s1",
+    "target": "loop_adolescence_s2",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing institutional–cultural loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adolescence"
+  },
+  {
+    "id": "e103",
+    "source": "loop_adolescence_s2",
+    "target": "loop_adolescence_s3",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing institutional–cultural loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adolescence"
+  },
+  {
+    "id": "e104",
+    "source": "loop_adolescence_s3",
+    "target": "loop_adolescence_s4",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing institutional–cultural loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adolescence"
+  },
+  {
+    "id": "e105",
+    "source": "loop_adolescence_s4",
+    "target": "loop_adolescence_s5",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing institutional–cultural loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adolescence"
+  },
+  {
+    "id": "e106",
+    "source": "loop_adolescence_s5",
+    "target": "loop_adolescence_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing institutional–cultural loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adolescence",
+    "loopClosure": true
+  },
+  {
+    "id": "e107",
+    "source": "loop_adolescence",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Reinforcing institutional–cultural loop"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": "loop_adolescence"
+  },
+  {
+    "id": "e108",
+    "source": "loop_adulthood_s1",
+    "target": "loop_adulthood_s2",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e109",
+    "source": "loop_adulthood_s2",
+    "target": "loop_adulthood_s3",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e110",
+    "source": "loop_adulthood_s3",
+    "target": "loop_adulthood_s4",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e111",
+    "source": "loop_adulthood_s4",
+    "target": "loop_adulthood_s5",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e112",
+    "source": "loop_adulthood_s5",
+    "target": "loop_adulthood_s6",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e113",
+    "source": "loop_adulthood_s6",
+    "target": "loop_adulthood_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_adulthood",
+    "loopClosure": true
+  },
+  {
+    "id": "e114",
+    "source": "loop_adulthood",
+    "target": "out_burnout",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e115",
+    "source": "loop_adulthood",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Reinforcing socio-technical extraction loop"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": "loop_adulthood"
+  },
+  {
+    "id": "e116",
+    "source": "loop_A_s1",
+    "target": "loop_A_s2",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reward conditioning → motivational displacement → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_A"
+  },
+  {
+    "id": "e117",
+    "source": "loop_A_s2",
+    "target": "loop_A_s3",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reward conditioning → motivational displacement → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_A"
+  },
+  {
+    "id": "e118",
+    "source": "loop_A_s3",
+    "target": "loop_A_s4",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reward conditioning → motivational displacement → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_A"
+  },
+  {
+    "id": "e119",
+    "source": "loop_A_s4",
+    "target": "loop_A_s5",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reward conditioning → motivational displacement → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_A"
+  },
+  {
+    "id": "e120",
+    "source": "loop_A_s5",
+    "target": "loop_A_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Reward conditioning → motivational displacement → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_A",
+    "loopClosure": true
+  },
+  {
+    "id": "e121",
+    "source": "loop_A",
+    "target": "out_extrinsic_orientation",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Reward conditioning → motivational displacement → reinforcing loop"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": "loop_A"
+  },
+  {
+    "id": "e122",
+    "source": "loop_B_s1",
+    "target": "loop_B_s2",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e123",
+    "source": "loop_B_s2",
+    "target": "loop_B_s3",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e124",
+    "source": "loop_B_s3",
+    "target": "loop_B_s4",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e125",
+    "source": "loop_B_s4",
+    "target": "loop_B_s5",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e126",
+    "source": "loop_B_s5",
+    "target": "loop_B_s6",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e127",
+    "source": "loop_B_s6",
+    "target": "loop_B_s7",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e128",
+    "source": "loop_B_s7",
+    "target": "loop_B_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B",
+    "loopClosure": true
+  },
+  {
+    "id": "e129",
+    "source": "loop_B",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Structural pressure → depletion → convenience substitution → reinforcing loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_B"
+  },
+  {
+    "id": "e130",
+    "source": "loop_C_s1",
+    "target": "loop_C_s2",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Institutional capture / commodification / autonomy erosion"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_C"
+  },
+  {
+    "id": "e131",
+    "source": "loop_C_s2",
+    "target": "loop_C_s3",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Institutional capture / commodification / autonomy erosion"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_C"
+  },
+  {
+    "id": "e132",
+    "source": "loop_C_s3",
+    "target": "loop_C_s4",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Institutional capture / commodification / autonomy erosion"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_C"
+  },
+  {
+    "id": "e133",
+    "source": "loop_C_s4",
+    "target": "loop_C_s5",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Institutional capture / commodification / autonomy erosion"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_C"
+  },
+  {
+    "id": "e134",
+    "source": "loop_C_s5",
+    "target": "loop_C_s1",
+    "arrowType": "circular",
+    "valence": "reinforcing",
+    "connectionTypes": [
+      "Institutional capture / commodification / autonomy erosion"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_C",
+    "loopClosure": true
+  },
+  {
+    "id": "e135",
+    "source": "loop_C",
+    "target": "out_joy_deficit",
+    "arrowType": "downward",
+    "valence": "constraining",
+    "connectionTypes": [
+      "Institutional capture / commodification / autonomy erosion"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": "loop_C"
+  },
+  {
+    "id": "e136",
+    "source": "loop_D_s1",
+    "target": "loop_D_s2",
+    "arrowType": "circular",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D"
+  },
+  {
+    "id": "e137",
+    "source": "loop_D_s2",
+    "target": "loop_D_s3",
+    "arrowType": "circular",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D"
+  },
+  {
+    "id": "e138",
+    "source": "loop_D_s3",
+    "target": "loop_D_s4",
+    "arrowType": "circular",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D"
+  },
+  {
+    "id": "e139",
+    "source": "loop_D_s4",
+    "target": "loop_D_s5",
+    "arrowType": "circular",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D"
+  },
+  {
+    "id": "e140",
+    "source": "loop_D_s5",
+    "target": "loop_D_s6",
+    "arrowType": "circular",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D"
+  },
+  {
+    "id": "e141",
+    "source": "loop_D_s6",
+    "target": "loop_D_s1",
+    "arrowType": "circular",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D",
+    "loopClosure": true
+  },
+  {
+    "id": "e142",
+    "source": "loop_D",
+    "target": "out_restorative_play",
+    "arrowType": "upward",
+    "valence": "protective",
+    "connectionTypes": [
+      "Enabling condition → social reinforcement → regenerative loop. The primary counter-loop"
+    ],
+    "provenance": "explicit",
+    "chainId": null,
+    "loopId": "loop_D"
+  },
+  {
+    "id": "e143",
+    "source": "int_protected_time",
+    "target": "loop_childhood",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e144",
+    "source": "int_protected_time",
+    "target": "loop_B",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e145",
+    "source": "int_nonevaluative_feedback",
+    "target": "ch_c3_s2",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e146",
+    "source": "int_nonevaluative_feedback",
+    "target": "loop_A",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e147",
+    "source": "int_open_ended_object",
+    "target": "ch_c2_s2",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "reinforces",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e148",
+    "source": "int_open_ended_object",
+    "target": "out_intrinsic_joy",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "reinforces",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e149",
+    "source": "int_antiextractive_digital",
+    "target": "ch_a3_s1",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e150",
+    "source": "int_antiextractive_digital",
+    "target": "xl_plat2_s1",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e151",
+    "source": "int_adult_third_place",
+    "target": "loop_D",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "reinforces",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e152",
+    "source": "int_adult_third_place",
+    "target": "ch_d5_s1",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "reinforces",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e153",
+    "source": "int_play_without_proof",
+    "target": "loop_C",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e154",
+    "source": "int_play_without_proof",
+    "target": "loop_adolescence",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e155",
+    "source": "int_workplace_recovery",
+    "target": "loop_adulthood",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e156",
+    "source": "int_workplace_recovery",
+    "target": "ch_d2_s2b",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e157",
+    "source": "int_alt_success_metric",
+    "target": "loop_A",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "redefines",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e158",
+    "source": "int_alt_success_metric",
+    "target": "xl_lab2_s2",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "redefines",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e159",
+    "source": "int_accessible_play_kit",
+    "target": "ch_d4_s3a",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "reinforces",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e160",
+    "source": "int_accessible_play_kit",
+    "target": "xl_cul2_s2",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e161",
+    "source": "int_intergenerational",
+    "target": "sub_later_adulthood",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "reinforces",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  },
+  {
+    "id": "e162",
+    "source": "int_intergenerational",
+    "target": "xl_cul2_s2",
+    "arrowType": "dashed",
+    "valence": "neutral",
+    "connectionTypes": [
+      "possible intervention"
+    ],
+    "provenance": "inferred",
+    "chainId": null,
+    "loopId": null,
+    "relation": "interrupts",
+    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+  }
+]

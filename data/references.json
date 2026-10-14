@@ -1,0 +1,49 @@
+[
+  {
+    "id": "ref_lifecourse",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3072576/",
+    "supports": "Life-course approach: development as a sequence of age-graded roles, opportunities, constraints, and transitions, where earlier conditions shape later ones.",
+    "usedBy": [
+      "meta"
+    ],
+    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+  },
+  {
+    "id": "ref_rewards_pubmed",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/10589297/",
+    "supports": "Expected, tangible, engagement-, completion-, and performance-contingent rewards can reduce later free-choice intrinsic motivation for already-interesting activities.",
+    "usedBy": [
+      "meta",
+      "loop_A"
+    ],
+    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+  },
+  {
+    "id": "ref_rewards_sagepub",
+    "url": "https://journals.sagepub.com/doi/10.3102/00346543071001001",
+    "supports": "Contingent rewards and intrinsic motivation; informational versus controlling feedback.",
+    "usedBy": [
+      "loop_A"
+    ],
+    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+  },
+  {
+    "id": "ref_sdt_2000",
+    "url": "https://selfdeterminationtheory.org/SDT/documents/2000_RyanDeci_SDT.pdf",
+    "supports": "Self-Determination Theory: autonomy, competence, and relatedness as psychological needs that sustain self-motivation and wellbeing; distinguishes controlling rewards from informational feedback.",
+    "usedBy": [
+      "meta",
+      "ch_d5"
+    ],
+    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+  },
+  {
+    "id": "ref_oecd_denmark",
+    "url": "https://oecd-better-life-index.truth-and-beauty.net/countries/denmark/",
+    "supports": "Denmark time-use satisfaction and life satisfaction figures as cited in the source.",
+    "usedBy": [
+      "ref_denmark"
+    ],
+    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+  }
+]
