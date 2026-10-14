@@ -157,10 +157,8 @@ function NodeShapeInner({ n, emph, selected, onActivate, onDouble, onHover, onFo
           </>
         );
       case 'outcome': {
-        const i = 18;
-        const pts = `${i},0 ${n.w - i},0 ${n.w},${n.h / 2} ${n.w - i},${n.h} ${i},${n.h} 0,${n.h / 2}`;
         const pol = g.nodeById.get(n.id)?.polarity;
-        return <polygon className={`shape pol-${pol}`} points={pts} />;
+        return <rect className={`shape pol-${pol}`} width={n.w} height={n.h} rx={10} />;
       }
       case 'reference':
         return (

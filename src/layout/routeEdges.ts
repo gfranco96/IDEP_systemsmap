@@ -606,9 +606,8 @@ export function routeEdges(g: Graph, layout: Layout, aggs: AggEdge[]): RoutedEdg
     const spacing = n > 1 ? Math.max(10, Math.min(14, (o.h - 16) / (n - 1))) : 0;
     list.forEach((a, i) => {
       const y = cy + (i - (n - 1) / 2) * spacing;
-      // left edge of the hexagon at this y (inset 18 at top/bottom)
-      const inset = (18 * Math.abs(y - cy)) / (o.h / 2);
-      outcomeSlots.set(a.key, { x: o.x + inset, y });
+      // outcomes are rounded rectangles: links enter the straight left side
+      outcomeSlots.set(a.key, { x: o.x, y });
       outcomeStub.set(a.key, 14 + i * 7);
     });
   }

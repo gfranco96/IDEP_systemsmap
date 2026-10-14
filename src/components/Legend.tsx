@@ -103,7 +103,7 @@ export function Legend() {
         </li>
         <li>
           <svg width={34} height={20} aria-hidden>
-            <polygon points="6,2 28,2 33,10 28,18 6,18 1,10" className="lg-outcome" />
+            <rect x={1} y={2} width={32} height={16} rx={5} className="lg-outcome" />
           </svg>
           Outcome · ▲ protective / ▼ constraining
         </li>

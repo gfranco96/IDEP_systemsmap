@@ -36,7 +36,7 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
 
 ## Revision 3 — further changes requested by the map author
 
-1. Stage dividers are thin (1 px) short-dashed (3 px / 3 px) lines drawn with `vector-effect: non-scaling-stroke`, so they
+1. Stage dividers are thin (0.5 px) short-dashed (3 px / 3 px) lines drawn with `vector-effect: non-scaling-stroke`, so they
    keep the same on-screen thickness at every zoom level.
 2. All pop-ups (details window, Legend, Menu, About, walk-through, tooltips, breadcrumbs) use ~8–9 px type
    (headings ~10 px); the details window is 260 px wide.

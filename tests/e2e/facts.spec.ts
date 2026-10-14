@@ -346,7 +346,7 @@ test('row titles are rotated in a narrow gutter; stage dividers are thin, short-
   const d = page.getByTestId('stage-divider').first();
   await expect(d).toHaveAttribute('vector-effect', 'non-scaling-stroke');
   const sw = await d.evaluate((e) => parseFloat(getComputedStyle(e).strokeWidth));
-  expect(sw).toBe(1);
+  expect(sw).toBe(0.5);
   expect(await d.evaluate((e) => getComputedStyle(e).strokeDasharray)).toBe('3px, 3px');
 });
 

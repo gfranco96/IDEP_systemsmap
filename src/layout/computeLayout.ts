@@ -719,7 +719,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     g.outcomes.forEach((o, i) => {
       const cy = top + pitch * (i + 0.5);
       const sym = o.polarity === 'protective' ? '▲' : '▼';
-      const lab = centredBlock(o.label, L.outcomeW, L.outcomeH - 18, 26, 13, 2, { bold: true });
+      const lab = centredBlock(o.label, L.outcomeW, L.outcomeH - 18, 14, 13, 2, { bold: true });
       const pol = block(`${sym} ${o.polarity ?? ''}`, L.outcomeW / 2, L.outcomeH - 16, L.outcomeW - 60, 10.5, 1, {
         anchor: 'middle',
         cls: 't-polarity',
