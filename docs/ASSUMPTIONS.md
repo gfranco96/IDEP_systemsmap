@@ -102,6 +102,23 @@ was not changed.
    across the space the outcome links run in, up to the outcome boxes; its title is centred over the whole column.
    The cultural hatch stops at the adulthood edge.
 
+## Revision 7 — About panel, legend, QR code
+
+- **Data edits requested by the author** (in `data/meta.json` and `tools/build_data.py`): `subtitle`
+  ("… across five ‘systemic layers’"), `centralUserNote` (text after the colon), `approach`, and both
+  `provenanceTypes` meanings (explicit: "The relationship is explicitly stated in the literature."; inferred:
+  "Inferred through observation in ethnographic research and conclusion across sources in literature review.").
+  These definitions also appear in a link's details window.
+- **About panel:** removed the Design framing, Reading notes and How-arrows-were-assigned sections; "Link provenance"
+  renamed "Relationship branch definition"; "Evidence links" replaced by **Sources**, the 30 citations supplied by the
+  author, stored verbatim in the new `data/sources.json` (italics marked with `*…*`; 7 entries have no URL).
+  Note: this replaces the earlier rule of showing only domain names because metadata was unverified — these
+  citations were supplied by the author.
+- **Legend:** inferred-link description reworded by the author; line samples are no longer clipped.
+- **QR code:** `docs/qr-code.png` / `docs/qr-code.svg` (regenerate with `npm run qr`) point to
+  https://gfranco96.github.io/IDEP_systemsmap/. Exported PNGs carry the same QR code in a footer strip at the
+  bottom-right ("Interactive version"); an e2e test decodes it from a real export.
+
 ## Interpretations
 
 ### Project & data

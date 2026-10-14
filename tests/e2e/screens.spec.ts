@@ -40,7 +40,12 @@ async function textOverflow(page: Page) {
 test('first visit opens the About panel', async ({ page }) => {
   const problems = await open(page, '');
   await expect(page.getByTestId('about-panel')).toBeVisible();
-  await expect(page.getByTestId('about-panel')).toContainText('Reading notes');
+  const about = page.getByTestId('about-panel');
+  await expect(about).toContainText('Relationship branch definition');
+  await expect(about).toContainText('across five ‘systemic layers’');
+  await expect(about.getByTestId('sources').locator('li')).toHaveCount(30);
+  for (const gone of ['Reading notes', 'How arrows were assigned', 'Design framing', 'Link provenance', 'Evidence links'])
+    await expect(about).not.toContainText(gone);
   await shot(page, '00-about');
   expect(problems).toEqual([]);
 });

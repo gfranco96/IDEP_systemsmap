@@ -1242,9 +1242,7 @@ ol.steps li.current {
 .legend li {
   margin: 2px 0;
 }
-.legend-arrows li svg {
-  height: 16px;
-}
+
 
 /* About */
 .modal {
@@ -1496,4 +1494,30 @@ ol.steps li.current {
 .tour .btn {
   font-size: 5.67px;
   min-height: 13px;
+}
+
+/* legend: line samples are never clipped; clear space between icon and description */
+.legend-arrows li {
+  gap: 4px;
+  margin: 5px 0;
+}
+.legend-arrows li svg {
+  overflow: visible;
+  height: 22px;
+  width: 72px;
+  flex: none;
+}
+.legend li > svg {
+  overflow: visible;
+}
+/* About: sources */
+.modal ol.sources {
+  padding-left: 18px;
+  margin: 3px 0;
+}
+.modal ol.sources li {
+  margin: 0 0 4px;
+}
+.modal ol.sources a {
+  word-break: break-all;
 }

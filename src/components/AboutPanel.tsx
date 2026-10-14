@@ -1,7 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { graph as g } from '../data/loadData';
+import { graph as g, sources } from '../data/loadData';
 import { useStore } from '../state/store';
-import { domainOf } from './DetailPanel';
+
+const PROV_LABEL: Record<string, string> = { explicit: 'Explicit', inferred: 'Inferred' };
+
+/** Renders *italic* spans in a citation; all other text is shown verbatim. */
+function Citation({ text }: { text: string }) {
+  const parts = text.split(/\*([^*]+)\*/g);
+  return <>{parts.map((p, i) => (i % 2 ? <em key={i}>{p}</em> : <span key={i}>{p}</span>))}</>;
+}
 
 export function AboutPanel() {
   const { state, dispatch } = useStore();
@@ -12,7 +19,6 @@ export function AboutPanel() {
   }, [state.about]);
   if (!state.about) return null;
   const close = () => dispatch({ type: 'setAbout', value: false });
-  const metaRefs = g.data.references.filter((r) => r.usedBy.includes('meta'));
   return (
     <div className="modal-backdrop" onClick={close}>
       <div
@@ -40,42 +46,31 @@ export function AboutPanel() {
         <p>{m.approach}</p>
         <h4>Thesis</h4>
         <p>{m.thesis}</p>
-        <h4>Design framing</h4>
-        <p>{m.designFraming}</p>
-        <p className="callout neutral">{m.designFramingNote}</p>
-        <h4>Reading notes</h4>
-        <ul>
-          {m.caveats.map((c, i) => (
-            <li key={i}>{c}</li>
-          ))}
-        </ul>
-        <h4>How arrows were assigned</h4>
-        <p>{m.arrowAssignmentRule}</p>
-        <h4>Link provenance</h4>
+        <h4>Relationship branch definition</h4>
         <dl className="kv">
           {m.provenanceTypes.map((p) => (
             <div key={p.id}>
-              <dt>{p.id}</dt>
+              <dt>{PROV_LABEL[p.id] ?? p.id}</dt>
               <dd>{p.meaning}</dd>
             </div>
           ))}
         </dl>
-        {metaRefs.length > 0 && (
-          <>
-            <h4>Evidence links</h4>
-            <ul className="evidence">
-              {metaRefs.map((r) => (
-                <li key={r.id}>
-                  <a href={r.url} target="_blank" rel="noopener noreferrer">
-                    {domainOf(r.url)}
+        <h4>Sources</h4>
+        <ol className="sources" data-testid="sources">
+          {sources.map((s) => (
+            <li key={s.n} value={s.n}>
+              <Citation text={s.citation} />
+              {s.url && (
+                <>
+                  {' '}
+                  <a href={s.url} target="_blank" rel="noopener noreferrer">
+                    {s.url}
                   </a>
-                  <div className="muted">{r.supports}</div>
-                </li>
-              ))}
-            </ul>
-            <p className="fine">Link text shows the domain only; bibliographic metadata has not been independently verified.</p>
-          </>
-        )}
+                </>
+              )}
+            </li>
+          ))}
+        </ol>
         <div className="modal-actions">
           <button type="button" className="btn primary" onClick={close}>
             Explore the map

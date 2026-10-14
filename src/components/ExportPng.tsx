@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { graph as g } from '../data/loadData';
+import QRCode from 'qrcode';
+import { graph as g, LIVE_URL } from '../data/loadData';
 import { aggregateEdges } from '../model/graph';
 import { computeLayout } from '../layout/computeLayout';
 import { routeEdges } from '../layout/routeEdges';
@@ -11,6 +12,8 @@ import { Backdrop, CulturalOverlay, LaneLabels } from './Lane';
 import { APP_TITLE } from './Toolbar';
 
 const TITLE_H = 70;
+const FOOTER_H = 300; // strip at the bottom that carries the QR code back to the interactive map
+const QR_SIZE = 220;
 const noop = () => {};
 
 // Presentation properties copied inline so the standalone SVG renders like the page (no stylesheet in an <img>).
@@ -30,6 +33,29 @@ function inlineStyles(src: Element, dst: Element) {
     .join(';');
   dst.setAttribute('style', style);
   for (let i = 0; i < src.children.length; i++) inlineStyles(src.children[i], dst.children[i]);
+}
+
+/** Draws a QR code (with quiet zone, caption and address) whose bottom-right corner is at (right, bottom). */
+function drawQr(ctx: CanvasRenderingContext2D, right: number, bottom: number, ink: string) {
+  const qr = QRCode.create(LIVE_URL, { errorCorrectionLevel: 'M' });
+  const n = qr.modules.size;
+  const quiet = 4;
+  const cell = QR_SIZE / (n + 2 * quiet);
+  const x0 = right - QR_SIZE;
+  const y0 = bottom - QR_SIZE;
+  ctx.fillStyle = '#ffffff'; // scanners need dark-on-light, regardless of theme
+  ctx.fillRect(x0, y0, QR_SIZE, QR_SIZE);
+  ctx.fillStyle = '#000000';
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++)
+      if (qr.modules.get(r, c)) ctx.fillRect(x0 + (c + quiet) * cell, y0 + (r + quiet) * cell, cell + 0.4, cell + 0.4);
+  ctx.fillStyle = ink;
+  ctx.textAlign = 'right';
+  ctx.font = '700 15px ui-monospace, Menlo, Monaco, Consolas, monospace';
+  ctx.fillText('Interactive version', x0 - 16, y0 + 24);
+  ctx.font = '12px ui-monospace, Menlo, Monaco, Consolas, monospace';
+  ctx.fillText('Scan to explore the map', x0 - 16, y0 + 44);
+  ctx.fillText(LIVE_URL, x0 - 16, y0 + 62);
 }
 
 async function svgToPng(svg: SVGSVGElement, w: number, h: number, filename: string) {
@@ -53,6 +79,8 @@ async function svgToPng(svg: SVGSVGElement, w: number, h: number, filename: stri
     const ctx = canvas.getContext('2d')!;
     ctx.scale(scale, scale);
     ctx.drawImage(img, 0, 0, w, h);
+    const cs = getComputedStyle(document.documentElement);
+    drawQr(ctx, w - 40, h - 40, cs.getPropertyValue('--ink').trim() || '#1b1d22');
     const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, 'image/png'));
     if (!blob) throw new Error('PNG encoding failed');
     const a = document.createElement('a');
@@ -77,7 +105,7 @@ export function ExportPng({ state, onDone }: { state: State; onDone: (err?: Erro
     [layout, view, state.edgeFilter],
   );
   const W = layout.width;
-  const H = layout.height + TITLE_H;
+  const H = layout.height + TITLE_H + FOOTER_H;
 
   useEffect(() => {
     let cancelled = false;

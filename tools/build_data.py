@@ -687,10 +687,10 @@ for r in REFS:
 # --------------------------------------------------------------------- META
 META = dict(
     title="Joy Deficit \u2014 Life-Course Systems Map",
-    subtitle="Childhood \u2192 Adolescence \u2192 Adulthood, across five systems",
+    subtitle="Childhood \u2192 Adolescence \u2192 Adulthood, across five \u2018systemic layers\u2019",
     centralUser="adult-in-formation",
-    centralUserNote="The map is centered on the \u201cadult-in-formation\u201d: an ordinary adult who is also a creative professional, rather than treating \u201ccreative professional\u201d as the sole user. The source recommends a highlighted pathway for people whose work, identity, leisure, and self-promotion are unusually entangled, but does not define one; no such pathway is encoded in this dataset.",
-    approach="A life-course approach treats development as a sequence of age-graded roles, opportunities, constraints, and transitions\u2014where earlier conditions shape later ones rather than appearing in isolation.",
+    centralUserNote="The map is centered on the \u201cadult-in-formation\u201d: the user is an ordinary adult who has succumbed to the unspoken pressures and rules set by the reward systems in place at the different stages of their life. The lens is that of a person whose work, identity, leisure, and self-promotion are unusually entangled.",
+    approach="A chronologic approach treats growth and identity development as a sequence of age defined roles within reward systems, opportunities, constraints, and transitions, where earlier conditions shape later ones rather than appearing in isolation.",
     thesis="Across the life course, social systems increasingly reward visible performance, measurable achievement, and externally validated engagement; intrinsic joy\u2014curiosity, voluntary play, absorption, experimentation, connection, and purposeless delight\u2014receives less protected time, legitimacy, and infrastructure.",
     centralVisualClaim="Across the life course, systems increasingly convert play into preparation, performance, data, status, consumption, or recovery for work\u2014while giving progressively less institutional protection to curiosity, direct connection, and purposeless joy.",
     designFraming="Creating conditions in which adults can access play without having to earn, quantify, display, optimize, or justify it.",
@@ -720,8 +720,8 @@ META = dict(
         dict(id="neutral", meaning="Structural / sequencing / intervention link without a value direction"),
     ],
     provenanceTypes=[
-        dict(id="explicit", meaning="The link or its direction is stated in the source document."),
-        dict(id="inferred", meaning="Added by the data author to satisfy the map spec (e.g., 'every pathway should eventually lead toward one or more outcome nodes', arrow semantics, intervention targets). The UI must disclose this."),
+        dict(id="explicit", meaning="The relationship is explicitly stated in the literature."),
+        dict(id="inferred", meaning="Inferred through observation in ethnographic research and conclusion across sources in literature review."),
     ],
     arrowAssignmentRule="arrowType was assigned per chain by the data author: protective chains = upward; constraining chains = downward; ambivalent chains use forward for the shared trunk and split into one upward and one downward branch. Renderer must read arrowType from data and must not infer it.",
 )

@@ -168,6 +168,18 @@ test('menu opens a column under the top-right button; export downloads a PNG of 
   const h = buf.readUInt32BE(20);
   expect(h).toBeGreaterThan(w); // the fully expanded map is taller than wide
   expect(w).toBeGreaterThan(4000);
+  // a QR code in the bottom-right corner leads back to the interactive map
+  const { PNG } = await import('pngjs');
+  const jsQR = (await import('jsqr')).default;
+  const png = PNG.sync.read(buf);
+  const cw = 900;
+  const crop = new Uint8ClampedArray(cw * cw * 4);
+  for (let y = 0; y < cw; y++)
+    for (let x = 0; x < cw; x++) {
+      const si = ((png.height - cw + y) * png.width + (png.width - cw + x)) * 4;
+      crop.set(png.data.subarray(si, si + 4), (y * cw + x) * 4);
+    }
+  expect(jsQR(crop, cw, cw)?.data).toBe('https://gfranco96.github.io/IDEP_systemsmap/');
 });
 
 test('two-finger scroll pans, pinch (ctrl+wheel) zooms', async ({ page }) => {
@@ -435,4 +447,19 @@ test('stage dividers are hidden behind cross-life system boxes; outcomes column 
   const lane = await page.evaluate(() => Math.max(...[...document.querySelectorAll('rect.lane-bg')].map((r) => r.getBoundingClientRect().right)));
   expect(col.x - lane).toBeLessThan(6);
   expect(col.x - lane).toBeGreaterThanOrEqual(0);
+});
+
+test('legend line samples are fully visible', async ({ page }) => {
+  await open(page, BASE);
+  await page.getByRole('button', { name: 'Legend' }).click();
+  const clipped = await page.locator('.legend-arrows li').evaluateAll((lis) =>
+    lis.map((li) => {
+      const svg = li.querySelector('svg')!;
+      const box = svg.getBoundingClientRect();
+      const content = (svg.querySelector('.edge-line') as SVGGraphicsElement).getBoundingClientRect();
+      return getComputedStyle(svg).overflow === 'visible' && content.height <= box.height + 8;
+    }),
+  );
+  expect(clipped.every(Boolean)).toBe(true);
+  await expect(page.getByTestId('legend')).toContainText('Relationship not explicitly extracted from source');
 });
