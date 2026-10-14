@@ -8,7 +8,12 @@ import { ALL_CONTAINERS, g, view } from './helpers';
 function overlapPairs(L: Layout) {
   const out: string[] = [];
   for (let i = 0; i < L.nodes.length; i++)
-    for (let j = i + 1; j < L.nodes.length; j++) if (overlaps(L.nodes[i], L.nodes[j])) out.push(`${L.nodes[i].id} × ${L.nodes[j].id}`);
+    for (let j = i + 1; j < L.nodes.length; j++) {
+      const a = L.nodes[i];
+      const b = L.nodes[j];
+      if (a.container === b.id || b.container === a.id) continue; // an expanded system box holds its chains
+      if (overlaps(a, b)) out.push(`${a.id} × ${b.id}`);
+    }
   return out;
 }
 
@@ -98,26 +103,39 @@ describe('layout invariants (§5 hard requirements)', () => {
     }
   });
 
-  it('houses an expanded cross-life system’s chains in one box spanning all stages', () => {
-    const L = computeLayout(g, view(['sys_education']));
-    const house = L.houses.find((h) => h.id === 'sys_education')!;
-    expect(house.x).toBeLessThanOrEqual(L.stageBands[0].x + 20);
-    expect(house.x + house.w).toBeGreaterThanOrEqual(L.contentX1 - 20);
-    for (const c of g.crossChainsBySystem.get('sys_education')!) {
-      const ids = [c.id, ...c.stepNodeIds];
-      for (const id of ids) {
-        const n = L.byId.get(id)!;
-        expect(n.x).toBeGreaterThanOrEqual(house.x);
-        expect(n.x + n.w).toBeLessThanOrEqual(house.x + house.w);
-        expect(n.y).toBeGreaterThanOrEqual(house.y);
-        expect(n.y + n.h).toBeLessThanOrEqual(house.y + house.h);
-      }
-      // steps are spread across the whole box width
-      const steps = c.stepNodeIds.map((id) => L.byId.get(id)!);
-      const last = steps.reduce((a, b) => (b.x > a.x ? b : a));
-      expect(last.x + last.w).toBeGreaterThan(house.x + house.w - 60);
+  it('an expanded cross-life system box grows to hold its chains side by side across all stages', () => {
+    for (const sysId of ['sys_education', 'sys_platform', 'sys_cultural']) {
+      const L = computeLayout(g, view([sysId]));
+      const box = L.byId.get(sysId)!;
+      expect(box.h).toBeGreaterThan(150); // grew vertically
+      expect(box.x).toBeLessThanOrEqual(L.stageBands[0].x + 20);
+      expect(box.x + box.w).toBeGreaterThanOrEqual(L.contentX1 - 20);
+      const chains = g.crossChainsBySystem.get(sysId)!;
+      const headers = chains.map((c) => L.byId.get(c.id)!);
+      // side by side: all on one row, left to right in data order, not overlapping
+      expect(new Set(headers.map((h) => h.y)).size).toBe(1);
+      for (let i = 1; i < headers.length; i++) expect(headers[i].x).toBeGreaterThanOrEqual(headers[i - 1].x + headers[i - 1].w);
+      for (const c of chains)
+        for (const id of [c.id, ...c.stepNodeIds]) {
+          const n = L.byId.get(id)!;
+          expect(n.x).toBeGreaterThanOrEqual(box.x);
+          expect(n.x + n.w).toBeLessThanOrEqual(box.x + box.w);
+          expect(n.y).toBeGreaterThanOrEqual(box.y + 44);
+          expect(n.y + n.h).toBeLessThanOrEqual(box.y + box.h);
+        }
     }
     expect(g.chainById.get('xl_edu3')!.title.startsWith('Academic admissions')).toBe(true);
+  });
+
+  it('outcome boxes are exactly as tall as their text', () => {
+    const L = computeLayout(g, view());
+    for (const o of g.outcomes) {
+      const n = L.byId.get(o.id)!;
+      const pol = n.blocks[2].lines[0];
+      expect(n.h - pol.y).toBeLessThanOrEqual(12); // polarity line sits at the bottom
+      const lastDesc = n.blocks[1].lines[n.blocks[1].lines.length - 1];
+      expect(pol.y - lastDesc.y).toBeLessThanOrEqual(20); // no gap between description and polarity
+    }
   });
 
   it('outcome bars show the bold name and the full description', () => {

@@ -561,7 +561,7 @@ ol.steps li.current {
 /* ---------------------------------------------------------------- tooltip */
 .tooltip {
   position: absolute;
-  transform: translate(-50%, calc(-100% - 10px));
+  transform: translate(-50%, calc(-100% - 5px));
   max-width: 340px;
   background: var(--ink);
   color: var(--bg);
@@ -764,8 +764,8 @@ ol.steps li.current {
 /* constant on-screen width at every zoom level (non-scaling stroke) */
 .stage-divider {
   stroke: var(--neutral);
-  stroke-width: 0.5px;
-  stroke-dasharray: 3 3;
+  stroke-width: 0.25px;
+  stroke-dasharray: 1.5 1.5;
 }
 .band rect {
   fill: var(--band-fill);
@@ -1364,4 +1364,136 @@ ol.steps li.current {
 }
 .menu-wrap {
   gap: 3px;
+}
+
+/* ================================================================ revision 5
+   hover bubbles at half size; every pop-up window's type at 2/3; bold titles one step larger */
+.tooltip {
+  font-size: 4.25px;
+  max-width: 130px;
+  padding: 2.5px 3.5px;
+  border-radius: 3px;
+}
+.tooltip strong {
+  font-size: 4.9px;
+  margin-bottom: 1.5px;
+}
+
+/* details window */
+.detail-panel {
+  font-size: 6px;
+}
+.detail-panel h2 {
+  font-size: 7.7px;
+}
+.detail-panel .type-badge,
+.dp-section h3 {
+  font-size: 5.75px;
+}
+.kv dt {
+  font-size: 5.33px;
+}
+.kv {
+  grid-template-columns: 52px 1fr;
+}
+.detail-panel .fine,
+.detail-panel .tag,
+.detail-panel .prov,
+.detail-panel .badge-inline {
+  font-size: 5px;
+}
+.detail-panel .btn {
+  font-size: 5.67px;
+  min-height: 11px;
+}
+.detail-panel .icon-btn {
+  font-size: 8px;
+  min-width: 11px;
+  min-height: 11px;
+}
+.detail-panel strong {
+  font-size: 6.9px;
+}
+.breadcrumbs ol {
+  font-size: 5.67px;
+}
+
+/* legend drop-down */
+.legend {
+  font-size: 5.33px;
+}
+.legend h3 {
+  font-size: 5.4px;
+}
+.legend strong {
+  font-size: 6.1px;
+}
+.legend .count,
+.legend .fine,
+.legend .badge-inline {
+  font-size: 5px;
+}
+
+/* menu drop-down */
+.menu-col,
+.menu-item {
+  font-size: 6px;
+}
+.filters,
+.check {
+  font-size: 5.67px;
+}
+.filters legend {
+  font-size: 5.75px;
+}
+.filters .btn.small {
+  font-size: 5.67px;
+  min-height: 12px;
+}
+
+/* About */
+.modal {
+  font-size: 6px;
+}
+.modal h2 {
+  font-size: 8.4px;
+}
+.modal h3 {
+  font-size: 7.7px;
+}
+.modal h4 {
+  font-size: 5.75px;
+}
+.modal .btn,
+.modal .fine {
+  font-size: 5.67px;
+}
+.modal .btn {
+  min-height: 14px;
+}
+.modal .icon-btn {
+  font-size: 9px;
+  min-width: 14px;
+  min-height: 14px;
+}
+
+/* walk-through (window size unchanged; text scrolls inside) */
+.tour {
+  font-size: 6px;
+}
+.tour-body h2 {
+  font-size: 7.7px;
+}
+.tour-pos {
+  font-size: 6.9px;
+}
+.tour .fine {
+  font-size: 6.67px;
+}
+.tour-parts button {
+  font-size: 5px;
+}
+.tour .btn {
+  font-size: 5.67px;
+  min-height: 13px;
 }

@@ -80,6 +80,21 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
 `tools/build_data.py`). The late-adolescence substage's `rewardSystemShift` ("College admissions, employability, …")
 was not changed.
 
+## Revision 5 — further changes requested by the map author
+
+1. Stage dividers: 0.25 px, dashes 1.5 px / gaps 1.5 px (still constant on-screen width).
+2. Hover bubbles are half their previous size (≈4.25 px text, 130 px max width).
+3. & 4. Expanding a cross-life system makes **the system box itself** grow downward; its chains sit **side by side**
+   inside it (wrapping to a new row only if they cannot fit), each chain's steps spread across the width it is given.
+   Lines that reach a step inside the box may enter it; all other lines treat the box as an obstacle.
+5. All pop-up windows (details, Legend, Menu, About, walk-through, breadcrumbs) use 2/3 of their previous type size
+   (≈6 px body). Window sizes are unchanged.
+6. Bold section/subsection titles are one step larger, on the map (stage, substage, chain, loop, system, lane,
+   outcome and intervention titles) and in the pop-ups (headings, badges, key terms).
+7. Outcome boxes are exactly as tall as their text (name, description, polarity marker) — no added space.
+   Every outcome link now has its own approach lane in front of the column; the gap before the column is sized to
+   the number of outcome links in the data so these lanes never coincide.
+
 ## Interpretations
 
 ### Project & data

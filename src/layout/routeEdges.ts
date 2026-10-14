@@ -681,9 +681,15 @@ export function routeEdges(g: Graph, layout: Layout, aggs: AggEdge[]): RoutedEdg
       const y = cy + (i - (n - 1) / 2) * spacing;
       // outcomes are rounded rectangles: links enter the straight left side
       outcomeSlots.set(a.key, { x: o.x, y });
-      outcomeStub.set(a.key, 14 + i * 7);
     });
   }
+  // every outcome link gets its own approach lane in front of the column (unique x → no shared verticals)
+  const slotted = [...outcomeSlots.entries()].sort((p, q) => {
+    const tp = layout.byId.get(p[0].split('|')[1])!;
+    const tq = layout.byId.get(q[0].split('|')[1])!;
+    return tp.y - tq.y || p[1].y - q[1].y || p[0].localeCompare(q[0]);
+  });
+  slotted.forEach(([key], k) => outcomeStub.set(key, 12 + k * 6));
 
   // parallel edges between the same pair are offset 8px apart; multiple outgoing outcome links spread
   const pairCount = new Map<string, AggEdge[]>();
@@ -723,7 +729,9 @@ export function routeEdges(g: Graph, layout: Layout, aggs: AggEdge[]): RoutedEdg
     const dst: Endpoint = slot
       ? { box: t, sides: ['left'], offset: 0, stub: outcomeStub.get(a.key)!, fixed: { side: 'left', p: slot } }
       : { box: t, sides: [], offset: pairOff, stub: 14, noBottom: t0.kind === 'loop' };
-    const obstacles = obstacleNodes.filter((n) => (n as { id?: string }).id !== s.id && (n as { id?: string }).id !== t.id);
+    // an endpoint inside an expanded cross-life system box may be reached through that box
+    const skip = new Set([s0.id, t0.id, s0.container, t0.container].filter(Boolean) as string[]);
+    const obstacles = obstacleNodes.filter((n) => !skip.has((n as { id?: string }).id ?? ''));
     const c = route(src, dst, obstacles, world, channelUse, occ);
     if (c.kind === 'ortho') occ.add(c.pts);
     const { mid, angle } = midOf(c.pts);
@@ -797,7 +805,8 @@ function edgeCollides(r: RoutedEdge, layout: Layout): number {
   const s = layout.byId.get(r.agg.source)!;
   const t = layout.byId.get(r.agg.target)!;
   if (!attached(r.pts[0], anchorBox(s)) || !attached(r.pts[r.pts.length - 1], anchorBox(t))) return 1;
-  const obstacles: Box[] = [...layout.nodes.filter((n) => n.id !== s.id && n.id !== t.id), gutterBox(layout)];
+  const skip = new Set([s.id, t.id, s.container, t.container].filter(Boolean) as string[]);
+  const obstacles: Box[] = [...layout.nodes.filter((n) => !skip.has(n.id)), gutterBox(layout)];
   let col = polyCollisions(r.pts, obstacles);
   const inner = r.pts.slice(1, -1);
   if (inner.length >= 2) col += polyCollisions(inner, [anchorBox(s), anchorBox(t)], 1);

@@ -15,7 +15,7 @@ for (const [name, exp, inter] of [['default', [], false], ['expanded', allContai
   const routed = routeEdges(g, lay, aggs);
   const t2 = performance.now();
   let ov = 0;
-  for (let i = 0; i < lay.nodes.length; i++) for (let j = i + 1; j < lay.nodes.length; j++) if (overlaps(lay.nodes[i], lay.nodes[j])) { ov++; console.log('OVERLAP', lay.nodes[i].id, lay.nodes[j].id); }
+  for (let i = 0; i < lay.nodes.length; i++) for (let j = i + 1; j < lay.nodes.length; j++) if (lay.nodes[i].container !== lay.nodes[j].id && lay.nodes[j].container !== lay.nodes[i].id && overlaps(lay.nodes[i], lay.nodes[j])) { ov++; console.log('OVERLAP', lay.nodes[i].id, lay.nodes[j].id); }
   const bad = routed.filter((r) => r.collisions > 0);
   console.log(name, `nodes=${lay.nodes.length} edges=${routed.length} world=${Math.round(lay.width)}x${Math.round(lay.height)} overlaps=${ov} colliding=${bad.length} layout=${(t1 - t0).toFixed(0)}ms route=${(t2 - t1).toFixed(0)}ms kinds=${JSON.stringify(routed.reduce((m, r) => ((m[r.kind] = (m[r.kind] ?? 0) + 1), m), {} as Record<string, number>))}`);
   for (const b of bad) console.log('  collides', b.key, b.collisions, b.kind);

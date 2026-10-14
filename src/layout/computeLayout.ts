@@ -142,8 +142,6 @@ export interface Layout {
   rings: Ring[];
   /** top of the first lane (depends on the substage row height) */
   lanesTop: number;
-  /** expanded cross-life systems: boxes that house their chains across the full width */
-  houses: { id: string; current: CurrentId; x: number; y: number; w: number; h: number }[];
   contentX0: number;
   contentX1: number;
   outcomeX: number;
@@ -239,7 +237,7 @@ const STEP_FS = 10;
 const STEP_LH = 13;
 const LOOP_FS = 9.5;
 const LOOP_LH = 12;
-const HEADER_FS = 11;
+const HEADER_FS = 12;
 
 /** Height a box needs to show `text` in full at the given width. */
 function fitHeight(text: string, w: number, pad: number, size: number, lh: number, min: number) {
@@ -356,11 +354,10 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   };
 
   const stageLabel = new Map(g.stages.map((s) => [s.stage as StageKey, s.label]));
-  const houses: Layout['houses'] = [];
 
   // every chip is tall enough for the longest chain title (titles are never cut off)
-  const CHIP_FS = 10.5;
-  const CHIP_LH = 13;
+  const CHIP_FS = 11.5;
+  const CHIP_LH = 14;
   const chipTitleLines = (ch: Chain) => wrapText(ch.title, L.chipW - 20, CHIP_FS, 99, true).lines.length;
   const chipH = Math.max(L.chipH, ...g.stageChains.map((c) => 26 + chipTitleLines(c) * CHIP_LH + 8));
 
@@ -420,7 +417,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   for (const s of g.stages) {
     const b = bandOf(s.stage as StageKey);
     const w = b.w - 40;
-    const lab = block(s.label, 14, 25, w - 28, 16, 1, { bold: true });
+    const lab = block(s.label, 14, 25, w - 28, 18, 1, { bold: true });
     const tag = block(s.tagline ?? '', 14, 45, w - 28, 11, 1, { cls: 't-sec', italic: true });
     push({
       id: s.id,
@@ -448,12 +445,12 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     return { st, subs, barX, w };
   });
   const subTextH = (n: MapNode, w: number) =>
-    wrapText(n.label, w - 20, 11, 99, true).lines.length * 14 + 10 + wrapText(n.ageRangeLabel ?? '', w - 20, 10, 99).lines.length * 13;
+    wrapText(n.label, w - 20, 12, 99, true).lines.length * 15 + 10 + wrapText(n.ageRangeLabel ?? '', w - 20, 10, 99).lines.length * 13;
   const subH = Math.max(104, ...subGeom.flatMap((sg) => sg.subs.map((n) => subTextH(n, sg.w) + 18)));
   for (const sg of subGeom) {
     sg.subs.forEach((s, i) => {
       const w = sg.w;
-      const lab = block(s.label, 10, 20, w - 20, 11, 99, { bold: true, lh: 14 });
+      const lab = block(s.label, 10, 21, w - 20, 12, 99, { bold: true, lh: 15 });
       const ageLines = wrapText(s.ageRangeLabel ?? '', w - 20, 10, 99).lines.length;
       const age = block(s.ageRangeLabel ?? '', 10, subH - 10 - (ageLines - 1) * 13, w - 20, 10, 99, { cls: 't-sec', lh: 13 });
       push({
@@ -534,6 +531,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
       secondary: ch.secondaryCurrents,
       stage,
       expanded: true,
+      container: ch.scope === 'cross' ? ch.system! : undefined,
     });
     for (const st of geo.steps) {
       const node = g.nodeById.get(st.id)!;
@@ -557,7 +555,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   };
 
   const hubNode = (lp: Loop, x0: number, y0: number, stage: LNode['stage'], isExpanded: boolean) => {
-    const t = block(lp.title, L.hubW / 2, L.hubR * 2 + 16, L.hubW - 4, 10, 3, { bold: true, anchor: 'middle', lh: 12 });
+    const t = block(lp.title, L.hubW / 2, L.hubR * 2 + 16, L.hubW - 4, 11, 3, { bold: true, anchor: 'middle', lh: 13 });
     const sub = block(`${lp.stepNodeIds.length} steps`, L.hubW / 2, L.hubR + 30, 80, 9, 1, {
       anchor: 'middle',
       cls: 't-sec',
@@ -611,12 +609,12 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     }
   };
 
-  const placeSystem = (sysId: string, laneCurrent: CurrentId, y: number) => {
+  const placeSystem = (sysId: string, laneCurrent: CurrentId, y: number, h = 44) => {
     const sys = g.nodeById.get(sysId)!;
     const isExp = expanded.has(sysId);
     const w = contentW - 20;
-    const lab = block(sys.label, 34, 27, 330, 12, 1, { bold: true });
-    const labW = Math.min(330, textWidth(lab.block.lines[0]?.text ?? '', 12, true));
+    const lab = block(sys.label, 34, 27, 360, 13, 1, { bold: true });
+    const labW = Math.min(360, textWidth(lab.block.lines[0]?.text ?? '', 13, true));
     // leadsTo pills, laid left-to-right, never overflowing the bar
     const pills: Pill[] = [];
     let px = 34 + labW + 16;
@@ -639,7 +637,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
       x: contentX0 + 10,
       y,
       w,
-      h: 44,
+      h,
       blocks: [lab.block, kick.block],
       pills,
       full: sys.label,
@@ -655,27 +653,54 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   const crossRow = (lane: CurrentId, y: number): number => {
     const cur = g.currentById.get(lane)!;
     const sysId = cur.systemNodeId;
-    placeSystem(sysId, lane, y + 6);
-    if (!expanded.has(sysId)) return L.crossCollapsedH;
-    // expanded: the system box grows to house its chains; each chain spans the box's full width
+    if (!expanded.has(sysId)) {
+      placeSystem(sysId, lane, y + 6);
+      return L.crossCollapsedH;
+    }
+    // Expanded: the system box itself grows downward and holds its chains side by side, each chain's steps
+    // spread across the width it is given.
     const chains = g.crossChainsBySystem.get(sysId) ?? [];
     const innerX = contentX0 + 30;
     const innerW = contentW - 60;
-    let cy = y + 6 + 44 + 18;
-    for (const c of chains) {
-      const geo = chainGeometry(g, c, innerW);
-      placeChain(c, innerX, cy, 'cross', innerW);
-      cy += geo.h + 22;
+    const GAP = 40;
+    const need = chains.map((c) => chainGeometry(g, c).w);
+    const rows: number[][] = [[]];
+    let used = 0;
+    chains.forEach((_, i) => {
+      const row = rows[rows.length - 1];
+      if (row.length && used + GAP + need[i] > innerW) {
+        rows.push([]);
+        used = 0;
+      }
+      rows[rows.length - 1].push(i);
+      used += (rows[rows.length - 1].length > 1 ? GAP : 0) + need[i];
+    });
+    const top = y + 6 + 44 + 14;
+    let cy = top;
+    const placements: { c: Chain; x: number; y: number; w: number }[] = [];
+    for (const row of rows) {
+      const sumNeed = row.reduce((a, i) => a + need[i], 0);
+      const extra = innerW - sumNeed - GAP * (row.length - 1);
+      let cx = innerX;
+      let rowH = 0;
+      for (const i of row) {
+        const w = need[i] + (extra * need[i]) / sumNeed;
+        placements.push({ c: chains[i], x: cx, y: cy, w });
+        rowH = Math.max(rowH, chainGeometry(g, chains[i], w).h);
+        cx += w + GAP;
+      }
+      cy += rowH + 24;
     }
-    const h = cy - y + 4;
-    houses.push({ id: sysId, current: lane, x: contentX0 + 10, y: y + 6, w: contentW - 20, h: h - 12 });
-    return h;
+    const boxH = cy - (y + 6) - 4;
+    placeSystem(sysId, lane, y + 6, boxH); // pushed before its chains so they draw on top
+    for (const pl of placements) placeChain(pl.c, pl.x, pl.y, 'cross', pl.w);
+    return boxH + 18;
   };
 
   /** Rotated row title for the left gutter, wrapped to the row height (max 3 lines). */
   const gutterLabel = (id: string, text: string, top: number, h: number, current?: CurrentId): LaneLabel => {
-    const size = 10.5;
-    const lh = 13;
+    const size = 11.5;
+    const lh = 14;
     const w = wrapText(text, h - 16, size, 3, true);
     const n = w.lines.length;
     return {
@@ -780,31 +805,34 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   }
 
   // ---- outcomes (far right) --------------------------------------------
-  const outcomeX = contentX1 + L.outcomeGap;
+  // room in front of the outcomes column for one approach lane per outcome link (6 px apart)
+  const nOutcomeLinks = g.data.edges.filter((e) => g.nodeById.get(e.target)?.type === 'outcome').length;
+  const outcomeX = contentX1 + Math.max(L.outcomeGap, 60 + nOutcomeLinks * 6);
   {
     // Tall bars: bold name, then the full description, then the polarity marker (▲/▼ + word).
     const W = L.outcomeW;
     const PAD = 12;
-    const NAME_FS = 12;
-    const NAME_LH = 15;
+    const NAME_FS = 13.5;
+    const NAME_LH = 16.5;
     const DESC_FS = 9.5;
     const DESC_LH = 12.5;
     const contentH = (o: MapNode) =>
       PAD + wrapText(o.label, W - 2 * PAD, NAME_FS, 99, true).lines.length * NAME_LH + 6 +
-      wrapText(o.description ?? '', W - 2 * PAD, DESC_FS, 99).lines.length * DESC_LH + 10 + 14 + PAD;
-    const needH = Math.max(L.outcomeH, ...g.outcomes.map(contentH));
+      wrapText(o.description ?? '', W - 2 * PAD, DESC_FS, 99).lines.length * DESC_LH + 6 + 12 + PAD - 2;
+    // each box is exactly as tall as its own text; boxes are spaced evenly down the column
+    const heights = g.outcomes.map(contentH);
     const top = Math.max(lanesTop, L.stageRowY + 70);
     const n = g.outcomes.length;
-    const avail = Math.max(lanesBottom, top + n * (needH + 24)) - top;
+    const avail = Math.max(lanesBottom, top + heights.reduce((a, b) => a + b + 24, 0)) - top;
     const pitch = avail / n;
-    const h = Math.max(needH, Math.min(pitch - 24, 340));
     g.outcomes.forEach((o, i) => {
+      const h = heights[i];
       const y0 = Math.round(top + pitch * i + (pitch - h) / 2);
       const sym = o.polarity === 'protective' ? '▲' : '▼';
       const name = block(o.label, PAD, PAD + NAME_FS, W - 2 * PAD, NAME_FS, 99, { bold: true, lh: NAME_LH });
       const descY = PAD + NAME_FS + name.block.lines.length * NAME_LH + 6;
       const desc = block(o.description ?? '', PAD, descY, W - 2 * PAD, DESC_FS, 99, { lh: DESC_LH, cls: 't-desc' });
-      const pol = block(`${sym} ${o.polarity ?? ''}`, PAD, h - PAD, W - 2 * PAD, 9.5, 1, { cls: 't-polarity' });
+      const pol = block(`${sym} ${o.polarity ?? ''}`, PAD, h - PAD + 1, W - 2 * PAD, 9.5, 1, { cls: 't-polarity' });
       push({
         id: o.id,
         kind: 'outcome',
@@ -829,13 +857,13 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     const list = g.interventions;
     const top = y + 74;
     const gap = Math.max(L.itemGap, (contentW - list.length * L.intW) / (list.length + 1));
-    const labLines = (n: MapNode) => wrapText(n.label, L.intW - 20, 11, 99, true).lines.length;
+    const labLines = (n: MapNode) => wrapText(n.label, L.intW - 20, 12, 99, true).lines.length;
     const typLines = (n: MapNode) => wrapText(n.interventionType ?? '', L.intW - 20, 9.5, 99).lines.length;
-    const intH = Math.max(L.intH, ...list.map((n) => 14 + labLines(n) * 14 + 6 + typLines(n) * 12 + 8));
+    const intH = Math.max(L.intH, ...list.map((n) => 14 + labLines(n) * 15 + 6 + typLines(n) * 12 + 8));
     list.forEach((n, i) => {
       // identical box size for all ten (fitted to the longest text)
-      const lab = block(n.label, L.intW / 2, 14 + 11, L.intW - 20, 11, 99, { bold: true, anchor: 'middle', lh: 14 });
-      const typ = block(n.interventionType ?? '', L.intW / 2, 14 + 11 + labLines(n) * 14 + 4, L.intW - 20, 9.5, 99, {
+      const lab = block(n.label, L.intW / 2, 14 + 12, L.intW - 20, 12, 99, { bold: true, anchor: 'middle', lh: 15 });
+      const typ = block(n.interventionType ?? '', L.intW / 2, 14 + 12 + labLines(n) * 15 + 4, L.intW - 20, 9.5, 99, {
         anchor: 'middle',
         cls: 't-sec',
         lh: 12,
@@ -863,7 +891,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
       y,
       w: contentW,
       h,
-      label: block('Possible interventions, none selected', 14, 22, contentW - 28, 12, 1, { bold: true, cls: 't-band' })
+      label: block('Possible interventions, none selected', 14, 22, contentW - 28, 13, 1, { bold: true, cls: 't-band' })
         .block,
     });
     // design framing note shown in the band header (§9)
@@ -893,7 +921,7 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     y: L.stageRowY,
     w: L.outcomeColW,
     h: height - L.margin / 2 - L.stageRowY,
-    label: block('Consequences/outcomes', L.outcomeColW / 2, 30, L.outcomeColW - 24, 14, 1, { bold: true, anchor: 'middle', cls: 't-band' }).block,
+    label: block('Consequences/outcomes', L.outcomeColW / 2, 30, L.outcomeColW - 24, 15.5, 1, { bold: true, anchor: 'middle', cls: 't-band' }).block,
   });
   for (const b of bands) if (b.kind === 'overlay') b.w = contentX1 + 20;
 
@@ -907,7 +935,6 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
     stageBands,
     rings,
     lanesTop,
-    houses,
     contentX0,
     contentX1,
     outcomeX,

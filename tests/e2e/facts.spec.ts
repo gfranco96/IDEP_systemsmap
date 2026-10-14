@@ -346,8 +346,8 @@ test('row titles are rotated in a narrow gutter; stage dividers are thin, short-
   const d = page.getByTestId('stage-divider').first();
   await expect(d).toHaveAttribute('vector-effect', 'non-scaling-stroke');
   const sw = await d.evaluate((e) => parseFloat(getComputedStyle(e).strokeWidth));
-  expect(sw).toBe(0.5);
-  expect(await d.evaluate((e) => getComputedStyle(e).strokeDasharray)).toBe('3px, 3px');
+  expect(sw).toBe(0.25);
+  expect(await d.evaluate((e) => getComputedStyle(e).strokeDasharray)).toBe('1.5px, 1.5px');
 });
 
 test('pop-up type is small', async ({ page }) => {
@@ -390,21 +390,32 @@ test('Legend and Menu buttons are compact (half the previous size)', async ({ pa
   }
 });
 
-test('an expanded cross-life system box covers the stage dividers and holds its chains', async ({ page }) => {
-  await open(page, `${BASE}&exp=sys_education`);
-  const house = (await page.getByTestId('house-sys_education').boundingBox())!;
-  for (const id of ['xl_edu1_s1', 'xl_edu3_s2']) {
-    const b = (await page.locator(`[data-id="${id}"]`).boundingBox())!;
-    expect(b.x).toBeGreaterThanOrEqual(house.x);
-    expect(b.x + b.width).toBeLessThanOrEqual(house.x + house.width + 0.5);
+test('an expanded cross-life system box grows to hold its chains side by side', async ({ page }) => {
+  await open(page, BASE);
+  const before = (await page.locator('[data-id="sys_education"]').boundingBox())!;
+  await page.locator('[data-id="sys_education"]').dispatchEvent('click');
+  await page.waitForTimeout(600);
+  const box = (await page.locator('[data-id="sys_education"] .shape').boundingBox())!;
+  expect(box.height).toBeGreaterThan(before.height * 2); // the same box grew downward
+  const heads = await Promise.all(['xl_edu1', 'xl_edu2', 'xl_edu3'].map(async (id) => (await page.locator(`[data-id="${id}"]`).boundingBox())!));
+  expect(Math.abs(heads[0].y - heads[2].y)).toBeLessThan(1); // side by side
+  expect(heads[1].x).toBeGreaterThan(heads[0].x + heads[0].width);
+  for (const h of heads) {
+    expect(h.x).toBeGreaterThanOrEqual(box.x);
+    expect(h.x + h.width).toBeLessThanOrEqual(box.x + box.width + 0.5);
+    expect(h.y).toBeGreaterThan(box.y);
+    expect(h.y + h.height).toBeLessThan(box.y + box.height);
   }
-  // the box is painted after (above) the dividers
-  const order = await page.evaluate(() => {
-    const all = [...document.querySelectorAll('.backdrop > *')];
-    const d = all.findIndex((e) => e.classList.contains('stage-divider'));
-    const h = all.findIndex((e) => e.classList.contains('system-house'));
-    return [d, h];
-  });
-  expect(order[1]).toBeGreaterThan(order[0]);
   await expect(page.locator('[data-id="xl_edu3"]')).toHaveAttribute('aria-label', /^Academic admissions/);
+});
+
+test('hover bubbles are half size; pop-up text is at 2/3', async ({ page }) => {
+  await open(page, `${BASE}&sel=out_joy_deficit`);
+  const panelFs = await page.getByTestId('detail-panel').evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(panelFs).toBeCloseTo(6, 1);
+  await page.waitForTimeout(600);
+  const bb = (await page.locator('[data-id="out_joy_deficit"]').boundingBox())!;
+  await page.mouse.move(bb.x + 10, bb.y + 10);
+  const tipFs = await page.locator('.tooltip').evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(tipFs).toBeCloseTo(4.25, 1);
 });
