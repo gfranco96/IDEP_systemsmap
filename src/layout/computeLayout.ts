@@ -914,16 +914,19 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
   const width = outcomeX + L.outcomeColW + L.margin;
   const height = Math.max(y, ...nodes.map((n) => n.y + n.h + 24)) + L.margin;
   // the outcome nodes sit in one full-height column, labelled as a category
+  const colX = contentX1 + 4;
+  const colW = outcomeX + L.outcomeColW - colX;
   bands.push({
     id: 'band_outcomes',
     kind: 'outcomes',
-    x: outcomeX,
+    // starts tight against the adulthood column and widens over the lanes the outcome links run in
+    x: colX,
     y: L.stageRowY,
-    w: L.outcomeColW,
+    w: colW,
     h: height - L.margin / 2 - L.stageRowY,
-    label: block('Consequences/outcomes', L.outcomeColW / 2, 30, L.outcomeColW - 24, 15.5, 1, { bold: true, anchor: 'middle', cls: 't-band' }).block,
+    label: block('Consequences/outcomes', colW / 2, 30, colW - 24, 15.5, 1, { bold: true, anchor: 'middle', cls: 't-band' }).block,
   });
-  for (const b of bands) if (b.kind === 'overlay') b.w = contentX1 + 20;
+  for (const b of bands) if (b.kind === 'overlay') b.w = contentX1;
 
   // tab order already follows push order; outcomes are pushed after lanes+main loops, before refs.
   const byId = new Map(nodes.map((n) => [n.id, n]));

@@ -95,6 +95,13 @@ was not changed.
    Every outcome link now has its own approach lane in front of the column; the gap before the column is sized to
    the number of outcome links in the data so these lanes never coincide.
 
+## Revision 6
+
+1. Cross-life system boxes (collapsed and expanded) have an opaque fill, so the stage dividers never show through them.
+2. The gray "Consequences/outcomes" column now starts 4 px from the right edge of the adulthood column and extends
+   across the space the outcome links run in, up to the outcome boxes; its title is centred over the whole column.
+   The cultural hatch stops at the adulthood edge.
+
 ## Interpretations
 
 ### Project & data

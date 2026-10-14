@@ -150,7 +150,14 @@ function NodeShapeInner({ n, emph, selected, onActivate, onDouble, onHover, onFo
       case 'system':
         return (
           <>
-            <rect className="shape" width={n.w} height={n.h} rx={8} style={{ fill, stroke }} />
+            {/* opaque fill: the stage dividers must not show through a cross-life system */}
+            <rect
+              className="shape"
+              width={n.w}
+              height={n.h}
+              rx={8}
+              style={{ fill: `color-mix(in srgb, ${stroke} 14%, var(--surface))`, stroke }}
+            />
             <text className="chev" x={14} y={27} fontSize={13} aria-hidden>
               {n.expanded ? '▾' : '▸'}
             </text>

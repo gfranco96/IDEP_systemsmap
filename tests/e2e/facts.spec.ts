@@ -419,3 +419,20 @@ test('hover bubbles are half size; pop-up text is at 2/3', async ({ page }) => {
   const tipFs = await page.locator('.tooltip').evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
   expect(tipFs).toBeCloseTo(4.25, 1);
 });
+
+test('stage dividers are hidden behind cross-life system boxes; outcomes column starts at the adulthood edge', async ({ page }) => {
+  await open(page, `${BASE}&exp=sys_education`);
+  const fill = await page.locator('[data-id="sys_education"] .shape').evaluate((e) => getComputedStyle(e).fill);
+  const alpha = fill.startsWith('rgba') ? parseFloat(fill.split(',')[3]) : fill.includes('/') ? parseFloat(fill.split('/')[1]) : 1;
+  expect(alpha).toBe(1); // opaque
+  const order = await page.evaluate(() => {
+    const divider = document.querySelector('.stage-divider')!;
+    const sys = document.querySelector('[data-id="sys_education"]')!;
+    return divider.compareDocumentPosition(sys) & Node.DOCUMENT_POSITION_FOLLOWING;
+  });
+  expect(order).toBeTruthy(); // the box is painted over the divider
+  const col = (await page.getByTestId('band-outcomes').locator('rect').boundingBox())!;
+  const lane = await page.evaluate(() => Math.max(...[...document.querySelectorAll('rect.lane-bg')].map((r) => r.getBoundingClientRect().right)));
+  expect(col.x - lane).toBeLessThan(6);
+  expect(col.x - lane).toBeGreaterThanOrEqual(0);
+});
