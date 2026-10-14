@@ -62,7 +62,7 @@ export function Legend() {
           <div>
             <strong>inferred link</strong>{' '}
             <span className="count">{g.data.edges.filter((e) => e.provenance === 'inferred').length} links</span>
-            <div className="muted">Reduced opacity + “i” tick: added to satisfy the map spec; not stated in the source.</div>
+            <div className="muted">Relationship not explicitly extracted from source; inferred from field research and literature review.</div>
           </div>
         </li>
       </ul>
