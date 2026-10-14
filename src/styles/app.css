@@ -764,9 +764,8 @@ ol.steps li.current {
 /* constant on-screen width at every zoom level (non-scaling stroke) */
 .stage-divider {
   stroke: var(--neutral);
-  stroke-width: 2.5px;
-  stroke-dasharray: 8 6;
-  opacity: 0.85;
+  stroke-width: 1px;
+  stroke-dasharray: 3 3;
 }
 .band rect {
   fill: var(--band-fill);

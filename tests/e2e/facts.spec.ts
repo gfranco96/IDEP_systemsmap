@@ -335,7 +335,7 @@ test('walk-through and node details are never shown together; fixed-size, scroll
   await expect(page.getByTestId('detail-panel')).toContainText('Burnout');
 });
 
-test('row titles are rotated in a narrow gutter; stage dividers keep their width at any zoom', async ({ page }) => {
+test('row titles are rotated in a narrow gutter; stage dividers are thin, short-dashed, constant width', async ({ page }) => {
   await open(page, `${BASE}&z=0,0,0.05`);
   const labels = page.locator('.lane-label');
   await expect(labels).toHaveCount(6); // 4 lanes + cultural + main feedback loops
@@ -346,7 +346,8 @@ test('row titles are rotated in a narrow gutter; stage dividers keep their width
   const d = page.getByTestId('stage-divider').first();
   await expect(d).toHaveAttribute('vector-effect', 'non-scaling-stroke');
   const sw = await d.evaluate((e) => parseFloat(getComputedStyle(e).strokeWidth));
-  expect(sw).toBeGreaterThanOrEqual(2.5);
+  expect(sw).toBe(1);
+  expect(await d.evaluate((e) => getComputedStyle(e).strokeDasharray)).toBe('3px, 3px');
 });
 
 test('pop-up type is small', async ({ page }) => {
@@ -356,4 +357,27 @@ test('pop-up type is small', async ({ page }) => {
   await page.getByRole('button', { name: 'Menu' }).click();
   const menuFs = await page.getByTestId('menu').locator('.menu-item').first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
   expect(menuFs).toBeLessThanOrEqual(9);
+});
+
+test('walk-through keeps the highlighted node above its window', async ({ page }) => {
+  await open(page, BASE);
+  await page.getByRole('button', { name: 'Menu' }).click();
+  await page.getByRole('button', { name: 'Walk through the map' }).click();
+  const tour = page.getByTestId('tour');
+  for (let i = 0; i < 17; i++) {
+    await tour.getByRole('button', { name: 'Next' }).click();
+    await page.waitForTimeout(650); // focus animation
+    const sel = await page.locator('.map-svg .node.selected').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().bottom));
+    const tb = (await tour.boundingBox())!;
+    const stage = (await page.locator('.canvas-wrap').boundingBox())!;
+    for (const bottom of sel) {
+      expect(bottom, `step ${i + 2}`).toBeLessThanOrEqual(tb.y);
+      expect(bottom).toBeGreaterThan(stage.y);
+    }
+    if (i === 15) {
+      // interventions step: focused intervention row must be above the window too
+      const ib = await page.locator('[data-id="int_protected_time"]').boundingBox();
+      if (ib) expect(ib.y + ib.height).toBeLessThanOrEqual(tb.y);
+    }
+  }
 });

@@ -36,8 +36,8 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
 
 ## Revision 3 — further changes requested by the map author
 
-1. Stage dividers are 2.5 px dashed lines drawn with `vector-effect: non-scaling-stroke`, so they keep the same on-screen
-   thickness at every zoom level (visible even at the minimum zoom).
+1. Stage dividers are thin (1 px) short-dashed (3 px / 3 px) lines drawn with `vector-effect: non-scaling-stroke`, so they
+   keep the same on-screen thickness at every zoom level.
 2. All pop-ups (details window, Legend, Menu, About, walk-through, tooltips, breadcrumbs) use ~8–9 px type
    (headings ~10 px); the details window is 260 px wide.
 3. The left gutter is 56 px wide; row titles (the five lanes and "Main feedback loops") are rotated 90° counter-clockwise
@@ -52,6 +52,8 @@ The data in `/data` was **not modified**; all text on screen is read from it ver
    Main loops A–D → Consequences → Interventions → Design framing) with the current part highlighted and clickable,
    a "Part n/7 · name · k of m" header, an overall step counter, and a one-line italic note on why each part comes where
    it does. These part names and notes are UI text; step bodies remain data text.
+8. During the walk-through, every focus/zoom treats only the area above the walk-through window as visible, so the
+   highlighted node(s) are never covered by it.
 
 ## Interpretations
 

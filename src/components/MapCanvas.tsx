@@ -71,6 +71,12 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
       const wrap = wrapRef.current!;
       const W = wrap.clientWidth;
       const H = wrap.clientHeight;
+      // the walk-through window sits at the bottom: keep focused nodes above it
+      const tour = wrap.parentElement?.querySelector<HTMLElement>('.tour');
+      if (tour) {
+        const top = tour.getBoundingClientRect().top - wrap.getBoundingClientRect().top;
+        return { x: 0, y: 0, w: W, h: Math.max(120, top - 12) };
+      }
       const panel = wrap.parentElement?.querySelector<HTMLElement>('.detail-panel');
       if (!panel) return { x: 0, y: 0, w: W, h: H };
       if (W <= 720) return { x: 0, y: 0, w: W, h: Math.max(160, H - panel.offsetHeight) };
