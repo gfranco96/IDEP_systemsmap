@@ -158,7 +158,7 @@ test('menu opens a column under the top-right button; export downloads a PNG of 
   const vw = page.viewportSize()!.width;
   expect(mb.x + mb.width).toBeGreaterThan(vw - 20);
   expect(mb.y).toBeLessThan(60);
-  const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 60_000 }), menu.getByRole('button', { name: 'Export as PNG' }).click()]);
+  const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 60_000 }), menu.getByRole('button', { name: 'Export current view as PNG' }).click()]);
   expect(dl.suggestedFilename()).toBe('joy-deficit-systems-map.png');
   const path = await dl.path();
   const fs = await import('node:fs');
@@ -166,7 +166,7 @@ test('menu opens a column under the top-right button; export downloads a PNG of 
   expect(buf.subarray(1, 4).toString()).toBe('PNG');
   const w = buf.readUInt32BE(16);
   const h = buf.readUInt32BE(20);
-  expect(h).toBeGreaterThan(w); // the fully expanded map is taller than wide
+  expect(w).toBeGreaterThan(h); // the default (collapsed) view is wider than tall — not the all-expanded map
   expect(w).toBeGreaterThan(4000);
   // a QR code in the bottom-right corner leads back to the interactive map
   const { PNG } = await import('pngjs');
@@ -180,6 +180,18 @@ test('menu opens a column under the top-right button; export downloads a PNG of 
       crop.set(png.data.subarray(si, si + 4), (y * cw + x) * 4);
     }
   expect(jsQR(crop, cw, cw)?.data).toBe('https://gfranco96.github.io/IDEP_systemsmap/');
+
+  // after expanding everything, the export follows the new view (the menu is still open after exporting)
+  await expect(page.getByTestId('menu')).toBeVisible();
+  await page.getByTestId('menu').getByRole('button', { name: 'Expand all' }).click();
+  await page.waitForTimeout(500);
+  await page.getByRole('button', { name: 'Menu' }).click();
+  const [dl2] = await Promise.all([
+    page.waitForEvent('download', { timeout: 60_000 }),
+    page.getByTestId('menu').getByRole('button', { name: 'Export current view as PNG' }).click(),
+  ]);
+  const buf2 = fs.readFileSync((await dl2.path())!);
+  expect(buf2.readUInt32BE(20) / buf2.readUInt32BE(16)).toBeGreaterThan((h / w) * 1.5);
 });
 
 test('two-finger scroll pans, pinch (ctrl+wheel) zooms', async ({ page }) => {

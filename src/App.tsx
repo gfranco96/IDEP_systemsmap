@@ -155,6 +155,7 @@ export function App() {
       {exporting && (
         <ExportPng
           state={state}
+          model={model}
           onDone={(err) => {
             setExporting(false);
             announce(err ? `PNG export failed: ${err.message}` : 'PNG downloaded');

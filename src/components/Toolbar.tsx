@@ -178,7 +178,7 @@ export function Toolbar({ onReset, onFit, onCopyLink, onExportPng, copied, expor
             {filters && filterPanel}
             <hr />
             <button type="button" className="menu-item" onClick={onExportPng} disabled={exporting}>
-              {exporting ? 'Exporting PNG…' : 'Export as PNG'}
+              {exporting ? 'Exporting PNG…' : 'Export current view as PNG'}
             </button>
             <button type="button" className="menu-item" onClick={onCopyLink}>
               {copied ? 'Link copied' : 'Copy link to this view'}

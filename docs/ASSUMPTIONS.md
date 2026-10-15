@@ -119,6 +119,13 @@ was not changed.
   https://gfranco96.github.io/IDEP_systemsmap/. Exported PNGs carry the same QR code in a footer strip at the
   bottom-right ("Interactive version"); an e2e test decodes it from a real export.
 
+## Revision 8
+
+- **Export current view as PNG** (renamed menu item) now exports the whole map in the user's current state —
+  the same expanded/collapsed containers, layers, filters, visible intervention links, and lane-focus / trace
+  emphasis — rather than always expanding everything. It exports the entire map, not only the part visible on screen,
+  and still adds the title and the QR code.
+
 ## Interpretations
 
 ### Project & data

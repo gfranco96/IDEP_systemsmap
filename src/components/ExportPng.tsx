@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
-import { graph as g, LIVE_URL } from '../data/loadData';
-import { aggregateEdges } from '../model/graph';
-import { computeLayout } from '../layout/computeLayout';
-import { routeEdges } from '../layout/routeEdges';
+import { LIVE_URL } from '../data/loadData';
 import type { State } from '../state/store';
-import { ALL_CONTAINERS } from '../state/actions';
+import type { MapModel } from '../state/derived';
 import { NodeShape } from './NodeShape';
 import { EdgePath, EdgeMarkers } from './EdgePath';
 import { Backdrop, CulturalOverlay, LaneLabels } from './Lane';
@@ -95,15 +92,13 @@ async function svgToPng(svg: SVGSVGElement, w: number, h: number, filename: stri
   }
 }
 
-/** Renders the whole map with every container expanded off-screen, then downloads it as a PNG. */
-export function ExportPng({ state, onDone }: { state: State; onDone: (err?: Error) => void }) {
+/**
+ * Renders the whole map exactly as the user currently has it — same expanded/collapsed containers, layers,
+ * filters, visible intervention links and lane-focus / trace emphasis — off-screen, then downloads it as a PNG.
+ */
+export function ExportPng({ state, model, onDone }: { state: State; model: MapModel; onDone: (err?: Error) => void }) {
   const ref = useRef<SVGSVGElement>(null);
-  const view = useMemo(() => ({ expanded: new Set(ALL_CONTAINERS), layers: state.layers }), [state.layers]);
-  const layout = useMemo(() => computeLayout(g, view), [view]);
-  const routed = useMemo(
-    () => routeEdges(g, layout, aggregateEdges(g, view, { arrowTypes: state.edgeFilter, interventionLinks: 'all' })),
-    [layout, view, state.edgeFilter],
-  );
+  const { layout, routed } = model;
   const W = layout.width;
   const H = layout.height + TITLE_H + FOOTER_H;
 
@@ -135,19 +130,19 @@ export function ExportPng({ state, onDone }: { state: State; onDone: (err?: Erro
           {APP_TITLE}
         </text>
         <g transform={`translate(0,${TITLE_H})`}>
-          <Backdrop layout={layout} laneFocus={null} />
+          <Backdrop layout={layout} laneFocus={state.laneFocus} />
           {state.layers.cultural && <CulturalOverlay layout={layout} />}
-          <LaneLabels layout={layout} laneFocus={null} onLane={noop} />
+          <LaneLabels layout={layout} laneFocus={state.laneFocus} onLane={noop} />
           <g className="nodes">
             {layout.nodes
               .filter((n) => n.kind === 'system')
               .map((n) => (
-                <NodeShape key={n.id} n={n} emph="normal" selected={false} onActivate={noop} onDouble={noop} onHover={noop} onFocusNode={noop} onKey={noop} />
+                <NodeShape key={n.id} n={n} emph={model.nodeEmph(n)} selected={false} onActivate={noop} onDouble={noop} onHover={noop} onFocusNode={noop} onKey={noop} />
               ))}
           </g>
           <g className="edges">
             {routed.map((e) => (
-              <EdgePath key={e.key} e={e} emph="normal" selected={false} onHover={noop} onClick={noop} />
+              <EdgePath key={e.key} e={e} emph={model.edgeEmph(e)} selected={false} onHover={noop} onClick={noop} />
             ))}
           </g>
           <g className="nodes">
@@ -155,7 +150,7 @@ export function ExportPng({ state, onDone }: { state: State; onDone: (err?: Erro
               <NodeShape
                 key={n.id}
                 n={n}
-                emph="normal"
+                emph={model.nodeEmph(n)}
                 selected={false}
                 onActivate={noop}
                 onDouble={noop}
