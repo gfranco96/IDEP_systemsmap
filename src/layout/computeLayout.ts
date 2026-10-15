@@ -7,7 +7,7 @@ import { textWidth, wrapText } from './text';
 // Constants (SVG user units at zoom 1) — §5
 // ---------------------------------------------------------------------------
 export const L = {
-  gutter: 56,
+  gutter: 84,
   substageCol: 200,
   stagePad: 40,
   outcomeGap: 150,
@@ -21,7 +21,7 @@ export const L = {
   laneMinH: 150,
   laneCellPad: 20,
   crossCollapsedH: 56,
-  culturalStageRowH: 48,
+  culturalStageRowH: 56,
   mainLoopsMinH: 220,
   interventionsH: 160,
   bandGap: 24,
@@ -699,8 +699,8 @@ export function computeLayout(g: Graph, view: ViewState): Layout {
 
   /** Rotated row title for the left gutter, wrapped to the row height (max 3 lines). */
   const gutterLabel = (id: string, text: string, top: number, h: number, current?: CurrentId): LaneLabel => {
-    const size = 11.5;
-    const lh = 14;
+    const size = 18; // same as the stage titles (Childhood, Adolescence, …)
+    const lh = 21;
     const w = wrapText(text, h - 16, size, 3, true);
     const n = w.lines.length;
     return {
