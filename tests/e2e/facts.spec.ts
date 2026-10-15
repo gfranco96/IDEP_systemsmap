@@ -463,3 +463,29 @@ test('legend line samples are fully visible', async ({ page }) => {
   expect(clipped.every(Boolean)).toBe(true);
   await expect(page.getByTestId('legend')).toContainText('Relationship not explicitly extracted from source');
 });
+
+test('links inside an expanded cross-life system are visible without hovering', async ({ page }) => {
+  await open(page, `${BASE}&exp=sys_education,sys_platform`);
+  for (const key of ['xl_edu1_s1|xl_edu1_s2|downward', 'xl_plat4_s1|xl_plat4_s2b|downward']) {
+    const edge = page.locator(`.edge[data-key="${key}"]`);
+    await expect(edge).toHaveCount(1);
+    // the line is painted after (on top of) its system box
+    const after = await page.evaluate((k) => {
+      const e = document.querySelector(`.edge[data-key="${k}"]`)!;
+      const sys = document.querySelector('[data-id="sys_education"]')!;
+      return !!(sys.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_FOLLOWING);
+    }, key);
+    expect(after).toBe(true);
+    // and it is actually what the browser draws at its midpoint
+    const hit = await page.evaluate((k) => {
+      const path = document.querySelector(`.edge[data-key="${k}"] .edge-line`) as SVGPathElement;
+      const pt = path.getPointAtLength(path.getTotalLength() * 0.3);
+      const m = path.getScreenCTM()!;
+      const x = pt.x * m.a + m.e;
+      const y = pt.y * m.d + m.f;
+      const top = document.elementsFromPoint(x, y);
+      return top.slice(0, 3).some((el) => el.closest('.edge'));
+    }, key);
+    expect(hit).toBe(true);
+  }
+});

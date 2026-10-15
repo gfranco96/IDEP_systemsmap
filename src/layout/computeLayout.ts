@@ -28,7 +28,7 @@ export const L = {
   chipW: 260,
   chipH: 64, // minimum; grows to fit the full title
   itemGap: 20,
-  hubW: 140,
+  hubW: 164,
   hubH: 148,
   hubR: 48,
   stepW: 200,

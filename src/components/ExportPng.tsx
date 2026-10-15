@@ -138,13 +138,20 @@ export function ExportPng({ state, onDone }: { state: State; onDone: (err?: Erro
           <Backdrop layout={layout} laneFocus={null} />
           {state.layers.cultural && <CulturalOverlay layout={layout} />}
           <LaneLabels layout={layout} laneFocus={null} onLane={noop} />
+          <g className="nodes">
+            {layout.nodes
+              .filter((n) => n.kind === 'system')
+              .map((n) => (
+                <NodeShape key={n.id} n={n} emph="normal" selected={false} onActivate={noop} onDouble={noop} onHover={noop} onFocusNode={noop} onKey={noop} />
+              ))}
+          </g>
           <g className="edges">
             {routed.map((e) => (
               <EdgePath key={e.key} e={e} emph="normal" selected={false} onHover={noop} onClick={noop} />
             ))}
           </g>
           <g className="nodes">
-            {layout.nodes.map((n) => (
+            {layout.nodes.filter((n) => n.kind !== 'system').map((n) => (
               <NodeShape
                 key={n.id}
                 n={n}

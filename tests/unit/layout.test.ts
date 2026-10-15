@@ -127,6 +127,18 @@ describe('layout invariants (§5 hard requirements)', () => {
     expect(g.chainById.get('xl_edu3')!.title.startsWith('Academic admissions')).toBe(true);
   });
 
+  it('never breaks a word in the middle of a node label', () => {
+    for (const v of [view(), view(ALL_CONTAINERS, { interventions: true })]) {
+      const L = computeLayout(g, v);
+      for (const n of L.nodes)
+        for (const b of n.blocks) {
+          const words = new Set(b.lines.map((l) => l.text).join(' ').split(/\s+/));
+          const full = n.full.split(/\s+/);
+          if (b.lines.map((l) => l.text).join(' ') === n.full) for (const w of words) expect(full, `${n.id}: "${w}"`).toContain(w);
+        }
+    }
+  });
+
   it('outcome boxes are exactly as tall as their text', () => {
     const L = computeLayout(g, view());
     for (const o of g.outcomes) {

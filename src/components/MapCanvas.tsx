@@ -437,6 +437,24 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
             <Backdrop layout={layout} laneFocus={state.laneFocus} />
             {state.layers.cultural && <CulturalOverlay layout={layout} />}
             <LaneLabels layout={layout} laneFocus={state.laneFocus} onLane={onLane} />
+            {/* cross-life system boxes sit beneath the lines so the links inside an expanded system stay visible */}
+            <g className="nodes nodes-under">
+              {layout.nodes
+                .filter((n) => n.kind === 'system')
+                .map((n) => (
+                  <NodeShape
+                    key={n.id}
+                    n={n}
+                    emph={model.nodeEmph(n)}
+                    selected={sel === n.id}
+                    onActivate={activate}
+                    onDouble={onDouble}
+                    onHover={onHover}
+                    onFocusNode={onFocusNode}
+                    onKey={onKey}
+                  />
+                ))}
+            </g>
             <g className="edges">
               {routed.map((e) => (
                 <EdgePath
@@ -450,7 +468,7 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
               ))}
             </g>
             <g className="nodes">
-              {layout.nodes.map((n) => (
+              {layout.nodes.filter((n) => n.kind !== 'system').map((n) => (
                 <NodeShape
                   key={n.id}
                   n={n}
