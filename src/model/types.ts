@@ -131,7 +131,6 @@ export interface Reference {
   url: string;
   supports: string;
   usedBy: string[];
-  verification: string;
 }
 
 export interface Current {

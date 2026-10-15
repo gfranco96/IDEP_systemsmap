@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 import { LIVE_URL } from '../data/loadData';
 import type { State } from '../state/store';
@@ -11,6 +11,7 @@ import { APP_TITLE } from './Toolbar';
 const TITLE_H = 70;
 const FOOTER_H = 300; // strip at the bottom that carries the QR code back to the interactive map
 const QR_SIZE = 220;
+const MARGIN = 40; // breathing room around the drawn content (edges can route outside the layout box)
 const noop = () => {};
 
 // Presentation properties copied inline so the standalone SVG renders like the page (no stylesheet in an <img>).
@@ -98,11 +99,27 @@ async function svgToPng(svg: SVGSVGElement, w: number, h: number, filename: stri
  */
 export function ExportPng({ state, model, onDone }: { state: State; model: MapModel; onDone: (err?: Error) => void }) {
   const ref = useRef<SVGSVGElement>(null);
+  const contentRef = useRef<SVGGElement>(null);
   const { layout, routed } = model;
-  const W = layout.width;
-  const H = layout.height + TITLE_H + FOOTER_H;
+  // Bounds of everything actually drawn. Edges (notably intervention links) can route above / left of the
+  // layout origin or past its right / bottom, so measure the rendered content rather than trusting layout size.
+  const [box, setBox] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
+  useLayoutEffect(() => {
+    if (!contentRef.current) return;
+    const bb = contentRef.current.getBBox();
+    setBox({
+      x0: Math.min(0, bb.x - MARGIN),
+      y0: Math.min(0, bb.y - MARGIN),
+      x1: Math.max(layout.width, bb.x + bb.width + MARGIN),
+      y1: Math.max(layout.height, bb.y + bb.height + MARGIN),
+    });
+  }, [layout]);
+  const b = box ?? { x0: 0, y0: 0, x1: layout.width, y1: layout.height };
+  const W = b.x1 - b.x0;
+  const H = b.y1 - b.y0 + TITLE_H + FOOTER_H;
 
   useEffect(() => {
+    if (!box) return;
     let cancelled = false;
     requestAnimationFrame(() =>
       requestAnimationFrame(async () => {
@@ -119,7 +136,7 @@ export function ExportPng({ state, model, onDone }: { state: State; model: MapMo
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [box]);
 
   return (
     <div className="export-host" aria-hidden>
@@ -129,7 +146,7 @@ export function ExportPng({ state, model, onDone }: { state: State; model: MapMo
         <text className="export-title" x={W / 2} y={44} textAnchor="middle" fontSize={26} fontWeight={700}>
           {APP_TITLE}
         </text>
-        <g transform={`translate(0,${TITLE_H})`}>
+        <g ref={contentRef} transform={`translate(${-b.x0},${TITLE_H - b.y0})`}>
           <Backdrop layout={layout} laneFocus={state.laneFocus} />
           {state.layers.cultural && <CulturalOverlay layout={layout} />}
           <LaneLabels layout={layout} laneFocus={state.laneFocus} onLane={noop} />

@@ -62,7 +62,7 @@ export function Legend() {
           <div>
             <strong>inferred link</strong>{' '}
             <span className="count">{g.data.edges.filter((e) => e.provenance === 'inferred').length} links</span>
-            <div className="muted">Relationship not explicitly extracted from source; inferred from field research and literature review.</div>
+            <div className="muted">Relationship inferred from field research and literature review.</div>
           </div>
         </li>
       </ul>
@@ -114,7 +114,7 @@ export function Legend() {
           Possible intervention (none selected)
         </li>
         <li>
-          <span className="badge-inline">double-edged</span> chain where the source names both outcomes
+          <span className="badge-inline">double-edged</span> chain that leads to both enabling and extractive outcomes
         </li>
         <li>
           <svg width={34} height={20} aria-hidden>

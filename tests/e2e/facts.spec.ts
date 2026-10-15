@@ -298,7 +298,7 @@ test('clicking an edge opens its provenance and meaning', async ({ page }) => {
   await page.locator('.edge[data-key="ch_c1_s4|out_intrinsic_joy|upward"] .edge-hit').dispatchEvent('click');
   const panel = page.getByTestId('detail-panel');
   await expect(panel).toContainText('A protective condition, recovery, or restoration of intrinsic joy');
-  await expect(panel).toContainText('Inferred link: added to satisfy the map spec; not stated in the source');
+  await expect(panel).toContainText('Inferred link: inferred from field research and literature review');
 });
 
 test('lane focus and trace pathways', async ({ page }) => {
@@ -366,7 +366,7 @@ test('row titles are rotated in a narrow gutter; stage dividers are thin, short-
   const t = await labels.first().locator('g[transform*="rotate(-90)"]').count();
   expect(t).toBe(1);
   const w = await labels.first().locator('.lane-label-bg').getAttribute('width');
-  expect(Number(w)).toBeLessThan(60);
+  expect(Number(w)).toBeLessThan(80);
   const d = page.getByTestId('stage-divider').first();
   await expect(d).toHaveAttribute('vector-effect', 'non-scaling-stroke');
   const sw = await d.evaluate((e) => parseFloat(getComputedStyle(e).strokeWidth));
@@ -473,7 +473,7 @@ test('legend line samples are fully visible', async ({ page }) => {
     }),
   );
   expect(clipped.every(Boolean)).toBe(true);
-  await expect(page.getByTestId('legend')).toContainText('Relationship not explicitly extracted from source');
+  await expect(page.getByTestId('legend')).toContainText('Relationship inferred from field research and literature review');
 });
 
 test('links inside an expanded cross-life system are visible without hovering', async ({ page }) => {

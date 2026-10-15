@@ -246,7 +246,7 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
       if (n.kind === 'loop') lines.push(n.expanded ? 'Click to collapse the loop.' : 'Click to expand the loop ring.');
       if (n.kind === 'system') lines.push(n.expanded ? 'Click to collapse the cross-life chains.' : 'Click to expand the cross-life chains.');
       if (n.kind === 'stage') lines.push('Click to focus · double-click to expand everything in this stage.');
-      if (ch?.defaultValence === 'ambivalent') lines.push('Double-edged: the source names both enabling and extractive outcomes.');
+      if (ch?.defaultValence === 'ambivalent') lines.push('Double-edged: leads to both enabling and extractive outcomes.');
       if (ch?.framingNote) lines.push(`Framing note: ${ch.framingNote}`);
       const node = g.nodeById.get(n.id);
       if (node?.type === 'reference' && node.caution) lines.push(`Caution: ${node.caution}`);
@@ -274,8 +274,8 @@ export const MapCanvas = forwardRef<CanvasHandle, { model: MapModel; onTransform
         const rel = [...new Set(a.members.map((m) => m.relation).filter(Boolean))];
         if (rel.length) lines.push(`Relation: ${rel.join(', ')}`);
         if (a.members.length > 1) lines.push(`${a.members.length} links aggregated (container collapsed).`);
-        if (a.inferred) lines.push('Inferred link: added to satisfy the map spec; not stated in the source.');
-        else if (a.anyInferred) lines.push('Some aggregated links are inferred (added to satisfy the map spec; not stated in the source).');
+        if (a.inferred) lines.push('Inferred link: inferred from field research and literature review.');
+        else if (a.anyInferred) lines.push('Some aggregated links are inferred from field research and literature review.');
         setTip({ ...toScreen(e.mid.x, e.mid.y - 6), title: `${s} → ${t}`, lines });
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps

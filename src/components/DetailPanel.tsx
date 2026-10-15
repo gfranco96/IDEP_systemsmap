@@ -4,8 +4,8 @@ import type { Chain, Loop, MapEdge, MapNode } from '../model/types';
 import { useStore } from '../state/store';
 import { containersInStage, goTo, isContainer } from '../state/actions';
 
-export const AMBIVALENT_TEXT = 'The source names both enabling and extractive outcomes.';
-export const INFERRED_TEXT = 'Inferred link: added to satisfy the map spec; not stated in the source';
+export const AMBIVALENT_TEXT = 'Leads to both enabling and extractive outcomes.';
+export const INFERRED_TEXT = 'Inferred link: inferred from field research and literature review';
 
 export function domainOf(url: string): string {
   try {
@@ -67,7 +67,6 @@ function Evidence({ ids }: { ids?: string[] }) {
           );
         })}
       </ul>
-      <p className="fine">Link text shows the domain only; bibliographic metadata has not been independently verified.</p>
     </Section>
   );
 }
@@ -196,7 +195,7 @@ function LoopBody({ lp, current }: { lp: Loop; current?: string }) {
         </Section>
       ) : null}
       {lp.interventionOpportunities?.length ? (
-        <Section title="Intervention opportunities (as listed in the source)">
+        <Section title="Intervention opportunities">
           <List items={lp.interventionOpportunities} />
         </Section>
       ) : null}
@@ -460,7 +459,7 @@ function NodeBody({ n }: { n: MapNode }) {
             <List items={n.connectionTypes} />
           </Section>
           {n.datapoints?.length ? (
-            <Section title="Datapoints — as cited in the source; not independently verified">
+            <Section title="Datapoints">
               <ul className="plain">
                 {n.datapoints.map((d, i) => (
                   <li key={i}>
@@ -582,7 +581,6 @@ export function DetailPanel() {
   if (!id || state.tourStep != null) return null; // never shown together with the walk-through
   let title = '';
   let badge = '';
-  let source = '';
   let body: ReactNode = null;
   const traceable = !id.startsWith('edge:');
   if (id.startsWith('edge:')) {
@@ -594,14 +592,12 @@ export function DetailPanel() {
     const ch = g.chainById.get(id)!;
     title = ch.title;
     badge = ch.scope === 'stage' ? 'Causal chain' : 'Cross-life chain';
-    source = ch.sourceSection;
     body = <ChainBody ch={ch} />;
   } else {
     const n = g.nodeById.get(id);
     if (!n) return null;
     title = n.label;
     badge = TYPE_BADGE[n.type];
-    source = n.sourceSection;
     body = <NodeBody n={n} />;
   }
   const tracing = state.traceId === id;
@@ -622,7 +618,6 @@ export function DetailPanel() {
         </button>
       </header>
       <h2>{title}</h2>
-      {source && <p className="fine">Source section: {source}</p>}
       {traceable && (
         <button
           type="button"

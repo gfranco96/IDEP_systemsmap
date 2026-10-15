@@ -11,7 +11,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "note": "Timeline progression between parent stages (map spec: forward arrows for institutional transition)."
+    "note": "Timeline progression between parent stages."
   },
   {
     "id": "e002",
@@ -25,7 +25,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "note": "Timeline progression between parent stages (map spec: forward arrows for institutional transition)."
+    "note": "Timeline progression between parent stages."
   },
   {
     "id": "e003",
@@ -633,7 +633,7 @@
     "chainId": "ch_a3",
     "loopId": null,
     "loopClosure": true,
-    "note": "Source names this connection type a 'commercial feedback loop'; closure edge added to depict it."
+    "note": "Commercial feedback loop."
   },
   {
     "id": "e044",
@@ -2004,8 +2004,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e144",
@@ -2019,8 +2018,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e145",
@@ -2034,8 +2032,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e146",
@@ -2049,8 +2046,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e147",
@@ -2064,8 +2060,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "reinforces",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "reinforces"
   },
   {
     "id": "e148",
@@ -2079,8 +2074,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "reinforces",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "reinforces"
   },
   {
     "id": "e149",
@@ -2094,8 +2088,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e150",
@@ -2109,8 +2102,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e151",
@@ -2124,8 +2116,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "reinforces",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "reinforces"
   },
   {
     "id": "e152",
@@ -2139,8 +2130,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "reinforces",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "reinforces"
   },
   {
     "id": "e153",
@@ -2154,8 +2144,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e154",
@@ -2169,8 +2158,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e155",
@@ -2184,8 +2172,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e156",
@@ -2199,8 +2186,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e157",
@@ -2214,8 +2200,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "redefines",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "redefines"
   },
   {
     "id": "e158",
@@ -2229,8 +2214,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "redefines",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "redefines"
   },
   {
     "id": "e159",
@@ -2244,8 +2228,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "reinforces",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "reinforces"
   },
   {
     "id": "e160",
@@ -2259,8 +2242,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   },
   {
     "id": "e161",
@@ -2274,8 +2256,7 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "reinforces",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "reinforces"
   },
   {
     "id": "e162",
@@ -2289,7 +2270,6 @@
     "provenance": "inferred",
     "chainId": null,
     "loopId": null,
-    "relation": "interrupts",
-    "note": "Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source."
+    "relation": "interrupts"
   }
 ]

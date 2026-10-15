@@ -5,8 +5,7 @@
     "supports": "Life-course approach: development as a sequence of age-graded roles, opportunities, constraints, and transitions, where earlier conditions shape later ones.",
     "usedBy": [
       "meta"
-    ],
-    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+    ]
   },
   {
     "id": "ref_rewards_pubmed",
@@ -15,8 +14,7 @@
     "usedBy": [
       "meta",
       "loop_A"
-    ],
-    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+    ]
   },
   {
     "id": "ref_rewards_sagepub",
@@ -24,8 +22,7 @@
     "supports": "Contingent rewards and intrinsic motivation; informational versus controlling feedback.",
     "usedBy": [
       "loop_A"
-    ],
-    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+    ]
   },
   {
     "id": "ref_sdt_2000",
@@ -34,16 +31,14 @@
     "usedBy": [
       "meta",
       "ch_d5"
-    ],
-    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+    ]
   },
   {
     "id": "ref_oecd_denmark",
     "url": "https://oecd-better-life-index.truth-and-beauty.net/countries/denmark/",
-    "supports": "Denmark time-use satisfaction and life satisfaction figures as cited in the source.",
+    "supports": "Denmark time-use satisfaction and life satisfaction figures.",
     "usedBy": [
       "ref_denmark"
-    ],
-    "verification": "URL and the 'supports' paraphrase come from the source document. Authors, titles, years and figures have NOT been independently verified. Display the URL and a neutral link label; do not invent bibliographic metadata."
+    ]
   }
 ]

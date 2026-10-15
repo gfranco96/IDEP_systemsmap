@@ -68,7 +68,7 @@ for sid, label, tag, rng, trans, o in STAGES:
       stage=sid.replace("stage_", ""), order=o, sourceSection=f"{label} parent node")
 for a, b in [("stage_childhood", "stage_adolescence"), ("stage_adolescence", "stage_adulthood")]:
     E(a, b, "forward", "neutral", ["developmental / institutional transition"], prov="inferred",
-      note="Timeline progression between parent stages (map spec: forward arrows for institutional transition).")
+      note="Timeline progression between parent stages.")
 
 # --------------------------------------------------------------- SUBSTAGES
 # (id, stage, label, ageLabel, ageStart, ageEnd, joyMode, rewardShift, leadsTo[])
@@ -303,7 +303,7 @@ chain("ch_a3", "stage", "adolescence", None, "platform", [],
 # close the commercial feedback loop explicitly
 E("ch_a3_s5", "ch_a3_s1", "circular", "reinforcing", ["data extraction", "behavioral reinforcement", "commercial feedback loop"],
   chain="ch_a3", closure=True,
-  note="Source names this connection type a 'commercial feedback loop'; closure edge added to depict it.")
+  note="Commercial feedback loop.")
 chains[-1]["edgeIds"].append(edges[-1]["id"])
 chain("ch_a4", "stage", "adolescence", None, "family", ["market"],
       "Fandom and participatory culture \u2192 belonging and making \u2192 possible intrinsic-play refuge",
@@ -658,8 +658,7 @@ for i, (iid, label, eff, typ, targets) in enumerate(INTS, 1):
     N(id=iid, type="intervention", label=label, effect=eff, interventionType=typ, stage="intervention",
       order=i, selected=False, sourceSection="Map-ready intervention nodes")
     for tgt, rel in targets:
-        E(iid, tgt, "dashed", "neutral", ["possible intervention"], prov="inferred", relation=rel,
-          note="Target chosen by the data author from the 'Interrupts / reinforces' wording; not stated node-by-node in the source.")
+        E(iid, tgt, "dashed", "neutral", ["possible intervention"], prov="inferred", relation=rel)
 
 # --------------------------------------------------------------- REFERENCES
 REFS = [
@@ -676,13 +675,9 @@ REFS = [
          supports="Self-Determination Theory: autonomy, competence, and relatedness as psychological needs that sustain self-motivation and wellbeing; distinguishes controlling rewards from informational feedback.",
          usedBy=["meta", "ch_d5"]),
     dict(id="ref_oecd_denmark", url="https://oecd-better-life-index.truth-and-beauty.net/countries/denmark/",
-         supports="Denmark time-use satisfaction and life satisfaction figures as cited in the source.",
+         supports="Denmark time-use satisfaction and life satisfaction figures.",
          usedBy=["ref_denmark"]),
 ]
-for r in REFS:
-    r["verification"] = ("URL and the 'supports' paraphrase come from the source document. Authors, titles, years and "
-                         "figures have NOT been independently verified. Display the URL and a neutral link label; do not "
-                         "invent bibliographic metadata.")
 
 # --------------------------------------------------------------------- META
 META = dict(
@@ -715,7 +710,7 @@ META = dict(
     valences=[
         dict(id="protective", meaning="Enabling / protective / regenerative"),
         dict(id="constraining", meaning="Constraining / narrowing / extractive"),
-        dict(id="ambivalent", meaning="Double-edged; both enabling and extractive outcomes are named in the source"),
+        dict(id="ambivalent", meaning="Double-edged; leads to both enabling and extractive outcomes"),
         dict(id="reinforcing", meaning="Self-reinforcing feedback (direction of value depends on the loop)"),
         dict(id="neutral", meaning="Structural / sequencing / intervention link without a value direction"),
     ],
@@ -723,7 +718,7 @@ META = dict(
         dict(id="explicit", meaning="The relationship is explicitly stated in the literature."),
         dict(id="inferred", meaning="Inferred through observation in ethnographic research and conclusion across sources in literature review."),
     ],
-    arrowAssignmentRule="arrowType was assigned per chain by the data author: protective chains = upward; constraining chains = downward; ambivalent chains use forward for the shared trunk and split into one upward and one downward branch. Renderer must read arrowType from data and must not infer it.",
+    arrowAssignmentRule="arrowType is assigned per chain: protective chains = upward; constraining chains = downward; ambivalent chains use forward for the shared trunk and split into one upward and one downward branch. Renderer must read arrowType from data and must not infer it.",
 )
 
 # ------------------------------------------------------------ VALIDATION

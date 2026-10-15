@@ -100,7 +100,7 @@
     },
     {
       "id": "ambivalent",
-      "meaning": "Double-edged; both enabling and extractive outcomes are named in the source"
+      "meaning": "Double-edged; leads to both enabling and extractive outcomes"
     },
     {
       "id": "reinforcing",
@@ -121,7 +121,7 @@
       "meaning": "Inferred through observation in ethnographic research and conclusion across sources in literature review."
     }
   ],
-  "arrowAssignmentRule": "arrowType was assigned per chain by the data author: protective chains = upward; constraining chains = downward; ambivalent chains use forward for the shared trunk and split into one upward and one downward branch. Renderer must read arrowType from data and must not infer it.",
+  "arrowAssignmentRule": "arrowType is assigned per chain: protective chains = upward; constraining chains = downward; ambivalent chains use forward for the shared trunk and split into one upward and one downward branch. Renderer must read arrowType from data and must not infer it.",
   "counts": {
     "nodes": 178,
     "edges": 162,
